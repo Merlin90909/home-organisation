@@ -3,12 +3,18 @@
         "first_Name": "test",
         "last_Name": "test",
         "email": "test@test",
-        "password": "test"
+        "password": "testtest"
     },
     "alexander.albreecht@check24.de": {
         "first_Name": "Alexander",
         "last_Name": "Albrecht",
         "email": "alexander.albreecht@check24.de",
         "password": "test"
+    },
+    "tes@test": {
+        "first_Name": "fewf",
+        "last_Name": "wefewf",
+        "email": "tes@test",
+        "password": "testtest"
     }
 }

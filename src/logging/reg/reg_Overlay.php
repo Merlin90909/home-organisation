@@ -1,7 +1,8 @@
 <?php
 
-
-echo'<!Doctype html>
+$email = $_POST['email'] ?? '';
+?>
+<!Doctype html>
 <html lang="de-De">
 <head>
     <meta charset="utf-8">
@@ -32,7 +33,9 @@ echo'<!Doctype html>
     <br>
     <br>
     <a href="/login">Einloggen</a>
+<?php
 
+?>
 </form>
 </body>
-</html>';
+</html>
