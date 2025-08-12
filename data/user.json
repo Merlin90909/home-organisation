@@ -4,5 +4,11 @@
         "last_Name": "test",
         "email": "test@test",
         "password": "test"
+    },
+    "alexander.albreecht@check24.de": {
+        "first_Name": "Alexander",
+        "last_Name": "Albrecht",
+        "email": "alexander.albreecht@check24.de",
+        "password": "test"
     }
 }

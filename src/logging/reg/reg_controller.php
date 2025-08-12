@@ -25,5 +25,5 @@ if(empty($_POST['fName']) || empty($_POST['lName']) || empty($_POST['email']) ||
     $jsonData = json_encode($data, JSON_PRETTY_PRINT);
     file_put_contents($path, $jsonData);
 
-    header('Location: /register');
+    header('Location: /login');
 }
