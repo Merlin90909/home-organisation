@@ -43,12 +43,15 @@ require __DIR__ . '/../../partials/header.php';
         <h3>Küche</h3>
         <details class="faq">
           <summary>Wie oft muss ich was wechseln?</summary>
-          <p>Küchenschwamm: nach ca. 7 Tagen</p>
+          <p>
+              - Küchenschwamm: nach ca. 7 Tagen<br>
+              - Waschlappen: nach 7 Tagen<br>
+          </p>
         </details>
 
         <h3>Badezimmer</h3>
         <details class="faq">
-          <summary>Wie verwalte ich Kategorien?</summary>
+          <summary>Sauberkeitsregeln(individuell anpassbar):</summary>
           <p></p>
         </details>
       </div>
