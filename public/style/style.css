@@ -1,6 +1,30 @@
 /*Fehlerseite*/
 .page-404 h1{
-    font-size: 50px;
+    font-size: 100px;
+}
+.page-404-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    text-align: center;
+}
+.page-404 p {
+    font-size: 18px;
+    color: var(--muted);
+    margin-bottom: 20px;
+}
+.page-404 .button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: var(--primary);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+.page-404 .button:hover {
+    background: var(--primary-strong);
 }
 /*Dashboard*/
 :root{
@@ -313,3 +337,60 @@ body:not(.dashboard-body).login-overlay form a:hover {
 body:not(.dashboard-body).login-overlay form br {
     line-height: 8px;
 }
+/* Impressum: Farben & Layout-Typ (dokumentenartig, wie deine Overlays) */
+body.legal-page{
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    background: radial-gradient(1200px 600px at 10% -10%, rgba(59,130,246,.25), transparent 30%),
+    radial-gradient(900px 600px at 110% 0%, rgba(99,102,241,.2), transparent 35%),
+    var(--bg);
+    color: var(--text);
+}
+
+/* zentrierter, ruhiger Dokument-Flow */
+.legal-page main{
+    width: min(800px, 92vw);
+    margin: 48px auto 56px;
+}
+
+/* Typografie auf Dashboard-Niveau */
+.legal-page h1{
+    margin: 0 0 8px 0;
+    font-size: clamp(28px, 4vw, 36px);
+}
+.legal-page > header p,
+.legal-page .intro{
+    margin: 0 0 16px 0;
+    color: var(--muted);
+    text-align: left;
+}
+.legal-page h2{
+    margin: 24px 0 10px 0;
+    font-size: 18px;
+    color: var(--text);
+}
+
+/* Text & Links */
+.legal-page p{ line-height: 1.65; color: var(--text); }
+.legal-page a{ color: var(--text); text-decoration: underline; }
+.legal-page a:hover{ color: var(--primary); }
+
+/* Definition-Listen für Adressblöcke */
+.legal-page dl{
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 8px 16px;
+    margin: 0;
+}
+.legal-page dt{ color: var(--muted); }
+.legal-page dd{ margin: 0; }
+
+/* Feiner Absatzstil für Rechtstexte */
+.legal-page .fineprint{
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Spacing */
+.legal-page section{ margin-top: 20px; }

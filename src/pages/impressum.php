@@ -1,1 +1,18 @@
 <?php
+require __DIR__ . '/../../partials/header.php';
+?>
+
+    <div class="page-404-wrapper">
+        <div class="page-404">
+            <h1>Impressum</h1>
+            <p>
+                Alexander Albrecht... <br>
+                Check24-Mobilfunk
+            </p>
+        </div>
+    </div>
+
+<?php
+require __DIR__ . '/../../partials/footer.php';
+ echo'</body></html>';
+
