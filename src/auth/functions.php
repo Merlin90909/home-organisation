@@ -112,12 +112,12 @@ function empty_data($email, $passwort)
     if (empty($email) || empty($passwort)) {
         header('Location: /login?invalidInput');
         exit;
-    }else{
+    } else {
         return true;
     }
 }
 
-function user_found($data,$email)
+function user_found($data, $email)
 {
     if (is_array($data)) {
         $found = false;
@@ -136,8 +136,8 @@ function user_found($data,$email)
                 header('Location: /login?login=false');
                 exit;
             } else {
-               // header('Location: /');
-               // exit;
+                // header('Location: /');
+                // exit;
                 return true;
             }
         }

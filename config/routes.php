@@ -7,4 +7,8 @@ return [
     '/reg_controller' => __DIR__ . '/../src/auth/reg/reg_controller.php',
     '/impressum' =>  __DIR__ . '/../src/pages/impressum.php',
     '/user_exist' => __DIR__ . '/../src/auth/log/user_exist.php',
-    ];
+
+    '/bath' => __DIR__ . '/../src/pages/categories/bathroom.php',
+    '/kitchen' => __DIR__ . '/../src/pages/categories/kitchen.php',
+    '/bedroom' => __DIR__ . '/../src/pages/categories/bedroom.php',
+];

@@ -33,9 +33,9 @@ require __DIR__ . '/../../partials/header.php';
             </header>
             <div class="card__body">
                 <div class="chips" id="categories">
-                    <span class="chip">Haushalt</span>
-                    <span class="chip">Finanzen</span>
-                    <span class="chip">Gesundheit</span>
+                    <a href="/kitchen"><span class="chip">Küche</span></a>
+                    <a href="/bath"><span class="chip">Badezimmer</span></a>
+                    <a href="/bedroom"><span class="chip">Schlafzimmer</span></a>
                 </div>
             </div>
         </article>

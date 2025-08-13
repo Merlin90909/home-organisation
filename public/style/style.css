@@ -113,6 +113,16 @@ body.dashboard-body{
 .chips{ display:flex; flex-wrap:wrap; gap:8px; }
 .chip{ display:inline-block; padding:6px 10px; border-radius:999px; background: var(--chip-bg); border:1px solid var(--border); }
 
+/* Category links: same behavior as header nav links */
+.chips a,
+.chips a:visited{
+  color: var(--text);
+  text-decoration: underline;
+}
+.chips a:hover{
+  color: var(--primary);
+}
+
 /* FAQ */
 .faq{ margin-bottom:10px; }
 .faq summary{ cursor:pointer; }
