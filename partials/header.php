@@ -24,3 +24,6 @@
       </form>
     </div>
   </header>
+<?php
+require_once __DIR__ . '/../src/auth/functions.php';
+session_delete();
