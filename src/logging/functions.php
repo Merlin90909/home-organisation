@@ -1,24 +1,45 @@
 <?php
 
 //reg_controller--------------------------------------------------------------------------------------------------------
-function already_exists($mail, $data)
+function user_request($mail, $data): bool
 {
     return array_key_exists($mail, $data);
 }
 
-function empty_register()
+function user_exists($mail, $data): bool
 {
-    if (empty($_POST['fName']) || empty($_POST['lName']) || empty($_POST['email']) || empty($_POST['pwd']) || empty($_POST['pwd2'])) {
-        return false;
+    if (user_request($mail, $data)) {
+        header('Location: /register?error=user_already_exists');
+        exit;
+    }
+    return false;
+}
+
+function empty_register($fName, $lName, $email, $pwd, $pwd2)
+{
+    if (empty($fName) || empty($lName) || empty($email) || empty($pwd) || empty($pwd2)) {
+        header('location: /register?error=fields_not_filled_in');
+        exit;
     } else {
         return true;
     }
 }
 
-function password_usage($path, $data, $mail): bool
+function equal_pwd($pwd, $pwd2)
 {
-    if ((strlen($_POST['pwd']) < 8)) {
-        return false;
+    if ($pwd !== $pwd2) {
+        header('location: /register?error=pwd_mismatch');
+        exit;
+    } else {
+        return true;
+    }
+}
+
+function password_usage($pwd): bool
+{
+    if ((strlen($pwd) < 8)) {
+        header('location: /register?error=pwd_too_short');
+        exit;
     } else {
         return true;
     }
@@ -37,8 +58,6 @@ function create_user($path)
     $data[$username] = $newUser;
     $jsonData = json_encode($data, JSON_PRETTY_PRINT);
     file_put_contents($path, $jsonData);
-
-    //header('Location: /login');
 }
 
 
