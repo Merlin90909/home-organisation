@@ -3,7 +3,7 @@ return [
     '/' => 'DashboardController',
     //'/header' => 'HeaderController',
     //'/footer' => 'FooterController',
-    '/login' => 'LoginController',
+    '/login' => 'LoginController', //nach Implementierung das hier überprüfen
     '/register' => 'RegisterController',
     '/impressum' => 'ImprintController',
     '/404' => 'ErrorController',
@@ -11,6 +11,7 @@ return [
     '/kitchen' => 'KitchenController',
     '/bathroom' => 'BathroomController',
     '/bedroom' => 'BedroomController',
+    '/login-submit' => 'LoginSubmitController',
 
 
 //    '/login' => __DIR__ . '/../src/Auth/Log/log_Overlay.php',

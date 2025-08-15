@@ -8,7 +8,7 @@ $data = json_decode($json, true);
 
 require_once __DIR__ . ('/../functions.php');
 
-empty_data($_POST['email'] ?? '', $_POST['pwd'] ?? '');
+empty_data($_POST['email'] ?? '', $_POST['password'] ?? '');
 
 user_found($data, $email = $_POST['email'] ?? '');
 

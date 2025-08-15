@@ -28,4 +28,3 @@
 //<?php
 //require_once __DIR__ . '/../src/Auth/functions.php';
 //session_delete();
-//
