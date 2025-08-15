@@ -404,3 +404,75 @@ body.legal-page{
 
 /* Spacing */
 .legal-page section{ margin-top: 20px; }
+
+/*Kategorien*/
+.kategorie
+
+    /* Kategorien – Seiten-Template (wiederverwendbar) */
+.category-page{
+    margin: 0;
+    background: radial-gradient(1200px 600px at 10% -10%, rgba(59,130,246,.25), transparent 30%),
+    radial-gradient(900px 600px at 110% 0%, rgba(99,102,241,.2), transparent 35%),
+    var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+.category-page .container{
+    width: min(1000px, 92vw);
+    margin: 0 auto;
+    padding: 32px 0 56px;
+}
+
+/* zentrierte Überschrift */
+.category-header{
+    text-align: center;
+    margin: 16px 0 20px;
+}
+.category-header h1{
+    margin: 0;
+    font-size: clamp(28px, 4vw, 36px);
+}
+.category-header p{
+    margin: 6px 0 0 0;
+    color: var(--muted);
+}
+
+/* Zwei optisch getrennte Bereiche */
+.category-sections{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 20px;
+}
+@media (min-width: 720px){
+    .category-sections{ grid-template-columns: 1fr 1fr; }
+}
+
+.category-panel{
+    background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    padding: 18px;
+}
+.category-panel h2{
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: var(--text);
+}
+.category-panel p{
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+/* Links im Panel – wie Header-Links */
+.category-panel a,
+.category-panel a:visited{
+    color: var(--text);
+    text-decoration: underline;
+}
+.category-panel a:hover{
+    color: var(--primary);
+}

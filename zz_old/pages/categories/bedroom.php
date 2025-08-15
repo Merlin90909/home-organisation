@@ -1,0 +1,25 @@
+<?php
+require __DIR__ . '/../../../partials/header.php';
+?>
+<div class="category-page">
+  <div class="container">
+    <header class="category-header">
+      <h1>Schlafzimmer</h1>
+      <p>Tipps, Checklisten und Routinen fürs Schlafgemach</p>
+    </header>
+
+    <div class="category-sections">
+      <section class="category-panel">
+        <h2>Pflege &amp; Reinigung</h2>
+        <p>Bettwäsche wechseln, Matratze wenden, Oberflächen staubfrei halten, Luftqualität verbessern.</p>
+      </section>
+
+      <section class="category-panel">
+        <h2>Organisation &amp; Ordnung</h2>
+        <p>Kleiderschrank sortieren, Nachttisch organisieren, Kabelmanagement, Minimalismus-Check.</p>
+      </section>
+    </div>
+  </div>
+</div>
+<?php
+require __DIR__ . '/../../../partials/footer.php';

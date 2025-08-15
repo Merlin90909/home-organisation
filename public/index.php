@@ -3,12 +3,14 @@
 declare(strict_types=1);
 
 require __DIR__ . '/../boot/boot.php';
+//require __DIR__ . '/../src/Controller/HeaderController.php';
 
-$route = $_SERVER['PATH_INFO'] ?? '/';
+$routes = require_once('../config/routes.php');
+$path = $_SERVER['PATH_INFO'] ?? '/';
 
-$routes = (require __DIR__ . '/../config/routes.php');
-if (isset($routes[$route])) {
-    require $routes[$route];
-} else {
-    require __DIR__ . '/../src/pages/404.php';
-}
+$controllerName = $routes[$path];
+
+/** @var ControllerInterface $controller */
+$controller = new $controllerName();
+$html = $controller->handle($_POST, $_GET, $_SERVER, $SESSION);
+echo $html;
