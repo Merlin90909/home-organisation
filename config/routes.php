@@ -6,13 +6,17 @@ return [
     //'/footer' => 'FooterController',
     '/login' => 'LoginController', //nach Implementierung das hier überprüfen
     '/register' => 'RegisterController',
+    '/logout' => 'LogoutController',
     '/impressum' => 'ImprintController',
     '/404' => 'ErrorController',
 
     '/kitchen' => 'KitchenController',
     '/bathroom' => 'BathroomController',
     '/bedroom' => 'BedroomController',
+
     '/login-submit' => 'LoginSubmitController',
+    '/register-submit' => 'RegisterSubmitController',
+    '/logout-submit' => 'LogoutSubmitController',
 
 
 //    '/login' => __DIR__ . '/../src/Auth/Log/log_Overlay.php',

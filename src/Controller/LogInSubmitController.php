@@ -8,7 +8,7 @@ class LogInSubmitController implements ControllerInterface
         $isLoggedin = $LoginService->login($post['email'], $post['password']);
 
         if (!$isLoggedin) {
-            header('Location: login?error=login-failed');
+            header('Location: /login?error=login_failed');
             return '';
         }
         header('Location: /');
