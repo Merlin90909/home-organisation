@@ -2,10 +2,10 @@
 
 class LoginService
 {
-    function login(string $username, string $email, string $password): bool
+    function login(string $email, string $password): bool
     {
         $UserService = new UserService();
-        $user = $UserService->getUserbyUsername($username);
+        $user = $UserService->getUserbyEmail($email);
 
         if (!$user) {
             return false;

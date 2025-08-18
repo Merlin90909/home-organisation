@@ -5,14 +5,6 @@ use Dtos\UserDto;
 class UserService
 {
 
-    public function getUserbyUsername(string $username): ?UserDto
-    {
-        $users = $this->getUsers();
-        $user = $users[$username];
-
-        return $this->createUserDto($user);
-    }
-
     public function getUserbyEmail(string $email): ?UserDto
     {
         $users = $this->getUsers();
@@ -43,7 +35,6 @@ class UserService
             $user['last_Name'],
             $user['email'],
             $user['password'],
-            $user['username']
         );
     }
 

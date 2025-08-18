@@ -10,7 +10,6 @@ readonly class UserDto
         public string $last_Name,
         public string $email,
         public string $password,
-        public string $username,
     ) {
     }
 }
