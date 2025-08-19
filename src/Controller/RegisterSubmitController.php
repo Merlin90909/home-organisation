@@ -10,8 +10,8 @@ class RegisterSubmitController implements ControllerInterface
             $post['fName'],
             $post['lName'],
             $post['email'],
-            $post['pwd'],
-            $post['pwd2']
+            $post['password'],
+            $post['password2']
         );
 
         if (!$register) {

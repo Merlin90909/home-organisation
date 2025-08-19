@@ -7,23 +7,29 @@ class UserService
 
     public function getUserbyEmail(string $email): ?UserDto
     {
-        $users = $this->getUsers();
+        $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        foreach ($users as $user) {
-            if ($user['email'] === $email) {
-                return $this->createUserDto($user);
-            }
+        $stmt = $pdo->prepare(
+            'SELECT first_Name, last_Name, email, password  FROM user WHERE email = :email LIMIT 1'
+        );
+        $stmt->execute(['email' => $email]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row) {
+            return null;
         }
 
-        return null;
+        return $this->createUserDto($row);
     }
 
-    private
-    function getUsers(): array
+    private function getUsers(): array
     {
-        $path = __DIR__ . '/../../data/users.json';
-        $json = file_get_contents($path);
-        $users = json_decode($json, true);
+        $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $stmt = $pdo->query('SELECT first_Name, last_Name, email, password FROM user');
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $users;
     }
