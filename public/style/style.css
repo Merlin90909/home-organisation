@@ -519,3 +519,62 @@ body.legal-page{
 body:not(.dashboard-body) > h1{ font-size: clamp(32px, 5vw, 40px); }
 .legal-page h1{ font-size: clamp(32px, 5vw, 40px); }
 .legal-page h2{ font-size: 20px; }
+/* ---------------------
+   Rooms page styling
+   --------------------- */
+.rooms-wrapper{
+  width: min(800px, 92vw);
+  margin: 32px auto 56px;
+}
+
+.rooms{
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  padding: 20px;
+}
+
+.rooms h1{
+  margin: 0 0 12px 0;
+  font-size: clamp(28px, 4vw, 36px);
+}
+
+.rooms form label{ display:block; margin: 10px 0 6px; color: var(--text); }
+.rooms form input[type="text"],
+.rooms form textarea{
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #0b1220;
+  color: var(--text);
+  outline: none;
+}
+
+.rooms form textarea{ min-height: 120px; resize: vertical; }
+
+.rooms form input[type="text"]:focus,
+.rooms form textarea:focus{
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59,130,246,.25);
+}
+
+.rooms form button[type="submit"]{
+  display:inline-block;
+  padding: 10px 14px;
+  margin-top: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.02);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.rooms form button[type="submit"]:hover{
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Simple spacing between fields */
+.rooms form > div + div{ margin-top: 12px; }

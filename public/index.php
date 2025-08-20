@@ -11,5 +11,5 @@ $controllerName = $routes[$path];
 
 /** @var ControllerInterface $controller */
 $controller = new $controllerName();
-$html = $controller->handle($_POST, $_GET, $_SERVER, $SESSION);
+$html = $controller->handle($_POST, $_GET, $_SERVER, $_SESSION);
 echo $html;

@@ -19,8 +19,8 @@ class LoginService
         if ($user->password !== $password) {
             return false;
         }
-
         $_SESSION['logged_in'] = true;
+        $_SESSION['user_id'] = $user->id;
         $_SESSION['user_email'] = $user->email;
         $_SESSION['user_name'] = $user->first_Name . ' ' . $user->last_Name;
 

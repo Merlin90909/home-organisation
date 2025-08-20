@@ -26,6 +26,10 @@ class RegisterService
         $statement = $pdo->prepare(
             'INSERT INTO user (first_Name, last_Name, email, password) VALUES (:firstName, :lastName, :email, :password)'
         );
+
+
+
+
         $statement->execute([
             'firstName' => $first_Name,
             'lastName' => $last_Name,

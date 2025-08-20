@@ -5,8 +5,19 @@ require_once(__DIR__ . '/header.phtml');
     <div class="rooms-wrapper">
         <div class="rooms">
             <h1>Meine Räume</h1>
-
-
+            <form method="post" action="/rooms-submit">
+                <div>
+                    <label for="room_name">Raumname:</label>
+                    <input type="text" id="room_name" name="room_name" required>
+                </div>
+                <div>
+                    <label for="room_description">Beschreibung:</label>
+                    <textarea id="room_description" name="room_description" required></textarea>
+                </div>
+                <div>
+                    <button type="submit">Raum erstellen</button>
+                </div>
+            </form>
         </div>
     </div>
 

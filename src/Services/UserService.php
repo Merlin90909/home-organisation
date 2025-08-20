@@ -11,7 +11,7 @@ class UserService
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $stmt = $pdo->prepare(
-            'SELECT first_Name, last_Name, email, password  FROM user WHERE email = :email LIMIT 1'
+            'SELECT *  FROM user WHERE email = :email LIMIT 1'
         );
         $stmt->execute(['email' => $email]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -28,7 +28,7 @@ class UserService
         $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $pdo->query('SELECT first_Name, last_Name, email, password FROM user');
+        $stmt = $pdo->query('SELECT * FROM user');
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $users;
@@ -37,6 +37,7 @@ class UserService
     private function createUserDto(array $user): UserDto
     {
         return new UserDto(
+            $user['id'],
             $user['first_Name'],
             $user['last_Name'],
             $user['email'],

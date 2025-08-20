@@ -33,6 +33,8 @@ require_once __DIR__ . '/../src/Services/LoginService.php';
 require_once __DIR__ . '/../src/Services/UserService.php';
 require_once __DIR__ . '/../src/Services/RegisterService.php';
 require_once __DIR__ . '/../src/Services/LogoutService.php';
+require_once __DIR__ . '/../src/Services/RoomsCreateService.php';
+require_once __DIR__ . '/../src/Services/RoomsService.php';
 
 
 //Dtos
