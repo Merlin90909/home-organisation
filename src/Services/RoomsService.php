@@ -1,6 +1,5 @@
 <?php
 
-
 class RoomsService
 {
     public function getRoombyName(string $name): ?RoomDto
@@ -21,7 +20,7 @@ class RoomsService
         return $this->createRoomDto($row);
     }
 
-    private function getRoom(): array
+    public function getRooms(): array
     {
         $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -35,9 +34,8 @@ class RoomsService
     private function createRoomDto(array $room): RoomDto
     {
         return new RoomDto(
-            $userDtos,
             $room['name'],
-            $room['description'],
+            $room['description']
         );
     }
 }

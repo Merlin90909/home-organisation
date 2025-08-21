@@ -21,8 +21,8 @@ class RoomsCreateService
 
         $roomId = $pdo->lastInsertId();
 
-        $statement =$pdo->prepare(
-          'INSERT INTO user_to_room (owner_user_id, room_id) VALUES (:owner_user_id, :room_id)'
+        $statement = $pdo->prepare(
+            'INSERT INTO user_to_room (owner_user_id, room_id) VALUES (:owner_user_id, :room_id)'
         );
         $statement->execute([
             'owner_user_id' => $userId,
