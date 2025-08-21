@@ -1,30 +1,56 @@
 /*Fehlerseite*/
-.page-404 h1{
-    font-size: 100px;
-}
 .page-404-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 50vh;
+    display: grid;
+    place-items: center;
+    min-height: calc(100vh - 140px);
+    padding: 32px 16px;
     text-align: center;
 }
+
+.page-404 {
+    background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    padding: 32px 28px;
+    width: min(560px, 92vw);
+}
+
+.page-404 h1{
+    margin: 0 0 8px 0;
+    font-size: clamp(64px, 12vw, 120px);
+    line-height: .85;
+    letter-spacing: .5px;
+    background: linear-gradient(90deg, var(--primary-strong), var(--primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 10px 30px rgba(59,130,246,.25);
+}
+
 .page-404 p {
     font-size: 18px;
     color: var(--muted);
-    margin-bottom: 20px;
+    margin: 0 0 18px 0;
 }
+
 .page-404 .button {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 12px 20px;
     background: var(--primary);
     color: white;
-    border-radius: 8px;
+    border-radius: 10px;
     text-decoration: none;
-    transition: background 0.3s ease;
+    transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    box-shadow: 0 6px 18px rgba(59,130,246,.25);
 }
-.page-404 .button:hover {
+
+.page-404 .button:hover,
+.page-404 .button:focus-visible {
     background: var(--primary-strong);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(59,130,246,.35);
+    outline: none;
 }
 /*Dashboard*/
 :root{
@@ -584,6 +610,18 @@ body:not(.dashboard-body) > h1{ font-size: clamp(32px, 5vw, 40px); }
 .card a:visited {
     color: var(--text);
 }
+/* Rooms: Links verhalten sich wie übrige Links */
+.room-card a,
+.room-card a:visited,
+.rooms a,
+.rooms a:visited{
+    color: var(--text);
+    text-decoration: underline;
+}
+.room-card a:hover,
+.rooms a:hover{
+    color: var(--primary);
+}
 
 /* CTA-Card auf dem Dashboard */
 .card--cta .card__body {
@@ -642,7 +680,7 @@ body:not(.dashboard-body) > h1{ font-size: clamp(32px, 5vw, 40px); }
     border-radius: 8px;
     padding: 1rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    color: #e6e6e6;
+    color: var(--text);
 }
 
 .room-card h2 {

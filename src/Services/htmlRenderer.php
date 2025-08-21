@@ -1,5 +1,7 @@
 <?php
-class htmlRenderer{
+
+class htmlRenderer
+{
     function render(string $view, array $data = []): string
     {
         ob_start();
