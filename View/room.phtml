@@ -3,13 +3,65 @@
 require_once(__DIR__ . '/header.phtml');
 ?>
 
-    <h1>Übersicht: <?= $room['name'] ?></h1>
+    <div class="rooms-wrapper">
+        <div class="rooms room-detail">
+            <h1>Raum: <?= htmlspecialchars($room['name']) ?></h1>
+            <?php
+            if (!empty($room['description'])): ?>
+                <p class="room-desc"><?= htmlspecialchars($room['description']) ?></p>
+            <?php
+            endif; ?>
 
-    <p>Beschreibung: <?=$room['description']?></p>
+            <h2>Aktuelle Timer</h2>
+            <?php
+            if (!empty($timers)): ?>
+                <ul class="list">
+                    <?php
+                    foreach ($timers as $t): ?>
+                        <li class="list__item">
+                            <strong><?= htmlspecialchars($t['name']) ?></strong>
+                            <div class="muted">
+                                <?php
+                                if (!empty($t['due_at'])): ?>endet am <?= htmlspecialchars($t['due_at']) ?><?php
+                                endif; ?>
+                                <?php
+                                if (!empty($t['description'])): ?> – <?= htmlspecialchars($t['description']) ?><?php
+                                endif; ?>
+                            </div>
+                        </li>
+                    <?php
+                    endforeach; ?>
+                </ul>
+            <?php
+            else: ?>
+                <p class="is-empty">Keine Timer vorhanden.</p>
+            <?php
+            endif; ?>
 
-    <h2>aktuelle Timer:</h2>
+            <h2>Neuen Timer/Reminder hinzufügen</h2>
+            <form action="/reminder-submit" method="post">
+                <input type="hidden" name="room_id" value="<?= htmlspecialchars($room['id']) ?>">
 
-    <h2></h2>
+                <div>
+                    <label for="reminder_name">Name</label>
+                    <input type="text" id="reminder_name" name="name" required>
+                </div>
+
+                <div>
+                    <label for="reminder_time">Zeit (in Tagen)</label>
+                    <input type="number" id="reminder_time" name="time" min="1" required>
+                </div>
+
+                <div>
+                    <label for="reminder_description">Beschreibung</label>
+                    <textarea id="reminder_description" name="description" rows="4"></textarea>
+                </div>
+
+                <button type="submit">Reminder anlegen</button>
+            </form>
+        </div>
+    </div>
+
 <?php
 require_once(__DIR__ . '/footer.phtml');
 ?>
