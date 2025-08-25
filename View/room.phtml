@@ -40,24 +40,54 @@ require_once(__DIR__ . '/header.phtml');
 
             <h2>Neuen Timer/Reminder hinzufügen</h2>
             <form action="/reminder-submit" method="post">
-                <input type="hidden" name="room_id" value="<?= htmlspecialchars($room['id']) ?>">
+                <input type="hidden" name="room_id" value="<?= $room['id'] ?>">
 
                 <div>
-                    <label for="reminder_name">Name</label>
-                    <input type="text" id="reminder_name" name="name" required>
+                    <label for="reminder_title">Titel</label>
+                    <input type="text" id="reminder_title" name="reminder_title" required>
                 </div>
 
                 <div>
-                    <label for="reminder_time">Zeit (in Tagen)</label>
-                    <input type="number" id="reminder_time" name="time" min="1" required>
+                    <label for="reminder_notes">Notizen</label>
+                    <textarea id="reminder_notes" name="reminder_notes" rows="4"></textarea>
                 </div>
 
                 <div>
-                    <label for="reminder_description">Beschreibung</label>
-                    <textarea id="reminder_description" name="description" rows="4"></textarea>
+                    <label for="reminder_duo_at">Fällig am</label>
+                    <input type="datetime-local" id="reminder_duo_at" name="reminder_duo_at" value="<?= date('Y-m-d\\TH:i') ?>" required>
                 </div>
+
+                <div>
+                    <label for="reminder_repeat_rules">Wiederholen</label>
+                    <select id="reminder_repeat_rules" name="reminder_repeat_rules">
+                        <option value="none">Keine Wiederholung</option>
+                        <option value="daily">Täglich</option>
+                        <option value="weekly">Wöchentlich</option>
+                        <option value="monthly">Monatlich</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="reminder_priority">Priorität</label>
+                    <select id="reminder_priority" name="reminder_priority">
+                        <option value="low">Niedrig</option>
+                        <option value="medium">Mittel</option>
+                        <option value="high">Hoch</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="reminder_status">Status</label>
+                    <select id="reminder_status" name="reminder_status">
+                        <option value="open">Offen</option>
+                        <option value="done">Erledigt</option>
+                    </select>
+                </div>
+
+                <input type="hidden" name="reminder_created_at" value="<?= date('Y-m-d H:i:s') ?>">
 
                 <button type="submit">Reminder anlegen</button>
+
             </form>
         </div>
     </div>

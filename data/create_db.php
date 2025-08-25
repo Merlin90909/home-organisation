@@ -3,6 +3,8 @@
 $pdo = new PDO('sqlite:' . __DIR__ . '/home-organisation.sqlite');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+$pdo->exec("PRAGMA foreign_keys = ON;");
+
 $pdo->exec("DROP TABLE IF EXISTS user");
 $pdo->exec("DROP TABLE IF EXISTS room");
 $pdo->exec("DROP TABLE IF EXISTS reminder");
@@ -23,8 +25,9 @@ $pdo->exec("
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT(30) NOT NULL,
         description TEXT,
-        created_by INTEGER NOT NULL REFERENCES user(id),
-        created_at TEXT NOT NULL DEFAULT (datetime('now'))
+        created_by INTEGER NOT NULL,
+        created_at TEXT NOT NULL DEFAULT (datetime('now')),
+        FOREIGN KEY (created_by) REFERENCES user(id)
 );
     CREATE TABLE reminder(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -35,7 +38,10 @@ $pdo->exec("
         priority INTEGER NOT NULL,
         status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open','done','snoozed','archived')),
         created_at TEXT NOT NULL DEFAULT (datetime('now')),
-        created_by INTEGER NOT NULL REFERENCES user(id)
+        created_by INTEGER NOT NULL,
+        created_for INTEGER NOT NULL,
+        FOREIGN KEY (created_by) REFERENCES user(id),
+        FOREIGN KEY (created_for) REFERENCES room(id)
 );
     CREATE TABLE user_to_room(
         id INTEGER PRIMARY KEY AUTOINCREMENT,

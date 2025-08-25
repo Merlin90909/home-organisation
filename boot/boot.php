@@ -2,9 +2,13 @@
 
 session_start();
 
-//Utilities
-//require_once __DIR__ . '/../src/functions.php';
-
+//DD
+function dd(mixed $var): void
+{
+    echo '<pre>';
+    var_dump($var);
+    exit;
+}
 
 //Interfaces
 require_once __DIR__ . '/../src/Interfaces/ControllerInterface.php';
@@ -17,15 +21,18 @@ require_once __DIR__ . '/../src/Controller/ImprintController.php';
 
 require_once __DIR__ . '/../src/Controller/LoginController.php';
 require_once __DIR__ . '/../src/Controller/LogInSubmitController.php';
+
 require_once __DIR__ . '/../src/Controller/RegisterController.php';
 require_once __DIR__ . '/../src/Controller/RegisterSubmitController.php';
+
 require_once __DIR__ . '/../src/Controller/LogoutController.php';
 require_once __DIR__ . '/../src/Controller/LogoutSubmitController.php';
 
-
+require_once __DIR__ . '/../src/Controller/RoomController.php';
 require_once __DIR__ . '/../src/Controller/RoomsController.php';
 require_once __DIR__ . '/../src/Controller/RoomsSubmitController.php';
-require_once __DIR__ . '/../src/Controller/RoomController.php';
+
+require_once __DIR__ . '/../src/Controller/ReminderSubmitController.php';
 
 
 //Services
@@ -37,6 +44,7 @@ require_once __DIR__ . '/../src/Services/LogoutService.php';
 require_once __DIR__ . '/../src/Services/RoomsCreateService.php';
 require_once __DIR__ . '/../src/Services/RoomsService.php';
 require_once __DIR__ . '/../src/Services/ReminderService.php';
+require_once __DIR__ . '/../src/Services/ReminderCreateService.php';
 
 
 //Dtos

@@ -35,7 +35,7 @@ class RoomsService
     {
         return new RoomDto(
             $room['name'],
-            $room['description']
+            $room['description'],
         );
     }
 

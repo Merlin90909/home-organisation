@@ -2,5 +2,54 @@
 
 class ReminderCreateService
 {
+    function create(
+        int $userId,
+        int $roomId,
+        string $title,
+        string $notes,
+        string $duo_at,
+        string $repeat_rules,
+        string $priority,
+        string $status,
+        string $created_at
+    ) {
+        if (empty($userId) || empty($roomId) || empty($title) || empty($notes) || empty($duo_at) || empty($repeat_rules) || empty($priority) || empty($status)) {
+            return false;
+        }
 
+        $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $statement = $pdo->prepare(
+            'INSERT INTO reminder (created_by, created_for, title, notes, duo_at, repeat_rules, priority, status, created_at) VALUES (:created_by, :created_for, :title, :notes, :duo_at, :repeat_rules, :priority, :status, :created_at)'
+        );
+        $statement->execute([
+            'created_by' => $userId,
+            'created_for' => $roomId,
+            'title' => $title,
+            'notes' => $notes,
+            'duo_at' => $duo_at,
+            'repeat_rules' => $repeat_rules,
+            'priority' => $priority,
+            'status' => $status,
+            'created_at' => $created_at
+        ]);
+        $reminderId = $pdo->lastInsertId();
+
+        $statement = $pdo->prepare(
+            'INSERT INTO user_to_reminder (owner_user_id, reminder_id) VALUES (:owner_user_id, :reminder_id)'
+        );
+        $statement->execute([
+            'owner_user_id' => $userId,
+            'reminder_id' => $reminderId,
+        ]);
+        $stmt2 = $pdo->prepare(
+            'INSERT INTO room_to_reminder (room_id, reminder_id) VALUES (:room_id, :reminder_id)'
+        );
+        $stmt2->execute([
+            'room_id' => $roomId,
+            'reminder_id' => $reminderId,
+        ]);
+
+        return true;
+    }
 }
