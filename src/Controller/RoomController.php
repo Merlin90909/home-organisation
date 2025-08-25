@@ -15,11 +15,17 @@ class RoomController implements ControllerInterface
 
         if (!$room) {
             header("Location: /404");
+            exit;
         }
+
+        $reminderService = new ReminderService();
+        $reminders = $reminderService->getRemindersByRoomId($id);
 
         $htmlRenderer = new htmlRenderer();
         return $htmlRenderer->render('room.phtml', [
             'room' => $room,
+            'reminders' => $reminders,
+            'timers' => $reminders
         ]);
     }
 }

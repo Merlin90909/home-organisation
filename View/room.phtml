@@ -12,21 +12,27 @@ require_once(__DIR__ . '/header.phtml');
             <?php
             endif; ?>
 
+            <?php
+            $items = $reminders ?? ($room['reminders'] ?? []);
+            ?>
+
             <h2>Aktuelle Timer</h2>
             <?php
-            if (!empty($timers)): ?>
+            if (!empty($items)): ?>
                 <ul class="list">
                     <?php
-                    foreach ($timers as $t): ?>
-                        <li class="list__item">
-                            <strong><?= htmlspecialchars($t['name']) ?></strong>
-                            <div class="muted">
-                                <?php
-                                if (!empty($t['due_at'])): ?>endet am <?= htmlspecialchars($t['due_at']) ?><?php
-                                endif; ?>
-                                <?php
-                                if (!empty($t['description'])): ?> – <?= htmlspecialchars($t['description']) ?><?php
-                                endif; ?>
+                    foreach ($items as $t): ?>
+                        <li>
+                            <div class="title">
+                                <?= htmlspecialchars($t['title'] ?? '') ?>
+                            </div>
+
+                            <div class="date">
+                                endet am <?= htmlspecialchars($t['due_at'] ?? '') ?>
+                            </div>
+
+                            <div class="desc">
+                                <?= nl2br(htmlspecialchars($t['notes'] ?? '')) ?>
                             </div>
                         </li>
                     <?php
@@ -34,11 +40,11 @@ require_once(__DIR__ . '/header.phtml');
                 </ul>
             <?php
             else: ?>
-                <p class="is-empty">Keine Timer vorhanden.</p>
+                <p>Keine Einträge vorhanden.</p>
             <?php
             endif; ?>
 
-            <h2>Neuen Timer/Reminder hinzufügen</h2>
+            <h2>Neuen Reminder hinzufügen</h2>
             <form action="/reminder-submit" method="post">
                 <input type="hidden" name="room_id" value="<?= $room['id'] ?>">
 
@@ -53,8 +59,9 @@ require_once(__DIR__ . '/header.phtml');
                 </div>
 
                 <div>
-                    <label for="reminder_duo_at">Fällig am</label>
-                    <input type="datetime-local" id="reminder_duo_at" name="reminder_duo_at" value="<?= date('Y-m-d\\TH:i') ?>" required>
+                    <label for="reminder_due_at">Fällig am</label>
+                    <input type="datetime-local" id="reminder_due_at" name="reminder_due_at"
+                           value="<?= date('Y-m-d\\TH:i', time() + 300) ?>" required>
                 </div>
 
                 <div>

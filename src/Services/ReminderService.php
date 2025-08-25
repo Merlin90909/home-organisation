@@ -10,7 +10,7 @@ class ReminderService
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $stmt = $pdo->prepare(
-            "SELECT title, notes, duo_at, repeat_rules, priority, status, created_at FROM reminder WHERE title = :title"
+            "SELECT title, notes, due_at, repeat_rules, priority, status, created_at FROM reminder WHERE title = :title"
         );
         $stmt->execute(['title' => $title]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -27,10 +27,27 @@ class ReminderService
         $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $pdo->query("SELECT title, notes, duo_at, repeat_rules, priority, status, created_at FROM reminder");
+        $stmt = $pdo->query("SELECT title, notes, due_at, repeat_rules, priority, status, created_at FROM reminder");
         $reminder = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $reminder;
+    }
+
+    public function getRemindersByRoomId(int $id): array
+    {
+        $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $stmt = $pdo->prepare(
+            "SELECT r.id, r.title, r.notes, r.due_at, r.repeat_rules, r.priority, r.status, r.created_at
+             FROM reminder r
+             INNER JOIN room_to_reminder rr ON rr.reminder_id = r.id
+             WHERE rr.room_id = :id
+             ORDER BY r.due_at ASC"
+        );
+        $stmt->execute(['id' => $id]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 
     private function createReminderDto(array $reminder): ReminderDto
@@ -38,7 +55,7 @@ class ReminderService
         return new ReminderDto(
             $reminder['title'],
             $reminder['notes'],
-            $reminder['duo_at'],
+            $reminder['due_at'],
             $reminder['repeat_rules'],
             $reminder['priority'],
             $reminder['status'],

@@ -7,27 +7,27 @@ class ReminderCreateService
         int $roomId,
         string $title,
         string $notes,
-        string $duo_at,
+        string $due_at,
         string $repeat_rules,
         string $priority,
         string $status,
         string $created_at
     ) {
-        if (empty($userId) || empty($roomId) || empty($title) || empty($notes) || empty($duo_at) || empty($repeat_rules) || empty($priority) || empty($status)) {
+        if (empty($userId) || empty($roomId) || empty($title) || empty($notes) || empty($due_at) || empty($repeat_rules) || empty($priority) || empty($status)) {
             return false;
         }
 
         $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $statement = $pdo->prepare(
-            'INSERT INTO reminder (created_by, created_for, title, notes, duo_at, repeat_rules, priority, status, created_at) VALUES (:created_by, :created_for, :title, :notes, :duo_at, :repeat_rules, :priority, :status, :created_at)'
+            'INSERT INTO reminder (created_by, created_for, title, notes, due_at, repeat_rules, priority, status, created_at) VALUES (:created_by, :created_for, :title, :notes, :due_at, :repeat_rules, :priority, :status, :created_at)'
         );
         $statement->execute([
             'created_by' => $userId,
             'created_for' => $roomId,
             'title' => $title,
             'notes' => $notes,
-            'duo_at' => $duo_at,
+            'due_at' => $due_at,
             'repeat_rules' => $repeat_rules,
             'priority' => $priority,
             'status' => $status,

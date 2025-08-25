@@ -3,7 +3,6 @@
 $pdo = new PDO('sqlite:' . __DIR__ . '/home-organisation.sqlite');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$pdo->exec("PRAGMA foreign_keys = ON;");
 
 $pdo->exec("DROP TABLE IF EXISTS user");
 $pdo->exec("DROP TABLE IF EXISTS room");
@@ -33,7 +32,7 @@ $pdo->exec("
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT(20) NOT NULL,
         notes TEXT,
-        duo_at TEXT,
+        due_at TEXT,
         repeat_rules TEXT,
         priority INTEGER NOT NULL,
         status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open','done','snoozed','archived')),

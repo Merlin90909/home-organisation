@@ -9,7 +9,7 @@ readonly class ReminderDto
         public array $rooms,
         public string $title,
         public string $note,
-        public string $duo_at,
+        public string $due_at,
         public string $repeat_rules,
         public string $priority,
         public string $status,
