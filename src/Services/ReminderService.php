@@ -64,6 +64,7 @@ class ReminderService
             $reminder['created_at']
         );
     }
+
     public function deleteReminderbyId(int $id): bool{
         $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

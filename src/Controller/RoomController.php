@@ -4,24 +4,26 @@ class RoomController implements ControllerInterface
 {
     function handle($post, $get, $server, &$session): string
     {
-        $roomService = new RoomsService();
+        $service = new RoomsService();
+        $htmlRenderer = new htmlRenderer();
 
         $id = isset($get['id']) && ctype_digit((string)$get['id']) ? (int)$get['id'] : null;
-        if ($id === null) {
-            header("Location: /rooms");
-            exit;
-        }
-        $room = $roomService->getRoom($id);
 
+        if ($id === null) {
+            $rooms = $service->getRooms();
+            return $htmlRenderer->render('rooms.phtml', [
+                'rooms' => $rooms
+            ]);
+        }
+
+        $room = $service->getRoom($id);
         if (!$room) {
-            header("Location: /404");
-            exit;
+            return $htmlRenderer->render('404.phtml', []);
         }
 
         $reminderService = new ReminderService();
         $reminders = $reminderService->getRemindersByRoomId($id);
 
-        $htmlRenderer = new htmlRenderer();
         return $htmlRenderer->render('room.phtml', [
             'room' => $room,
             'reminders' => $reminders,

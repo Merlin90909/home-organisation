@@ -12,10 +12,17 @@ class RoomsSubmitController implements ControllerInterface
             $post['room_description']
         );
         if (!$create) {
-            header("Location: /rooms?error=creation_failed");
-            exit;
+            $htmlRenderer = new htmlRenderer();
+            return $htmlRenderer->render('rooms.phtml', [
+                'rooms' => (new RoomsService())->getRooms(),
+                'error' => 'creation_failed'
+            ]);
         }
-        header("Location: /rooms?error=creation_success");
-        return '';
+
+        $htmlRenderer = new htmlRenderer();
+        return $htmlRenderer->render('rooms.phtml', [
+            'rooms' => (new RoomsService())->getRooms(),
+            'success' => 'creation_success'
+        ]);
     }
 }

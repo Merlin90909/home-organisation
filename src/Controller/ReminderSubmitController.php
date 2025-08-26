@@ -19,11 +19,34 @@ class ReminderSubmitController implements ControllerInterface
             $post['reminder_status'],
             $post['reminder_created_at']
         );
+
+        $service = new RoomsService();
+        $htmlRenderer = new htmlRenderer();
+
         if (!$create) {
-            header("Location: /room?id=" . urlencode((string)$roomId) . "&status=creation_failed");
-            return '';
+            // Fehler beim Anlegen: rendere die Raumansicht mit Fehlerstatus
+            $room = $service->getRoom($roomId);
+            $reminderService2 = new ReminderService();
+            $reminders = $reminderService2->getRemindersByRoomId($roomId);
+
+            return $htmlRenderer->render('room.phtml', [
+                'room' => $room,
+                'reminders' => $reminders,
+                'timers' => $reminders,
+                'error' => 'creation_failed'
+            ]);
         }
-        header("Location: /room?id=" . urlencode((string)$roomId) . "&status=creation_success");
-        return '';
+
+        // Erfolgreich angelegt: rendere Raumansicht mit success-Status
+        $room = $service->getRoom($roomId);
+        $reminderService2 = new ReminderService();
+        $reminders = $reminderService2->getRemindersByRoomId($roomId);
+
+        return $htmlRenderer->render('room.phtml', [
+            'room' => $room,
+            'reminders' => $reminders,
+            'timers' => $reminders,
+            'success' => 'creation_success'
+        ]);
     }
 }
