@@ -34,8 +34,9 @@ class RoomsService
     private function createRoomDto(array $room): RoomDto
     {
         return new RoomDto(
+            $room['users'],
             $room['name'],
-            $room['description'],
+            $room['description']
         );
     }
 

@@ -15,12 +15,51 @@ require_once(__DIR__ . '/homheader.phtml');
     <main class="container grid">
         <article class="card">
             <header class="card__header">
-                <h2>Nächste Erinnerungen</h2>
+                <?php
+                // stellt sicher, dass eine Instanz vom ReminderService existiert bevor ein neues Objekt erstellt wird
+                if (!isset($reminderService)) {
+                    $reminderService = new ReminderService();
+                }
+                //fragt die Datenbank nach den nächsten 3 Timern ab(getReminder)
+                $items = $reminderService->getReminder(3, true);
+                ?>
+                <h2>Nächste Timer</h2>
             </header>
             <div class="card__body">
-                <ul class="list" id="reminders-list">
-                    <li class="list__item is-empty">Noch keine Erinnerungen eingetragen.</li>
-                </ul>
+                <?php
+                if (!empty($items)): ?>
+                    <ul class="list" id="reminders-list">
+                        <?php
+                        foreach ($items as $t): ?>
+                            <li class="reminder-card">
+                                <div class="reminder-header">
+                                    <h3>
+                                        <?= htmlspecialchars($t['title'] ?? '') ?>x
+                                        <?php
+                                        if (!empty($t['rooms'])): ?>
+                                            <small class="tag">(Raum: <?= htmlspecialchars($t['rooms']) ?>)</small>
+                                        <?php
+                                        endif; ?>
+                                    </h3>
+                                </div>
+                                <div class="reminder-body">
+                                    <p><strong>Endet in:</strong>
+                                        <?php
+                                        $text = $reminderService->showTimer($t['due_at'] ?? null);
+                                        echo htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+                                        ?>
+                                    </p>
+                                    <p><?= nl2br(htmlspecialchars($t['notes'] ?? '')) ?></p>
+                                </div>
+                            </li>
+                        <?php
+                        endforeach; ?>
+                    </ul>
+                <?php
+                else: ?>
+                    <p>Keine Einträge vorhanden.</p>
+                <?php
+                endif; ?>
             </div>
         </article>
 
