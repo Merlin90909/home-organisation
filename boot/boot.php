@@ -33,7 +33,6 @@ require_once __DIR__ . '/../src/Controller/RoomsController.php';
 require_once __DIR__ . '/../src/Controller/RoomsSubmitController.php';
 
 require_once __DIR__ . '/../src/Controller/ReminderSubmitController.php';
-
 require_once __DIR__ . '/../src/Controller/ReminderDeleteController.php';
 
 require_once __DIR__ . '/../src/Controller/WarehouseController.php';

@@ -12,8 +12,7 @@ class WarehouseService
         }
         $amount = (int)$amount;
 
-
-        $pdo = new PDO('sqlite:' . __DIR__ . '/../../home-organisation.sqlite');
+        $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $statement = $pdo->prepare(

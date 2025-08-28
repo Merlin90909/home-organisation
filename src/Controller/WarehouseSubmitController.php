@@ -12,8 +12,6 @@ class WarehouseSubmitController implements ControllerInterface
             $post['amount']
         );
 
-
-
         if (!$warehouse) {
             $htmlRenderer = new htmlRenderer();
             return $htmlRenderer->render('warehouse.phtml', [
