@@ -14,7 +14,6 @@ class ReminderSubmitController implements ControllerInterface
             $post['reminder_title'],
             $post['reminder_notes'],
             $post['reminder_due_at'],
-            $post['reminder_repeat_rules'],
             $post['reminder_priority'],
             $post['reminder_status'],
             $post['reminder_created_at']

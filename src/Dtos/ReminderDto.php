@@ -8,7 +8,6 @@ readonly class ReminderDto
         public string $title,
         public string $note,
         public string $due_at,
-        public string $repeat_rules,
         public string $priority,
         public string $status,
         public string $created_at,

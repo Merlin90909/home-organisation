@@ -34,7 +34,6 @@ $pdo->exec("
         title TEXT(20) NOT NULL,
         notes TEXT,
         due_at TEXT,
-        repeat_rules TEXT,
         priority INTEGER NOT NULL,
         status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open','done','snoozed','archived')),
         created_at TEXT NOT NULL DEFAULT (datetime('now')),

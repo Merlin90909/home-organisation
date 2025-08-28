@@ -28,7 +28,7 @@ class ReminderService
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $stmt = $pdo->prepare(
-            "SELECT r.id, r.title, r.notes, r.due_at, r.repeat_rules, r.priority, r.status, r.created_at
+            "SELECT r.id, r.title, r.notes, r.due_at, r.priority, r.status, r.created_at
              FROM reminder r
              INNER JOIN room_to_reminder rr ON rr.reminder_id = r.id
              WHERE rr.room_id = :id
@@ -47,7 +47,6 @@ class ReminderService
             $reminder['title'],
             $reminder['notes'],
             $reminder['due_at'],
-            $reminder['repeat_rules'],
             $reminder['priority'],
             $reminder['status'],
             $reminder['created_at']
@@ -69,7 +68,7 @@ class ReminderService
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $stmt = $pdo->prepare(
-            "SELECT r.id, r.title, r.notes, r.due_at, r.repeat_rules, r.priority, r.status, r.created_at,
+            "SELECT r.id, r.title, r.notes, r.due_at, r.priority, r.status, r.created_at,
                     GROUP_CONCAT(DISTINCT ro.name) AS rooms
              FROM reminder r
              LEFT JOIN room_to_reminder rr ON rr.reminder_id = r.id
