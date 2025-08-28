@@ -2,26 +2,28 @@
 
 class WarehouseSubmitController implements ControllerInterface
 {
-
     function handle($post, $get, $server, &$session): string
     {
-        $WarehouseService = new WarehouseService();
-        $warehouse = $WarehouseService->edit(
+        $service = new WarehouseService();
+        $warehouse = $service->edit(
             $post['name'],
             $post['category'],
             $post['amount']
         );
 
+        $items = $service->getItems();
+
+        $htmlRenderer = new htmlRenderer();
         if (!$warehouse) {
-            $htmlRenderer = new htmlRenderer();
             return $htmlRenderer->render('warehouse.phtml', [
-                //'warehouse' => (new WarehouseService()->getItem()),
-                'error' => 'creation_failed'
+                'error' => 'creation_failed',
+                'items' => $items,
             ]);
         }
-        $htmlRenderer = new htmlRenderer();
+
         return $htmlRenderer->render('warehouse.phtml', [
-            'success' => 'creation_success'
+            'success' => 'creation_success',
+            'items' => $items,
         ]);
     }
 }

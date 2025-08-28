@@ -47,8 +47,11 @@ $pdo->exec("
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT(30) NOT NULL,
         category TEXT(30) NOT NULL,
-        amount INTEGER NOT NULL
+        amount INTEGER NOT NULL CHECk(amount >=0)
 );
+CREATE UNIQUE INDEX IF NOT EXISTS uniq_item_name_category
+  ON item(name, category);
+
     CREATE TABLE user_to_room(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         owner_user_id INTEGER NOT NULL,
