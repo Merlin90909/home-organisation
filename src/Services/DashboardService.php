@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Services;
+
+class DashboardService
+{
+
+    public function __construct(private ReminderService $reminderService)
+    {
+    }
+
+    public function getReminderItems(int $limit = 3): array
+    {
+
+        $rawItems = $this->reminderService->getReminder($limit, true);
+        if (empty($rawItems) || !is_array($rawItems)) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($rawItems as $t) {
+            $title = $t['title'] ?? '';
+
+            $rooms = trim((string)($t['rooms'] ?? ''));
+            $roomTagHtml = '';
+            if ($rooms !== '') {
+                $roomTagHtml = '<small class="tag">(Raum: ' . $rooms . ')</small>';
+            }
+
+            $dueAt = $t['due_at'] ?? null;
+            $dueTextRaw = $this->reminderService->showTimer($dueAt);
+            $dueText = (string)$dueTextRaw;
+
+            $notes = (string)($t['notes'] ?? '');
+            $notesHtml = nl2br($notes);
+
+            $result[] = [
+                'title'       => $title,
+                'roomTagHtml' => $roomTagHtml,
+                'dueText'     => $dueText,
+                'notesHtml'   => $notesHtml,
+            ];
+        }
+
+        return $result;
+    }
+
+
+}

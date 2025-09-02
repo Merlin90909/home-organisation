@@ -1,16 +1,19 @@
 <?php
 
+namespace App\Services;
+
 class RoomsCreateService
 {
+    public function __construct(private PDO $pdo){
+
+    }
     function create(int $userId, string $name, string $description)
     {
         if (empty($userId) || empty($name) || empty($description)) {
             return false;
         }
 
-        $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $statement = $pdo->prepare(
+        $statement = $this->pdo->prepare(
             'INSERT INTO room (created_by, name, description) VALUES (:created_by, :name, :description)'
         );
         $statement->execute([
@@ -19,9 +22,9 @@ class RoomsCreateService
             'description' => $description
         ]);
 
-        $roomId = $pdo->lastInsertId();
+        $roomId = $this->pdo->lastInsertId();
 
-        $statement = $pdo->prepare(
+        $statement = $this->pdo->prepare(
             'INSERT INTO user_to_room (owner_user_id, room_id) VALUES (:owner_user_id, :room_id)'
         );
         $statement->execute([

@@ -1,9 +1,12 @@
 <?php
 
+namespace App\Services;
+
 class HtmlRenderer
 {
     function render(string $view, array $data = []): string
     {
+
         ob_start();
         extract($data);
 

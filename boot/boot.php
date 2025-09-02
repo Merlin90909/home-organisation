@@ -7,7 +7,8 @@ spl_autoload_register(function (string $class) {
         __DIR__ . '/../src/Controller',
         __DIR__ . '/../src/Dtos',
         __DIR__ . '/../src/Interfaces',
-        __DIR__ . '/../src/Services'
+        __DIR__ . '/../src/Services',
+        __DIR__ . '/../src/Factories'
     ];
     foreach ($directories as $directory) {
         $filePath = $directory . '/' . $class . '.php';

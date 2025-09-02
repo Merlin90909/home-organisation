@@ -1,11 +1,15 @@
 <?php
+namespace App\Controller;
 
 class LogInSubmitController implements ControllerInterface
 {
+    public function __construct(private LoginService $loginService)
+    {
+    }
+
     function handle($post, $get, $server, &$session): string
     {
-        $LoginService = new LoginService();
-        $isLoggedin = $LoginService->login($post['email'], $post['password']);
+        $isLoggedin = $this->loginService->login($post['email'], $post['password']);
 
         if (!$isLoggedin) {
             header('Location: /login?error=login_failed');

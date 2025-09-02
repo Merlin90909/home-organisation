@@ -1,14 +1,20 @@
 <?php
 
+namespace App\Controller;
+
 class WarehouseController implements ControllerInterface
 {
+    public function __construct(
+        private WarehouseService $warehouseService,
+        private HtmlRenderer $htmlRenderer
+    ) {
+    }
+
     function handle($post, $get, $server, &$session): string
     {
-        $service = new WarehouseService();
-        $htmlRenderer = new HtmlRenderer();
-        return $htmlRenderer->render('warehouse.phtml', [
+        return $this->htmlRenderer->render('warehouse.phtml', [
             'error' => $get['message'] ?? null,
-            'items' => $service->getItems(),
+            'items' => $this->warehouseService->getItems(),
         ]);
     }
 }

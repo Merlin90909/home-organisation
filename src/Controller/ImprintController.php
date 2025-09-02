@@ -1,11 +1,16 @@
 <?php
+namespace App\Controller;
 
 class ImprintController implements ControllerInterface
 {
+    public function __construct(private HtmlRenderer $htmlRenderer)
+    {
+    }
+
     function handle( $post,  $get,  $server,  &$session): string
     {
-        $htmlRenderer = new HtmlRenderer();
-        return $htmlRenderer->render('imprint.phtml', $_POST);
+
+        return $this->htmlRenderer->render('imprint.phtml', $_POST);
 
     }
 }

@@ -1,30 +1,35 @@
 <?php
 
+namespace App\Controller;
+
 class RoomController implements ControllerInterface
 {
+    public function __construct(
+        private RoomsService $roomsService,
+        private ReminderService $reminderService,
+        private HtmlRenderer $htmlRenderer
+    ) {
+    }
+
     function handle($post, $get, $server, &$session): string
     {
-        $service = new RoomsService();
-        $htmlRenderer = new HtmlRenderer();
-
         $id = isset($get['id']) && ctype_digit((string)$get['id']) ? (int)$get['id'] : null;
 
         if ($id === null) {
-            $rooms = $service->getRooms();
-            return $htmlRenderer->render('rooms.phtml', [
+            $rooms = $this->roomsService->getRooms();
+            return $this->htmlRenderer->render('rooms.phtml', [
                 'rooms' => $rooms
             ]);
         }
 
-        $room = $service->getRoom($id);
+        $room = $this->roomsService->getRoom($id);
         if (!$room) {
-            return $htmlRenderer->render('404.phtml', []);
+            return $this->htmlRenderer->render('404.phtml', []);
         }
 
-        $reminderService = new ReminderService();
-        $reminders = $reminderService->getRemindersByRoomId($id);
+        $reminders = $this->reminderService->getRemindersByRoomId($id);
 
-        return $htmlRenderer->render('room.phtml', [
+        return $this->htmlRenderer->render('room.phtml', [
             'room' => $room,
             'reminders' => $reminders,
             'timers' => $reminders

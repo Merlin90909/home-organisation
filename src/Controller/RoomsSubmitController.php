@@ -1,27 +1,32 @@
 <?php
 
+namespace App\Controller;
+
 class RoomsSubmitController implements ControllerInterface
 {
+    public function __construct(
+        private RoomsCreateService $roomsCreateService,
+        private HtmlRenderer $htmlRenderer,
+        private RoomsService $roomsService
+    ) {
+    }
 
     function handle($post, $get, $server, &$session): string
     {
-        $roomsService = new RoomsCreateService();
-        $create = $roomsService->create(
+        $create = $this->roomsCreateService->create(
             $session['user_id'],
             $post['room_name'],
             $post['room_description']
         );
         if (!$create) {
-            $htmlRenderer = new HtmlRenderer();
-            return $htmlRenderer->render('rooms.phtml', [
-                'rooms' => (new RoomsService())->getRooms(),
+            return $this->htmlRenderer->render('rooms.phtml', [
+                'rooms' => $this->roomsService->getRooms(),
                 'error' => 'creation_failed'
             ]);
         }
 
-        $htmlRenderer = new HtmlRenderer();
-        return $htmlRenderer->render('rooms.phtml', [
-            'rooms' => (new RoomsService())->getRooms(),
+        return $this->htmlRenderer->render('rooms.phtml', [
+            'rooms' => $this->roomsService->getRooms(),
             'success' => 'creation_success'
         ]);
     }

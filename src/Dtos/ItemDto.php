@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Dtos;
+
 
 readonly class ItemDto
 {

@@ -1,12 +1,16 @@
 <?php
 
+namespace App\Controller;
+
 class RegisterSubmitController implements ControllerInterface
 {
+    public function __construct(private RegisterService $registerService)
+    {
+    }
 
     function handle($post, $get, $server, &$session): string
     {
-        $RegisterService = new RegisterService();
-        $register = $RegisterService->register(
+        $register = $this->registerService->register(
             $post['fName'],
             $post['lName'],
             $post['email'],

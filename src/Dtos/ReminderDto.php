@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Dtos;
+
 readonly class ReminderDto
 {
     public function __construct(

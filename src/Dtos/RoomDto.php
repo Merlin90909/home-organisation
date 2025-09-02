@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Dtos;
+
 readonly class RoomDto
 {
     //__construct = Objekt initialisieren

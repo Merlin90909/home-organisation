@@ -1,7 +1,13 @@
 <?php
 
+namespace App\Services;
+
 class ReminderCreateService
 {
+    public function __construct(private PDO $pdo)
+    {
+    }
+
     function create(
         int $userId,
         int $roomId,
@@ -16,9 +22,8 @@ class ReminderCreateService
             return false;
         }
 
-        $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $statement = $pdo->prepare(
+
+        $statement = $this->pdo->prepare(
             'INSERT INTO reminder (created_by, created_for, title, notes, due_at, priority, status, created_at) VALUES (:created_by, :created_for, :title, :notes, :due_at, :priority, :status, :created_at)'
         );
         $statement->execute([
@@ -31,16 +36,16 @@ class ReminderCreateService
             'status' => $status,
             'created_at' => $created_at
         ]);
-        $reminderId = $pdo->lastInsertId();
+        $reminderId = $this->pdo->lastInsertId();
 
-        $statement = $pdo->prepare(
+        $statement = $this->pdo->prepare(
             'INSERT INTO user_to_reminder (owner_user_id, reminder_id) VALUES (:owner_user_id, :reminder_id)'
         );
         $statement->execute([
             'owner_user_id' => $userId,
             'reminder_id' => $reminderId,
         ]);
-        $stmt2 = $pdo->prepare(
+        $stmt2 = $this->pdo->prepare(
             'INSERT INTO room_to_reminder (room_id, reminder_id) VALUES (:room_id, :reminder_id)'
         );
         $stmt2->execute([

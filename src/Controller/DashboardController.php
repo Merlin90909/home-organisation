@@ -1,7 +1,16 @@
 <?php
 
+namespace App\Controller;
+
 class DashboardController implements ControllerInterface
 {
+
+    public function __construct(
+        private HtmlRenderer $htmlRenderer,
+        private DashboardService $dashboardService
+    )
+    {
+    }
 
     function handle($post, $get, $server, &$session): string
     {
@@ -9,9 +18,12 @@ class DashboardController implements ControllerInterface
             header('Location: /login');
         }
 
+        $data = [
+            'post' => $_POST,
+            'dashboardService' => $this->dashboardService
+        ];
 
-        $htmlRenderer = new HtmlRenderer();
-        return $htmlRenderer->render('home.phtml', $_POST);
+        return $this->htmlRenderer->render('home.phtml', $data);
     }
 
 }

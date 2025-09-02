@@ -1,13 +1,18 @@
 <?php
 
+namespace App\Controller;
 
 class ReminderDeleteController implements ControllerInterface
 {
+    public function __construct(
+        private ReminderService $reminderService,
+        private HtmlRenderer $htmlRenderer,
+        private RoomsService $roomsService
+    ) {
+    }
 
     function handle($post, $get, $server, &$session): string
     {
-        $reminderService = new ReminderService();
-
         $reminderId = isset($post['reminder_id']) && ctype_digit((string)$post['reminder_id'])
             ? (int)$post['reminder_id']
             : null;
@@ -16,8 +21,7 @@ class ReminderDeleteController implements ControllerInterface
             : null;
 
         if ($reminderId === null || $roomId === null) {
-            $service = new RoomsService();
-            $rooms = $service->getRooms();
+            $rooms = $this->roomsService->getRooms();
             $htmlRenderer = new HtmlRenderer();
             return $htmlRenderer->render('rooms.phtml', [
                 'rooms' => $rooms,
@@ -26,19 +30,16 @@ class ReminderDeleteController implements ControllerInterface
         }
 
 
-        $reminderService->deleteReminderbyId($reminderId);
+        $this->reminderService->deleteReminderbyId($reminderId);
 
-        $service = new RoomsService();
-        $room = $service->getRoom($roomId);
+        $room = $this->roomsService->getRoom($roomId);
         if (!$room) {
-            $htmlRenderer = new HtmlRenderer();
-            return $htmlRenderer->render('404.phtml', []);
+            return $this->htmlRenderer->render('404.phtml', []);
         }
 
-        $reminders = $reminderService->getRemindersByRoomId($roomId);
+        $reminders = $this->reminderService->getRemindersByRoomId($roomId);
 
-        $htmlRenderer = new HtmlRenderer();
-        return $htmlRenderer->render('room.phtml', [
+        return $this->htmlRenderer->render('room.phtml', [
             'room' => $room,
             'reminders' => $reminders,
             'timers' => $reminders,

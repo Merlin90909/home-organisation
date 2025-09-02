@@ -1,14 +1,18 @@
 <?php
 
+namespace App\Services;
+
 class UserService
 {
 
+    public function __construct(private PDO $pdo){
+
+    }
+
     public function getUserbyEmail(string $email): ?UserDto
     {
-        $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmt = $pdo->prepare(
+        $stmt = $this->pdo->prepare(
             'SELECT *  FROM user WHERE email = :email LIMIT 1'
         );
         $stmt->execute(['email' => $email]);
@@ -23,10 +27,7 @@ class UserService
 
     private function getUsers(): array
     {
-        $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $stmt = $pdo->query('SELECT * FROM user');
+        $stmt = $this->pdo->query('SELECT * FROM user');
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $users;

@@ -1,15 +1,19 @@
 <?php
 
+namespace App\Services;
+
 class LoginService
 {
+    public function __construct(private UserService $userService){
+
+    }
     function login(string $email, string $password): bool
     {
         if (empty($email) || empty($password)) {
             return false;
         }
 
-        $UserService = new UserService();
-        $user = $UserService->getUserbyEmail($email);
+        $user = $this->userService->getUserbyEmail($email);
 
 
         if (!$user) {

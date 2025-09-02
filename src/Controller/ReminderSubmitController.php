@@ -1,14 +1,20 @@
 <?php
+namespace App\Controller;
 
 class ReminderSubmitController implements ControllerInterface
 {
+    public function __construct(
+        private ReminderService $reminderService,
+        private RoomsService $roomsService,
+        private HtmlRenderer $htmlRenderer
+    ) {
+    }
 
     function handle($post, $get, $server, &$session): string
     {
-        $reminderService = new ReminderCreateService();
         $roomId = isset($post['room_id']) ? (int)$post['room_id'] : null;
 
-        $create = $reminderService->create(
+        $create = $this->reminderService->create(
             $session['user_id'],
             $post['room_id'],
             $post['reminder_title'],
@@ -19,16 +25,13 @@ class ReminderSubmitController implements ControllerInterface
             $post['reminder_created_at']
         );
 
-        $service = new RoomsService();
-        $htmlRenderer = new HtmlRenderer();
-
         if (!$create) {
             // Fehler beim Anlegen: rendere die Raumansicht mit Fehlerstatus
-            $room = $service->getRoom($roomId);
+            $room = $this->roomsService->getRoom($roomId);
             $reminderService2 = new ReminderService();
             $reminders = $reminderService2->getRemindersByRoomId($roomId);
 
-            return $htmlRenderer->render('room.phtml', [
+            return $this->htmlRenderer->render('room.phtml', [
                 'room' => $room,
                 'reminders' => $reminders,
                 'timers' => $reminders,
@@ -37,11 +40,11 @@ class ReminderSubmitController implements ControllerInterface
         }
 
         // Erfolgreich angelegt: rendere Raumansicht mit success-Status
-        $room = $service->getRoom($roomId);
+        $room = $this->roomsService->getRoom($roomId);
         $reminderService2 = new ReminderService();
         $reminders = $reminderService2->getRemindersByRoomId($roomId);
 
-        return $htmlRenderer->render('room.phtml', [
+        return $this->htmlRenderer->render('room.phtml', [
             'room' => $room,
             'reminders' => $reminders,
             'timers' => $reminders,

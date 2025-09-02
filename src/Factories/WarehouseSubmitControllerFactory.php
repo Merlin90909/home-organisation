@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Factories;
+
+class WarehouseSubmitControllerFactory implements FactoryInterface
+{
+    public function __construct(private ObjectManagerService $objectManagerService)
+    {
+    }
+
+    public function produce(): object
+    {
+        return new WarehouseSubmitController(
+            $this->objectManagerService->get(WarehouseService::class),
+        );
+    }
+}

@@ -1,11 +1,14 @@
 <?php
+namespace App\Controller;
 
 
 class LogoutController implements ControllerInterface
 {
+    public function __construct(private HtmlRenderer $htmlRenderer)
+    {
+    }
     function handle($post, $get, $server, &$session): string
     {
-        $htmlRenderer = new HtmlRenderer();
-        return $htmlRenderer->render('login.phtml', $_POST);
+        return $this->htmlRenderer->render('login.phtml', $_POST);
     }
 }

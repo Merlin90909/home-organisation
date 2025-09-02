@@ -1,7 +1,12 @@
 <?php
 
+namespace App\Services;
+
 class RegisterService
 {
+    public function __construct(private PDO $pdo){
+
+    }
     function register(string $first_Name, string $last_Name, string $email, string $password, string $password2): bool
     {
         // if ($user) {
@@ -20,15 +25,9 @@ class RegisterService
             return false;
         }
 
-
-        $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $statement = $pdo->prepare(
+        $statement = $this->pdo->prepare(
             'INSERT INTO user (first_Name, last_Name, email, password) VALUES (:firstName, :lastName, :email, :password)'
         );
-
-
-
 
         $statement->execute([
             'firstName' => $first_Name,

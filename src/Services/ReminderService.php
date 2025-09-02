@@ -1,34 +1,19 @@
 <?php
 
+namespace App\Services;
+
 use Dtos\ReminderDto;
 
 class ReminderService
 {
-    // eventuell rausnehmen(ungenutzt)
-    public function getReminderbyName(string $title): ?ReminderDto
+    //noch anpassen
+    public function __construct(private PDO $pdo)
     {
-        $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $stmt = $pdo->prepare(
-            "SELECT title, notes, due_at, priority, status, created_at FROM reminder WHERE title = :title"
-        );
-        $stmt->execute(['title' => $title]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$row) {
-            return null;
-        }
-
-        return $this->createReminderDto($row);
     }
 
     public function getRemindersByRoomId(int $id): array
     {
-        $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $stmt = $pdo->prepare(
+        $stmt = $this->pdo->prepare(
             "SELECT r.id, r.title, r.notes, r.due_at, r.priority, r.status, r.created_at
              FROM reminder r
              INNER JOIN room_to_reminder rr ON rr.reminder_id = r.id
@@ -40,35 +25,29 @@ class ReminderService
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 
-    private function createReminderDto(array $reminder): ReminderDto
-    {
-        return new ReminderDto(
-            $reminder['users'],
-            $reminder['rooms'],
-            $reminder['title'],
-            $reminder['notes'],
-            $reminder['due_at'],
-            $reminder['priority'],
-            $reminder['status'],
-            $reminder['created_at']
-        );
-    }
+   // private function createReminderDto(array $reminder): ReminderDto
+   // {
+   //     return new ReminderDto(
+   //         $reminder['users'],
+   //         $reminder['rooms'],
+   //         $reminder['title'],
+   //         $reminder['notes'],
+   //         $reminder['due_at'],
+   //         $reminder['priority'],
+   //         $reminder['status'],
+   //         $reminder['created_at']
+   //     );
+   // }
 
     public function deleteReminderbyId(int $id): bool
     {
-        $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $stmt = $pdo->prepare("DELETE FROM reminder WHERE id = :id");
+        $stmt = $this->pdo->prepare("DELETE FROM reminder WHERE id = :id");
         return $stmt->execute(['id' => $id]);
     }
 
     public function getReminder(int $limit = 3, bool $descending = true): array
     {
-        $pdo = new PDO('sqlite:' . __DIR__ . '/../../data/home-organisation.sqlite');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $stmt = $pdo->prepare(
+        $stmt = $this->pdo->prepare(
             "SELECT r.id, r.title, r.notes, r.due_at, r.priority, r.status, r.created_at,
                     GROUP_CONCAT(DISTINCT ro.name) AS rooms
              FROM reminder r
