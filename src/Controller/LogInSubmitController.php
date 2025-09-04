@@ -3,9 +3,9 @@ namespace App\Controller;
 
 use App\Interfaces\ControllerInterface;
 use App\Interfaces\ResponseInterface;
-use App\Responses\RedirectResponse;
 use App\Services\LoginService;
-use App\Responses\HtmlResponse;
+use Framework\Responses\RedirectResponse;
+
 class LogInSubmitController implements ControllerInterface
 {
     public function __construct(private LoginService $loginService)

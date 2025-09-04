@@ -3,11 +3,13 @@ namespace App\Controller;
 
 use App\Interfaces\ControllerInterface;
 use App\Interfaces\ResponseInterface;
-use App\Services\HtmlRenderer;
 use App\Services\ReminderCreateService;
 use App\Services\ReminderService;
 use App\Services\RoomsService;
-use App\Responses\HtmlResponse;class ReminderSubmitController implements ControllerInterface
+use Framework\Responses\HtmlResponse;
+use Framework\Services\HtmlRenderer;
+
+class ReminderSubmitController implements ControllerInterface
 {
     public function __construct(
         private ReminderCreateService $reminderCreateService,

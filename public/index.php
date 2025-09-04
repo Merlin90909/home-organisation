@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Interfaces\ControllerInterface;
-use App\Services\ObjectManagerService;
+use Framework\Services\ObjectManagerService;
 
 require __DIR__ . '/../boot/boot.php';
 

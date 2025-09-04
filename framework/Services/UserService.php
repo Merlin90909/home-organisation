@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace Framework\Services;
 
 use App\Dtos\UserDto;
 use PDO;

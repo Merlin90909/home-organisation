@@ -2,10 +2,11 @@
 namespace App\Controller;
 
 use App\Interfaces\ControllerInterface;
-use App\Interfaces\HtmlRespose;
 use App\Interfaces\ResponseInterface;
-use App\Services\HtmlRenderer;
-use App\Responses\HtmlResponse;class ImprintController implements ControllerInterface
+use Framework\Responses\HtmlResponse;
+use Framework\Services\HtmlRenderer;
+
+class ImprintController implements ControllerInterface
 {
     public function __construct(private HtmlRenderer $htmlRenderer)
     {

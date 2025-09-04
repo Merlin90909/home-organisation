@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Factories;
+namespace Framework\Factories;
 
 /*
  * hat diese Klasse Dependencies
@@ -12,10 +12,8 @@ namespace App\Factories;
  * */
 
 use App\Interfaces\FactoryInterface;
-use App\Services\ObjectManagerService;
-use App\Services\ResolveParametersService;
-use http\Params;
-use ReflectionClass;
+use Framework\Services\ObjectManagerService;
+use Framework\Services\ResolveParametersService;
 
 class AutoWireFactory implements FactoryInterface
 {

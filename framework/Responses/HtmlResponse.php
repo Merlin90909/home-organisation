@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Responses;
+namespace Framework\Responses;
 
 use App\Interfaces\ResponseInterface;
 

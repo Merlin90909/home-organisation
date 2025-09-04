@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Interfaces\ControllerInterface;
 use App\Interfaces\ResponseInterface;
-use App\Services\HtmlRenderer;
 use App\Services\RoomsService;
-use App\Responses\HtmlResponse;
+use Framework\Responses\HtmlResponse;
+use Framework\Services\HtmlRenderer;
 
 class RoomsController implements ControllerInterface
 {

@@ -3,7 +3,6 @@
 namespace App\Factories;
 
 use App\Interfaces\FactoryInterface;
-use App\Services\ObjectManagerService;
 use PDO;
 
 class PDOFactory implements FactoryInterface

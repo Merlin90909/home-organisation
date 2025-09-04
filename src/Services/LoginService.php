@@ -2,11 +2,14 @@
 
 namespace App\Services;
 
+use Framework\Services\UserService;
+
 class LoginService
 {
-    public function __construct(private UserService $userService){
-
+    public function __construct(private UserService $userService)
+    {
     }
+
     function login(string $email, string $password): bool
     {
         if (empty($email) || empty($password)) {
@@ -19,7 +22,6 @@ class LoginService
         if (!$user) {
             return false;
         }
-
         if ($user->password !== $password) {
             return false;
         }
@@ -28,10 +30,11 @@ class LoginService
         $_SESSION['user_email'] = $user->email;
         $_SESSION['user_name'] = $user->first_Name . ' ' . $user->last_Name;
 
-        if (!headers_sent()) {
-            header('Location: /');
-            exit;
-        }
+        // if (!headers_sent()) {
+        //     header('Location: /');
+//
+        //     exit;
+        // }
 
         return true;
     }

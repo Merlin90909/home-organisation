@@ -4,9 +4,10 @@ namespace App\Controller;
 
 use App\Interfaces\ControllerInterface;
 use App\Interfaces\ResponseInterface;
-use App\Responses\RedirectResponse;
 use App\Services\RegisterService;
-use App\Responses\HtmlResponse;class RegisterSubmitController implements ControllerInterface
+use Framework\Responses\RedirectResponse;
+
+class RegisterSubmitController implements ControllerInterface
 {
     public function __construct(private RegisterService $registerService)
     {

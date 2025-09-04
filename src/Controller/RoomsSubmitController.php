@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Interfaces\ControllerInterface;
-use App\Interfaces\HtmlRespose;
 use App\Interfaces\ResponseInterface;
-use App\Services\HtmlRenderer;
 use App\Services\RoomsCreateService;
 use App\Services\RoomsService;
-use App\Responses\HtmlResponse;class RoomsSubmitController implements ControllerInterface
+use Framework\Responses\HtmlResponse;
+use Framework\Services\HtmlRenderer;
+
+class RoomsSubmitController implements ControllerInterface
 {
     public function __construct(
         private RoomsCreateService $roomsCreateService,

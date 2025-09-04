@@ -3,7 +3,7 @@
 //ruft Klasse auf, welcher Nichts übergeben wird
 //HTML-Renderer
 //PDO_Factory
-namespace App\Factories;
+namespace Framework\Factories;
 
 use App\Interfaces\FactoryInterface;
 

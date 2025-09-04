@@ -16,11 +16,8 @@ use App\Controller\RoomsController;
 use App\Controller\RoomsSubmitController;
 use App\Controller\WarehouseController;
 use App\Controller\WarehouseSubmitController;
-use App\Factories\AutoWireFactory;
-use App\Factories\InvokableFactory;
 use App\Factories\PDOFactory;
 use App\Services\DashboardService;
-use App\Services\HtmlRenderer;
 use App\Services\LoginService;
 use App\Services\LogoutService;
 use App\Services\RegisterService;
@@ -28,8 +25,11 @@ use App\Services\ReminderCreateService;
 use App\Services\ReminderService;
 use App\Services\RoomsCreateService;
 use App\Services\RoomsService;
-use App\Services\UserService;
 use App\Services\WarehouseService;
+use Framework\Factories\AutoWireFactory;
+use Framework\Factories\InvokableFactory;
+use Framework\Services\HtmlRenderer;
+use Framework\Services\UserService;
 
 
 return [

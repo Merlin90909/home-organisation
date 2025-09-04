@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Interfaces\ControllerInterface;
 use App\Interfaces\ResponseInterface;
-use App\Responses\HtmlResponse;
 use App\Services\DashboardService;
-use App\Services\HtmlRenderer;
+use Framework\Responses\HtmlResponse;
+use Framework\Services\HtmlRenderer;
 
 class DashboardController implements ControllerInterface
 {
@@ -28,7 +28,6 @@ class DashboardController implements ControllerInterface
             'dashboardService' => $this->dashboardService
         ];
         return new HtmlResponse($this->htmlRenderer->render('home.phtml', $data));
-
     }
 
 }

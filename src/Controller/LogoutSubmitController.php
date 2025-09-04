@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Interfaces\ControllerInterface;
 use App\Interfaces\ResponseInterface;
-use App\Responses\RedirectResponse;
+use Framework\Responses\RedirectResponse;
 
 class LogoutSubmitController implements ControllerInterface
 {
