@@ -33,6 +33,6 @@ return [
     '/logout-submit' => LogoutSubmitController::class,
     '/rooms-submit' => RoomsSubmitController::class,
     '/reminder-submit' => ReminderSubmitController::class,
-    '/reminder/delete' => ReminderDeleteController::class,
+    '/reminder-delete' => ReminderDeleteController::class,
     '/warehouse-submit' => WarehouseSubmitController::class
 ];

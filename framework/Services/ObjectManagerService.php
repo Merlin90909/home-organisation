@@ -34,7 +34,3 @@ class ObjectManagerService
         return $factory->produce($className);
     }
 }
-
-
-
-//function string

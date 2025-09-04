@@ -13,7 +13,6 @@ class ErrorController implements ControllerInterface
     }
     function handle( $post,  $get,  $server,  &$session): ResponseInterface
     {
-        //return $this->htmlRenderer->render('error.phtml', $_POST);
         return new HtmlResponse($this->htmlRenderer->render('error.phtml', $_POST));
 
 

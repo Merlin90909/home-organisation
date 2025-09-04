@@ -28,10 +28,12 @@ class ReminderService
     }
 
 
-    public function deleteReminderbyId(int $id): bool
+    public function deleteReminderById(int $id): bool
     {
         $stmt = $this->pdo->prepare("DELETE FROM reminder WHERE id = :id");
         return $stmt->execute(['id' => $id]);
+
+
     }
 
     public function getReminder(int $limit = 3, bool $descending = true): array
@@ -57,8 +59,6 @@ class ReminderService
         return $reminders;
     }
 
-    //remaining = verbleibend
-    //rechnet anhand der gesetzten Variable due_at die verbleibende Zeit aus
     public function showTimer($dueAt): string
     {
         if (empty($dueAt)) {

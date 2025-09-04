@@ -29,28 +29,23 @@ class ReminderDeleteController implements ControllerInterface
 
         if ($reminderId === null || $roomId === null) {
             $rooms = $this->roomsService->getRooms();
-            $htmlRenderer = new HtmlRenderer();
-            //return $htmlRenderer->render('rooms.phtml', [
-            //    'rooms' => $rooms,
-            //    'error' => 'missing_parameters'
-            //]);
+
             return new HtmlResponse($this->htmlRenderer->render('rooms.phtml', [
                 'rooms' => $rooms,
                 'error' => 'missing_parameters'
             ]));
         }
-
-
-        $this->reminderService->deleteReminderbyId($reminderId);
+        $this->reminderService->deleteReminderById($reminderId);
 
         $room = $this->roomsService->getRoom($roomId);
+
         if (!$room) {
-            return new HtmlResponse($this->htmlRenderer->render('404.phtml'));
+            return new HtmlResponse($this->htmlRenderer->render('404.phtml',[]));
         }
 
         $reminders = $this->reminderService->getRemindersByRoomId($roomId);
 
-        return new HtmlResponse($this->htmlRenderer->render('home.phtml', [
+        return new HtmlResponse($this->htmlRenderer->render('room.phtml', [
             'room' => $room,
             'reminders' => $reminders,
             'timers' => $reminders,

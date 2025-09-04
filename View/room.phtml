@@ -1,8 +1,8 @@
-<file name=0 path=room.phtml><?php
+<?php
 
 require_once(__DIR__ . '/header.phtml');
 ?>
-
+<?php $room = is_array($room ?? null) ? $room : []; ?>
     <div class="rooms-wrapper">
         <div class="rooms room-detail">
             <div class="room-titlebar">
@@ -30,7 +30,7 @@ require_once(__DIR__ . '/header.phtml');
                                 <h3><?= htmlspecialchars($t['title'] ?? '') ?></h3>
                                 <form action="/reminder-delete" method="post" class="delete-form">
                                     <input type="hidden" name="reminder_id" value="<?= $t['id'] ?>">
-                                    <input type="hidden" name="room_id" value="<?= $room['id'] ?>">
+                                    <input type="hidden" name="room_id" value="<?= isset($room['id']) ? (int)$room['id'] : '' ?>">
                                     <button type="submit" class="delete-btn">✕</button>
                                 </form>
                             </div>
@@ -67,7 +67,7 @@ require_once(__DIR__ . '/header.phtml');
 
             <h2>Neuen Reminder hinzufügen</h2>
             <form action="/reminder-submit" method="post">
-                <input type="hidden" name="room_id" value="<?= $room['id'] ?>">
+                <input type="hidden" name="room_id" value="<?= isset($room['id']) ? (int)$room['id'] : '' ?>">
 
                 <div>
                     <label for="reminder_title">Titel</label>
@@ -112,4 +112,4 @@ require_once(__DIR__ . '/header.phtml');
 
 <?php
 require_once(__DIR__ . '/footer.phtml');
-?></file>
+?>

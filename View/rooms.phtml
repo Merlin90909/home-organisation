@@ -17,8 +17,7 @@ require_once(__DIR__ . '/header.phtml');
                 </div>
                 <div>
                     <button type="submit">Raum erstellen</button>
-                    <input type="hidden" name="room_id" value="<?= $room['id'] ?>">
-
+                    <input type="hidden" name="room_id" value="<?= isset($room['id']) ? htmlspecialchars($room['id']) : '' ?>">
                 </div>
             </form>
             <div class="room-list">
