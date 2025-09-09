@@ -30,7 +30,7 @@ class WarehouseService
 
         $statement = $this->pdo->prepare(
             'INSERT INTO item (name, category, amount, room_name, created_by, created_for)
-             VALUES(:name, :category, :amount, :room_name, :user_id, :created_for)
+             VALUES(:name, :category, :amount, :room_name, :created_by, :created_for)
              ON CONFLICT(name, category)
              DO UPDATE SET amount = item.amount + excluded.amount'
         );
@@ -39,8 +39,8 @@ class WarehouseService
             ':category' => $category,
             ':amount' => $amount,
             ':room_name' => $room_name,
-            'created_by' => $userId,
-            'created_for' => $roomId
+            ':created_by' => $userId,
+            ':created_for' => $roomId
         ]);
 
         $itemId = $this->pdo->lastInsertId();
@@ -49,8 +49,8 @@ class WarehouseService
                     VALUES(:item_id, :user_id)'
         );
         $statement->execute([
-            'item_id' => $itemId,
-            'reminder_id' => $userId,
+            ':item_id' => $itemId,
+            ':user_id' => $userId,
         ]);
 
         $statement2 = $this->pdo->prepare(
@@ -58,8 +58,8 @@ class WarehouseService
                     VALUES(:item_id, :room_id)'
         );
         $statement2->execute([
-            'item_id' => $itemId,
-            'room_id' => $roomId,
+            ':item_id' => $itemId,
+            ':room_id' => $roomId,
         ]);
 
         return true;
@@ -75,6 +75,18 @@ class WarehouseService
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+    }
+
+    public function getRoomNames(int $userId): array
+    {
+        $stmt = $this->pdo->prepare(
+            "SELECT room.name
+            FROM room 
+            WHERE created_by = :userId"
+        );
+        $stmt->execute([':userId' => $userId]);
+        $name = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $name;
     }
 
 }

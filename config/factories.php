@@ -28,6 +28,7 @@ use App\Services\RoomsService;
 use App\Services\WarehouseService;
 use App\Validators\EmailValidator;
 use App\Validators\EmptyValidator;
+use App\Validators\NameValidator;
 use App\Validators\PasswordLengthValidator;
 use App\Validators\PasswordSpecialCharValidator;
 use Framework\Factories\AutoWireFactory;
@@ -69,4 +70,5 @@ return [
     EmailValidator::class => InvokableFactory::class,
     PasswordLengthValidator::class => InvokableFactory::class,
     PasswordSpecialCharValidator::class => InvokableFactory::class,
+    NameValidator::class => InvokableFactory::class,
 ];

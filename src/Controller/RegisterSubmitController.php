@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Services\RegisterService;
+
 //use App\Validators\PasswordIdentValidator;
+use App\Validators\NameValidator;
 use App\Validators\PasswordLengthValidator;
 use App\Validators\EmptyValidator;
 use App\Validators\PasswordSpecialCharValidator;
@@ -21,8 +23,10 @@ class RegisterSubmitController implements ControllerInterface
         private UserService $userService,
         private PasswordLengthValidator $passwordLengthValidator,
         private PasswordSpecialCharValidator $passwordSpecialCharValidator,
+        private NameValidator $nameValidator,
         //private PasswordIdentValidator $passwordIdentValidator
-    ) {
+    )
+    {
     }
 
     function handle($post, $get, $server, &$session): ResponseInterface
@@ -45,18 +49,22 @@ class RegisterSubmitController implements ControllerInterface
             return new RedirectResponse('/register?error=failed_email_already_exists');
         }
 
-
         if (!$this->passwordLengthValidator->validate($post['password'])) {
             return new RedirectResponse('/register?error=failed_password_length');
         }
         if (!$this->passwordSpecialCharValidator->validate($post['password'])) {
             return new RedirectResponse('/register?error=failed_password_specialchar');
         }
-
+        if (!$this->nameValidator->validate($post['fName'])) {
+            return new RedirectResponse('/register?error=failed_name_length');
+        }
+        if (!$this->nameValidator->validate($post['lName'])) {
+            return new RedirectResponse('/register?error=failed_name_length');
+        }
         //ausgesetzt wegen Unklarheit mit $input
         //if(!$this->passwordIdentValidator->validate($post['password'], $post['password2'])) {
         //    return new RedirectResponse('/register?error=failed_passwords_not_identical');
-        //}
+            //}
 
         $this->registerService->register(...$inputs);
 

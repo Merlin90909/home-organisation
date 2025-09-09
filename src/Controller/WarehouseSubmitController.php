@@ -15,13 +15,15 @@ class WarehouseSubmitController implements ControllerInterface
 
     function handle($post, $get, $server, &$session): ResponseInterface
     {
+        $roomName = $this->warehouseService->getRoomNames($session['created_for'] ?? 0) ?? '';
+
         $warehouse = $this->warehouseService->edit(
             $session['user_id'],
+            $post['room_id'],
             $post['name'],
+            $post['room_name'],
             $post['category'],
             $post['amount'],
-            $session['room_name'],
-            $session['created_for']
         );
         if (!$warehouse) {
             return new RedirectResponse('Location: /warehouse?message=creation_failed');

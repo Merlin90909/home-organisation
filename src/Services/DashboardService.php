@@ -11,7 +11,6 @@ class DashboardService
 
     public function getReminderItems(int $limit = 3): array
     {
-
         $rawItems = $this->reminderService->getReminder($limit, true);
         if (empty($rawItems) || !is_array($rawItems)) {
             return [];
@@ -35,10 +34,10 @@ class DashboardService
             $notesHtml = nl2br($notes);
 
             $result[] = [
-                'title'       => $title,
+                'title' => $title,
                 'roomTagHtml' => $roomTagHtml,
-                'dueText'     => $dueText,
-                'notesHtml'   => $notesHtml,
+                'dueText' => $dueText,
+                'notesHtml' => $notesHtml,
             ];
         }
 
