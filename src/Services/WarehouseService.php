@@ -16,16 +16,11 @@ class WarehouseService
         int $roomId,
         string $name,
         string $category,
-        int $amount,
-        //string $room_name,
+        int $amount
     ): bool {
-        if ($name === '' || $category === '' || !is_numeric($amount) || filter_var(
-                $amount,
-                FILTER_VALIDATE_INT
-            ) === false) {
+        if ($userId === null || $roomId === null || $name === null || $category === null || $amount === null) {
             return false;
         }
-        $amount = (int)$amount;
 
 
         $statement = $this->pdo->prepare(
@@ -38,7 +33,6 @@ class WarehouseService
             ':name' => $name,
             ':category' => $category,
             ':amount' => $amount,
-            /*':room_name' => $room_name,*/
             ':created_by' => $userId,
             ':created_for' => $roomId
         ]);
