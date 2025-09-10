@@ -72,15 +72,16 @@ class WarehouseService
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 
-    public function getRoomNames(int $userId): array
+    public function getRoomNames($userId): array
     {
         $stmt = $this->pdo->prepare(
-            "SELECT room.id AS id, room.name AS name
-             FROM room 
-             WHERE created_by = :userId
-             ORDER BY room.name COLLATE NOCASE"
+            "SELECT name
+         FROM room
+         WHERE created_by = :user_id;"
         );
-        $stmt->execute([':userId' => $userId]);
+
+        $stmt->execute([':user_id' => $userId]);
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 

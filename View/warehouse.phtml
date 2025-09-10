@@ -1,7 +1,5 @@
 <?php
 
-//dd(get_defined_vars());
-//dd(rooms);
 require_once(__DIR__ . '/header.phtml');
 ?>
 
@@ -82,7 +80,7 @@ require_once(__DIR__ . '/header.phtml');
                                 <td><?= htmlspecialchars($row['name']) ?></td>
                                 <td><?= htmlspecialchars($row['category']) ?></td>
                                 <td><?= (int)$row['amount'] ?></td>
-                                <td><?= htmlspecialchars($row['room_name'] ?? ($row['room'] ?? ($row['room_id'] ?? '—'))) ?></td>
+                                <td><?= $row['room_name'] ?></td>
                             </tr>
                         <?php
                         endforeach; ?>
