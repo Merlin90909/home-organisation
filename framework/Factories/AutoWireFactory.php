@@ -2,14 +2,6 @@
 
 namespace Framework\Factories;
 
-/*
- * hat diese Klasse Dependencies
-*-> mit Reflection Klasse
-*falls Keine = new ClassName
- * für jede Dependency einen Parameter erstellen und in Klasenname geben
- * in Config ändern
- *
- * */
 
 use Framework\Interfaces\FactoryInterface;
 use Framework\Services\ObjectManagerService;

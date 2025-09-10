@@ -2,23 +2,20 @@
 
 declare(strict_types=1);
 
-use App\Controller\ErrorController;
-use Framework\Interfaces\ControllerInterface;
+use Framework\Services\RouterService;
 use Framework\Services\ObjectManagerService;
 
 require __DIR__ . '/../boot/boot.php';
+require __DIR__ . '/../framework/Services/RouterService.php';
+require __DIR__ . '/../framework/Services/ObjectManagerService.php';
 
-$routes = require_once('../config/routes.php');
+$factories = require __DIR__ . '/../config/factories.php';
+$routes    = require __DIR__ . '/../config/routes.php';
 
-if ($path = $_SERVER['PATH_INFO'] ?? '/') {
-    $controllerName = $routes[$path] ?? ErrorController::class;
-    $objectManagerService = new ObjectManagerService(require_once('../config/factories.php'));
+$objectManager = new ObjectManagerService($factories);
+$router = new RouterService($objectManager, $routes);
 
-
-    /** @var ControllerInterface $controller */
-    $controller = $objectManagerService->get($controllerName);
-
-    $response = $controller->handle($_POST, $_GET, $_SERVER, $_SESSION);
-    $response->send();
-}
-
+//eigentliches Routing
+$response = $router->route($_POST, $_GET, $_SERVER, $_SESSION);
+//zurück an den Browser
+$response->send();
