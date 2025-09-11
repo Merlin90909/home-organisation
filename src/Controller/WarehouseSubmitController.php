@@ -16,7 +16,7 @@ class WarehouseSubmitController implements ControllerInterface
     function handle($post, $get, $server, &$session): ResponseInterface
     {
         $warehouse = $this->warehouseService->edit(
-            $session['user_id'],
+            (int)($session['user_id']),
             (int)($post['room_id']),
             $post['name'],
             $post['category'],

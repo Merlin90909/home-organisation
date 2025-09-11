@@ -59,15 +59,16 @@ class WarehouseService
         return true;
     }
 
-    public function getItems(): array
+    public function getItems($userId): array
     {
         $stmt = $this->pdo->prepare(
             "SELECT i.name, i.category, i.amount, r.name AS room_name
-               FROM item i
-               LEFT JOIN room r ON r.id = i.room_id
-           ORDER BY i.name COLLATE NOCASE, i.category COLLATE NOCASE"
+           FROM item i
+           LEFT JOIN room r ON r.id = i.room_id
+          WHERE i.created_by = :user_id
+       ORDER BY i.name COLLATE NOCASE, i.category COLLATE NOCASE"
         );
-        $stmt->execute();
+        $stmt->execute([':user_id' => $userId]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }

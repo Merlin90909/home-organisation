@@ -20,8 +20,9 @@ class WarehouseController implements ControllerInterface
     {
         return new HtmlResponse($this->htmlRenderer->render('warehouse.phtml', [
             'error' => $get['message'] ?? null,
-            'items' => $this->warehouseService->getItems(),
+            'items' => $this->warehouseService->getItems($session['user_id']),
             'rooms' => $this->warehouseService->getRoomNames($session['user_id']),
+
         ]));
     }
 }
