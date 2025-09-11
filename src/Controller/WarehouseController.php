@@ -18,10 +18,13 @@ class WarehouseController implements ControllerInterface
 
     function handle($post, $get, $server, &$session): ResponseInterface
     {
+        $items = $this->warehouseService->getItems($session['user_id']);
+        $rooms = $this->warehouseService->getRoomNames($session['user_id']);
+
         return new HtmlResponse($this->htmlRenderer->render('warehouse.phtml', [
-            'error' => $get['message'] ?? null,
-            'items' => $this->warehouseService->getItems($session['user_id']),
-            'rooms' => $this->warehouseService->getRoomNames($session['user_id']),
+            'error' => $error ?? null,
+            'items' => $items,
+            'rooms' => $rooms,
 
         ]));
     }
