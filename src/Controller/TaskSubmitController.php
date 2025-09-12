@@ -2,21 +2,21 @@
 
 namespace App\Controller;
 
-use App\Services\ReminderCreateService;
-use App\Services\ReminderService;
+use App\Services\TaskCreateService;
+use App\Services\TaskService;
 use App\Services\RoomsService;
 use Framework\Interfaces\ControllerInterface;
 use Framework\Interfaces\ResponseInterface;
 use Framework\Responses\HtmlResponse;
 use Framework\Services\HtmlRenderer;
 
-class ReminderSubmitController implements ControllerInterface
+class TaskSubmitController implements ControllerInterface
 {
     public function __construct(
-        private ReminderCreateService $reminderCreateService,
+        private TaskCreateService $taskCreateService,
         private RoomsService $roomsService,
         private HtmlRenderer $htmlRenderer,
-        private ReminderService $reminderService,
+        private TaskService $taskService,
     ) {
     }
 
@@ -24,37 +24,37 @@ class ReminderSubmitController implements ControllerInterface
     {
         $roomId = isset($post['room_id']) ? (int)$post['room_id'] : null;
 
-        $create = $this->reminderCreateService->create(
+        $create = $this->taskCreateService->create(
             $session['user_id'],
             $post['room_id'],
-            $post['reminder_title'],
-            $post['reminder_notes'],
-            $post['reminder_due_at'],
-            $post['reminder_priority'],
-            $post['reminder_status'],
-            $post['reminder_created_at']
+            $post['task_title'],
+            $post['task_notes'],
+            $post['task_due_at'],
+            $post['task_priority'],
+            $post['task_status'],
+            $post['task_created_at']
         );
 
         if (!$create) {
             $room = $this->roomsService->getRoom($roomId);
-            $reminders = $this->reminderService->getRemindersByRoomId($roomId);
+            $task = $this->taskService->getTaskByRoomId($roomId);
 
 
             return new HtmlResponse($this->htmlRenderer->render('room.phtml', [
                 'room' => $room,
-                'reminders' => $reminders,
-                'timers' => $reminders,
+                'task' => $task,
+                'timers' => $task,
                 'error' => 'creation_failed'
             ]));
         }
 
         $room = $this->roomsService->getRoom($roomId);
-        $reminders = $this->reminderService->getRemindersByRoomId($roomId);
+        $task = $this->taskService->getTaskByRoomId($roomId);
 
         return new HtmlResponse($this->htmlRenderer->render('room.phtml', [
             'room' => $room,
-            'reminders' => $reminders,
-            'timers' => $reminders,
+            'task' => $task,
+            'timers' => $task,
             'success' => 'creation_success'
         ]));
     }

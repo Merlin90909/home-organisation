@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Services\ReminderService;
+use App\Services\TaskService;
 use App\Services\RoomsService;
 use Framework\Interfaces\ControllerInterface;
 use Framework\Interfaces\ResponseInterface;
@@ -13,7 +13,7 @@ class RoomController implements ControllerInterface
 {
     public function __construct(
         private RoomsService $roomsService,
-        private ReminderService $reminderService,
+        private TaskService $taskService,
         private HtmlRenderer $htmlRenderer
     ) {
     }
@@ -32,12 +32,12 @@ class RoomController implements ControllerInterface
             return new HtmlResponse($this->htmlRenderer->render('404.phtml', []));
         }
 
-        $reminders = $this->reminderService->getRemindersByRoomId($id);
+        $task = $this->taskService->getTaskByRoomId($id);
 
         return new HtmlResponse($this->htmlRenderer->render('room.phtml', [
             'room' => $room,
-            'reminders' => $reminders,
-            'timers' => $reminders
+            'task' => $task,
+            'timers' => $task
         ]));
     }
 }

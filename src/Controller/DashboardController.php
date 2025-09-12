@@ -23,7 +23,7 @@ class DashboardController implements ControllerInterface
             header('Location: /login');
         }
 
-        $items = $this->dashboardService->getReminderItems();
+        $items = $this->dashboardService->getTaskItems();
 
         return new HtmlResponse($this->htmlRenderer->render('home.phtml', [
             'post' => $_POST,

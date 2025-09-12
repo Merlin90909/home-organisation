@@ -2,7 +2,8 @@
 
 require_once(__DIR__ . '/header.phtml');
 ?>
-<?php $room = is_array($room ?? null) ? $room : []; ?>
+<?php
+$room = is_array($room ?? null) ? $room : []; ?>
     <div class="rooms-wrapper">
         <div class="rooms room-detail">
             <div class="room-titlebar">
@@ -16,26 +17,27 @@ require_once(__DIR__ . '/header.phtml');
             endif; ?>
 
             <?php
-            $items = $reminders ?? ($room['reminders'] ?? []);
+            $items = $task ?? ($room['task'] ?? []);
             ?>
 
-            <h2>Aktuelle Timer</h2>
+            <h2>Aktuelle Task</h2>
             <?php
             if (!empty($items)): ?>
-                <ul class="reminder-list">
+                <ul class="task-list">
                     <?php
                     foreach ($items as $t): ?>
-                        <li class="reminder-card">
-                            <div class="reminder-header">
+                        <li class="task-card">
+                            <div class="task-header">
                                 <h3><?= htmlspecialchars($t['title'] ?? '') ?></h3>
-                                <form action="/reminder-delete" method="post" class="delete-form">
-                                    <input type="hidden" name="reminder_id" value="<?= $t['id'] ?>">
-                                    <input type="hidden" name="room_id" value="<?= isset($room['id']) ? (int)$room['id'] : '' ?>">
+                                <form action="/task-delete" method="post" class="delete-form">
+                                    <input type="hidden" name="task_id" value="<?= $t['id'] ?>">
+                                    <input type="hidden" name="room_id"
+                                           value="<?= isset($room['id']) ? (int)$room['id'] : '' ?>">
                                     <button type="submit" class="delete-btn">✕</button>
                                 </form>
                             </div>
 
-                            <div class="reminder-body">
+                            <div class="task-body">
                                 <p><strong>Endet in:</strong>
                                     <?php
                                     if (!empty($t['due_at'])) {
@@ -65,29 +67,29 @@ require_once(__DIR__ . '/header.phtml');
             <?php
             endif; ?>
 
-            <h2>Neuen Reminder hinzufügen</h2>
-            <form action="/reminder-submit" method="post">
+            <h2>Neue Task hinzufügen</h2>
+            <form action="/task-submit" method="post">
                 <input type="hidden" name="room_id" value="<?= isset($room['id']) ? (int)$room['id'] : '' ?>">
 
                 <div>
-                    <label for="reminder_title">Titel</label>
-                    <input type="text" id="reminder_title" name="reminder_title" required>
+                    <label for="task_title">Titel</label>
+                    <input type="text" id="task_title" name="task_title" required>
                 </div>
 
                 <div>
-                    <label for="reminder_notes">Notizen</label>
-                    <textarea id="reminder_notes" name="reminder_notes" rows="4"></textarea>
+                    <label for="task_notes">Notizen</label>
+                    <textarea id="task_notes" name="task_notes" rows="4"></textarea>
                 </div>
 
                 <div>
-                    <label for="reminder_due_at">Fällig am</label>
-                    <input type="datetime-local" id="reminder_due_at" name="reminder_due_at"
+                    <label for="task_due_at">Fällig am</label>
+                    <input type="datetime-local" id="task_due_at" name="task_due_at"
                            value="<?= date('Y-m-d\\TH:i', time() + 300) ?>" required>
                 </div>
 
                 <div>
-                    <label for="reminder_priority">Priorität</label>
-                    <select id="reminder_priority" name="reminder_priority">
+                    <label for="task_priority">Priorität</label>
+                    <select id="task_priority" name="task_priority">
                         <option value="low">Niedrig</option>
                         <option value="medium">Mittel</option>
                         <option value="high">Hoch</option>
@@ -95,16 +97,16 @@ require_once(__DIR__ . '/header.phtml');
                 </div>
 
                 <div>
-                    <label for="reminder_status">Status</label>
-                    <select id="reminder_status" name="reminder_status">
+                    <label for="task_status">Status</label>
+                    <select id="task_status" name="task_status">
                         <option value="open">Offen</option>
                         <option value="done">Erledigt</option>
                     </select>
                 </div>
 
-                <input type="hidden" name="reminder_created_at" value="<?= date('Y-m-d H:i:s') ?>">
+                <input type="hidden" name="task_created_at" value="<?= date('Y-m-d H:i:s') ?>">
 
-                <button type="submit">Reminder anlegen</button>
+                <button type="submit">Task anlegen</button>
 
             </form>
         </div>

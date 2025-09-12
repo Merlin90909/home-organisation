@@ -993,7 +993,7 @@ body:not(.dashboard-body) > h1 {
     cursor: pointer;
 }
 
-.reminder-list {
+.task-list {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -1001,7 +1001,7 @@ body:not(.dashboard-body) > h1 {
     gap: 12px;
 }
 
-.reminder-card {
+.task-card {
     background: linear-gradient(180deg, rgba(255, 255, 255, .02), rgba(255, 255, 255, .01));
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -1010,12 +1010,12 @@ body:not(.dashboard-body) > h1 {
     color: var(--text);
 }
 
-.reminder-card:hover {
+.task-card:hover {
     border-color: var(--primary);
     box-shadow: 0 10px 24px rgba(0, 0, 0, .35);
 }
 
-.reminder-header {
+.task-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1023,18 +1023,18 @@ body:not(.dashboard-body) > h1 {
     margin-bottom: 6px;
 }
 
-.reminder-header h3 {
+.task-header h3 {
     margin: 0;
     font-size: 1.05rem;
     letter-spacing: .2px;
 }
 
-.reminder-body p {
+.task-body p {
     margin: 6px 0;
     color: var(--text);
 }
 
-.reminder-body p:first-of-type {
+.task-body p:first-of-type {
     color: var(--muted);
 }
 
@@ -1170,7 +1170,7 @@ body:not(.dashboard-body) > h1 {
 
 
 /* Base card appearance */
-.reminder-card {
+.task-card {
     border: 1px solid #e5e7eb; /* neutral gray */
     border-radius: 8px;
     padding: 10px 12px;
@@ -1178,24 +1178,23 @@ body:not(.dashboard-body) > h1 {
 }
 
 /* Warnung: Ablauf innerhalb 60 Minuten */
-.reminder-card.is-warning {
+.task-card.is-warning {
     border: 3px solid #f59e0b; /* deutlicher, aber ohne Hintergrundwechsel */
 }
 
-.reminder-card.is-warning:hover,
-.reminder-card.is-warning:focus-visible {
+.task-card.is-warning:hover,
+.task-card.is-warning:focus-visible {
     border-color: #f59e0b; /* nicht auf --primary wechseln */
     box-shadow: 0 10px 24px rgba(0, 0, 0, .35); /* gleicher Hover-Schatten wie normal */
 }
 
 /* Abgelaufen: rot */
-.reminder-card.is-expired {
+.task-card.is-expired {
     border: 3px solid #e63946; /* deutlicher, aber ohne Hintergrund-/Textwechsel */
 }
 
-.reminder-card.is-expired:hover,
-.reminder-card.is-expired:focus-visible {
+.task-card.is-expired:hover,
+.task-card.is-expired:focus-visible {
     border-color: #e63946; /* nicht auf --primary wechseln */
     box-shadow: 0 10px 24px rgba(0, 0, 0, .35);
 }
-

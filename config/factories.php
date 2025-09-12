@@ -9,8 +9,8 @@ use App\Controller\LogoutController;
 use App\Controller\LogoutSubmitController;
 use App\Controller\RegisterController;
 use App\Controller\RegisterSubmitController;
-use App\Controller\ReminderDeleteController;
-use App\Controller\ReminderSubmitController;
+use App\Controller\TaskDeleteController;
+use App\Controller\TaskSubmitController;
 use App\Controller\RoomController;
 use App\Controller\RoomsController;
 use App\Controller\RoomsSubmitController;
@@ -21,8 +21,8 @@ use App\Services\DashboardService;
 use App\Services\LoginService;
 use App\Services\LogoutService;
 use App\Services\RegisterService;
-use App\Services\ReminderCreateService;
-use App\Services\ReminderService;
+use App\Services\TaskCreateService;
+use App\Services\TaskService;
 use App\Services\RoomsCreateService;
 use App\Services\RoomsService;
 use App\Services\WarehouseService;
@@ -47,8 +47,8 @@ return [
     LogoutSubmitController::class => InvokableFactory::class,
     RegisterController::class => AutoWireFactory::class,
     RegisterSubmitController::class => AutoWireFactory::class,
-    ReminderDeleteController::class => AutoWireFactory::class,
-    ReminderSubmitController::class => AutoWireFactory::class,
+    TaskDeleteController::class => AutoWireFactory::class,
+    TaskSubmitController::class => AutoWireFactory::class,
     RoomController::class => AutoWireFactory::class,
     RoomsController::class => AutoWireFactory::class,
     RoomsSubmitController::class => AutoWireFactory::class,
@@ -59,8 +59,8 @@ return [
     LoginService::class => AutoWireFactory::class,
     LogoutService::class => InvokableFactory::class,
     RegisterService::class => AutoWireFactory::class,
-    ReminderService::class => AutoWireFactory::class,
-    ReminderCreateService::class => AutoWireFactory::class,
+    TaskService::class => AutoWireFactory::class,
+    TaskCreateService::class => AutoWireFactory::class,
     RoomsService::class => AutoWireFactory::class,
     RoomsCreateService::class => AutoWireFactory::class,
     UserService::class => AutoWireFactory::class,

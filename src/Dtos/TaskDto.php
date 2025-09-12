@@ -2,7 +2,7 @@
 
 namespace App\Dtos;
 
-readonly class ReminderDto
+readonly class TaskDto
 {
     public function __construct(
         public array $users,

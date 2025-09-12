@@ -4,7 +4,7 @@ namespace App\Services;
 
 use PDO;
 
-class ReminderCreateService
+class TaskCreateService
 {
     public function __construct(private PDO $pdo)
     {
@@ -26,7 +26,7 @@ class ReminderCreateService
 
 
         $statement = $this->pdo->prepare(
-            'INSERT INTO reminder (created_by, created_for, title, notes, due_at, priority, status, created_at) 
+            'INSERT INTO task (created_by, created_for, title, notes, due_at, priority, status, created_at) 
                     VALUES (:created_by, :created_for, :title, :notes, :due_at, :priority, :status, :created_at)'
         );
         $statement->execute([
@@ -39,21 +39,21 @@ class ReminderCreateService
             'status' => $status,
             'created_at' => $created_at
         ]);
-        $reminderId = $this->pdo->lastInsertId();
+        $taskId = $this->pdo->lastInsertId();
 
         $statement = $this->pdo->prepare(
-            'INSERT INTO user_to_reminder (owner_user_id, reminder_id) VALUES (:owner_user_id, :reminder_id)'
+            'INSERT INTO user_to_task (owner_user_id, task_id) VALUES (:owner_user_id, :task_id)'
         );
         $statement->execute([
             'owner_user_id' => $userId,
-            'reminder_id' => $reminderId,
+            'task_id' => $taskId,
         ]);
         $stmt2 = $this->pdo->prepare(
-            'INSERT INTO room_to_reminder (room_id, reminder_id) VALUES (:room_id, :reminder_id)'
+            'INSERT INTO room_to_task (room_id, task_id) VALUES (:room_id, :task_id)'
         );
         $stmt2->execute([
             'room_id' => $roomId,
-            'reminder_id' => $reminderId,
+            'task_id' => $taskId,
         ]);
 
         return true;

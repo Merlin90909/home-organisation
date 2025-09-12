@@ -9,8 +9,8 @@ use App\Controller\LogoutController;
 use App\Controller\LogoutSubmitController;
 use App\Controller\RegisterController;
 use App\Controller\RegisterSubmitController;
-use App\Controller\ReminderDeleteController;
-use App\Controller\ReminderSubmitController;
+use App\Controller\TaskDeleteController;
+use App\Controller\TaskSubmitController;
 use App\Controller\RoomController;
 use App\Controller\RoomsController;
 use App\Controller\RoomsSubmitController;
@@ -34,8 +34,8 @@ return [
         '/register-submit' => RegisterSubmitController::class,
         '/logout-submit' => LogoutSubmitController::class,
         '/rooms-submit' => RoomsSubmitController::class,
-        '/reminder-submit' => ReminderSubmitController::class,
-        '/reminder-delete' => ReminderDeleteController::class,
+        '/task-submit' => TaskSubmitController::class,
+        '/task-delete' => TaskDeleteController::class,
         '/warehouse-submit' => WarehouseSubmitController::class
     ]
 ];

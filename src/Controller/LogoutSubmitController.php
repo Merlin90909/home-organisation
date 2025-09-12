@@ -16,6 +16,5 @@ class LogoutSubmitController implements ControllerInterface
             session_destroy();
             return new RedirectResponse('login');
         }
-        //return '';
     }
 }

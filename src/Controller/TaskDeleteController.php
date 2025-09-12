@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
-use App\Services\ReminderService;
+use App\Services\TaskService;
 use App\Services\RoomsService;
 use Framework\Interfaces\ControllerInterface;
 use Framework\Interfaces\ResponseInterface;
 use Framework\Responses\HtmlResponse;
 use Framework\Services\HtmlRenderer;
 
-class ReminderDeleteController implements ControllerInterface
+class TaskDeleteController implements ControllerInterface
 {
     public function __construct(
-        private ReminderService $reminderService,
+        private TaskService $taskService,
         private HtmlRenderer $htmlRenderer,
         private RoomsService $roomsService
     ) {
@@ -20,14 +20,14 @@ class ReminderDeleteController implements ControllerInterface
 
     function handle($post, $get, $server, &$session): ResponseInterface
     {
-        $reminderId = isset($post['reminder_id']) && ctype_digit((string)$post['reminder_id'])
-            ? (int)$post['reminder_id']
+        $taskId = isset($post['task_id']) && ctype_digit((string)$post['task_id'])
+            ? (int)$post['task_id']
             : null;
         $roomId = isset($post['room_id']) && ctype_digit((string)$post['room_id'])
             ? (int)$post['room_id']
             : null;
 
-        if ($reminderId === null || $roomId === null) {
+        if ($taskId === null || $roomId === null) {
             $rooms = $this->roomsService->getRooms();
 
             return new HtmlResponse($this->htmlRenderer->render('rooms.phtml', [
@@ -35,7 +35,7 @@ class ReminderDeleteController implements ControllerInterface
                 'error' => 'missing_parameters'
             ]));
         }
-        $this->reminderService->deleteReminderById($reminderId);
+        $this->taskService->deleteTaskById($taskId);
 
         $room = $this->roomsService->getRoom($roomId);
 
@@ -43,12 +43,12 @@ class ReminderDeleteController implements ControllerInterface
             return new HtmlResponse($this->htmlRenderer->render('404.phtml',[]));
         }
 
-        $reminders = $this->reminderService->getRemindersByRoomId($roomId);
+        $task = $this->taskService->getTaskByRoomId($roomId);
 
         return new HtmlResponse($this->htmlRenderer->render('room.phtml', [
             'room' => $room,
-            'reminders' => $reminders,
-            'timers' => $reminders,
+            'task' => $task,
+            'timers' => $task,
         ]));
     }
 }

@@ -6,11 +6,11 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $pdo->exec("DROP TABLE IF EXISTS user");
 $pdo->exec("DROP TABLE IF EXISTS room");
-$pdo->exec("DROP TABLE IF EXISTS reminder");
+$pdo->exec("DROP TABLE IF EXISTS task");
 $pdo->exec("DROP TABLE IF EXISTS item");
 $pdo->exec("DROP TABLE IF EXISTS user_to_room");
-$pdo->exec("DROP TABLE IF EXISTS room_to_reminder");
-$pdo->exec("DROP TABLE IF EXISTS user_to_reminder");
+$pdo->exec("DROP TABLE IF EXISTS room_to_task");
+$pdo->exec("DROP TABLE IF EXISTS user_to_task");
 $pdo->exec("DROP TABLE IF EXISTS item_to_user");
 $pdo->exec("DROP TABLE IF EXISTS item_to_room");
 
@@ -31,7 +31,7 @@ $pdo->exec("
         created_at TEXT NOT NULL DEFAULT (datetime('now')),
         FOREIGN KEY (created_by) REFERENCES user(id)
 );
-    CREATE TABLE reminder(
+    CREATE TABLE task(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT(20) NOT NULL,
         notes TEXT,
@@ -64,19 +64,19 @@ CREATE UNIQUE INDEX IF NOT EXISTS uniq_item_name_category
         FOREIGN KEY (owner_user_id) REFERENCES user(id),
         FOREIGN KEY (room_id) REFERENCES room(id)
 );
-    CREATE TABLE user_to_reminder(
+    CREATE TABLE user_to_task(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         owner_user_id INTEGER NOT NULL,
-        reminder_id INTEGER NOT NULL,
+        task_id INTEGER NOT NULL,
         FOREIGN KEY (owner_user_id) REFERENCES user(id),
-        FOREIGN KEY (reminder_id) REFERENCES reminder(id)
+        FOREIGN KEY (task_id) REFERENCES task(id)
 );
-    CREATE TABLE room_to_reminder(
+    CREATE TABLE room_to_task(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         room_id INTEGER NOT NULL,
-        reminder_id INTEGER NOT NULL,
+        task_id INTEGER NOT NULL,
         FOREIGN KEY (room_id) REFERENCES room(id),
-        FOREIGN KEY (reminder_id) REFERENCES reminder(id)  
+        FOREIGN KEY (task_id) REFERENCES task(id)  
     );
     CREATE TABLE item_to_room(
         id INTEGER PRIMARY KEY AUTOINCREMENT,

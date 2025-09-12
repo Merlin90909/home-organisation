@@ -5,13 +5,13 @@ namespace App\Services;
 class DashboardService
 {
 
-    public function __construct(private ReminderService $reminderService)
+    public function __construct(private TaskService $taskService)
     {
     }
 
-    public function getReminderItems(int $limit = 3): array
+    public function getTaskItems(int $limit = 3): array
     {
-        $rawItems = $this->reminderService->getReminder($limit, true);
+        $rawItems = $this->taskService->getTask($limit, true);
         if (empty($rawItems) || !is_array($rawItems)) {
             return [];
         }
@@ -38,7 +38,7 @@ class DashboardService
                 }
             }
 
-            $dueTextRaw = $this->reminderService->showTimer($dueAt);
+            $dueTextRaw = $this->taskService->showTimer($dueAt);
             $dueText = (string)$dueTextRaw;
 
             $notes = (string)($t['notes'] ?? '');
@@ -52,9 +52,6 @@ class DashboardService
                 'status' => $status
             ];
         }
-
         return $result;
     }
-
-
 }
