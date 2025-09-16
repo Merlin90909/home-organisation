@@ -4,24 +4,46 @@ require_once(__DIR__ . '/header.phtml');
 ?>
 <?php
 $user = is_array($user ?? null) ? $user : []; ?>
-    <div class="account-wrapper">
-        <h1>Mein Account</h1>
+<div class="container">
+    <div class="card">
+        <div class="card__header">
+            <h2>Profil</h2>
+        </div>
+        <div class="card__body">
+            <div class="form-grid">
+                <div class="field">
+                    <label for="fName">Vorname</label>
+                    <input type="text" id="fName" value="<?= htmlspecialchars($user['first_Name'] ?? '') ?>" readonly>
+                </div>
+                <div class="field">
+                    <label for="lName">Nachname</label>
+                    <input type="text" id="lName" value="<?= htmlspecialchars($user['last_Name'] ?? '') ?>" readonly>
+                </div>
+                <div class="field">
+                    <label for="email_current">Aktuelle E‑Mail</label>
+                    <input type="email" id="email_current" value="<?= htmlspecialchars($user['email'] ?? '') ?>" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <div class="account-details">
-            <label for="fName">Vorname:</label><br>
-            <p><?= htmlspecialchars($user['first_Name']) ?></p>
-            <label for="lName">Nachname:</label><br>
-            <p><?= htmlspecialchars($user['last_Name']) ?></p>
-            <label for="email">E-Mail:</label><br>
-            <p><?= htmlspecialchars($user['email']) ?></p>
-            <form action="/account-submit" method="POST">
-                <input type="email" name="email" id="email">
-                <div class="form-actions">
-                    <button type="submit">neue E-Mail speichern</button>
+    <div class="card">
+        <div class="card__header">
+            <h2>E‑Mail ändern</h2>
+        </div>
+        <div class="card__body">
+            <form action="/account-submit" method="POST" class="form-grid">
+                <div class="field">
+                    <label for="email">Neue E‑Mail</label>
+                    <input type="email" name="email" id="email" placeholder="name@example.com" required>
+                </div>
+                <div>
+                    <button type="submit">E‑Mail speichern</button>
                 </div>
             </form>
         </div>
     </div>
+</div>
 
 <?php
 require_once(__DIR__ . '/footer.phtml');

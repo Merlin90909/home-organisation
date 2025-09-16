@@ -21,4 +21,18 @@ class AccountService
 
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
     }
+
+    public function setEmail(string $email, int $userId): bool
+    {
+        $stmt = $this->pdo->prepare(
+            'UPDATE user SET email = :email WHERE id = :userId'
+        );
+        $stmt->execute([
+            'email' => $email,
+            'userId' => $userId
+        ]);
+        return $stmt->rowCount() === 1;
+    }
+
+
 }
