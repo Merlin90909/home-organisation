@@ -1,5 +1,7 @@
 <?php
 
+use App\Controller\AccountController;
+use App\Controller\AccountSubmitController;
 use App\Controller\DashboardController;
 use App\Controller\ErrorController;
 use App\Controller\ImprintController;
@@ -28,6 +30,7 @@ return [
         '/rooms' => RoomsController::class,
         '/room' => RoomController::class,
         '/warehouse' => WarehouseController::class,
+        '/account' => AccountController::class,
     ],
     'POST' => [
         '/login-submit' => LoginSubmitController::class,
@@ -36,6 +39,7 @@ return [
         '/rooms-submit' => RoomsSubmitController::class,
         '/task-submit' => TaskSubmitController::class,
         '/task-delete' => TaskDeleteController::class,
-        '/warehouse-submit' => WarehouseSubmitController::class
+        '/warehouse-submit' => WarehouseSubmitController::class,
+        '/account-submit' => AccountSubmitController::class,
     ]
 ];

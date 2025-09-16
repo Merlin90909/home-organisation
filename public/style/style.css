@@ -108,6 +108,19 @@ body.dashboard-body {
     padding: 12px 0;
 }
 
+/* Topbar: Account link styling */
+.topbar a,
+.topbar a:visited {
+    color: var(--text);
+    text-decoration: underline;
+}
+
+.topbar a:hover,
+.topbar a:focus-visible {
+    color: var(--primary);
+    outline: none;
+}
+
 .brand {
     font-weight: 700;
     letter-spacing: .2px;

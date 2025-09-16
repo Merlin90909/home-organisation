@@ -1,5 +1,7 @@
 <?php
 
+use App\Controller\AccountController;
+use App\Controller\AccountSubmitController;
 use App\Controller\DashboardController;
 use App\Controller\ErrorController;
 use App\Controller\ImprintController;
@@ -17,6 +19,7 @@ use App\Controller\RoomsSubmitController;
 use App\Controller\WarehouseController;
 use App\Controller\WarehouseSubmitController;
 use App\Factories\PDOFactory;
+use App\Services\AccountService;
 use App\Services\DashboardService;
 use App\Services\LoginService;
 use App\Services\LogoutService;
@@ -71,4 +74,7 @@ return [
     PasswordLengthValidator::class => InvokableFactory::class,
     PasswordSpecialCharValidator::class => InvokableFactory::class,
     NameValidator::class => InvokableFactory::class,
+    AccountController::class => AutoWireFactory::class,
+    AccountSubmitController::class => AutoWireFactory::class,
+    AccountService::class => AutoWireFactory::class,
 ];

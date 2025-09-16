@@ -1,0 +1,28 @@
+<?php
+
+require_once(__DIR__ . '/header.phtml');
+?>
+<?php
+$user = is_array($user ?? null) ? $user : []; ?>
+    <div class="account-wrapper">
+        <h1>Mein Account</h1>
+
+        <div class="account-details">
+            <label for="fName">Vorname:</label><br>
+            <p><?= htmlspecialchars($user['first_Name']) ?></p>
+            <label for="lName">Nachname:</label><br>
+            <p><?= htmlspecialchars($user['last_Name']) ?></p>
+            <label for="email">E-Mail:</label><br>
+            <p><?= htmlspecialchars($user['email']) ?></p>
+            <form action="/account-submit" method="POST">
+                <input type="email" name="email" id="email">
+                <div class="form-actions">
+                    <button type="submit">neue E-Mail speichern</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<?php
+require_once(__DIR__ . '/footer.phtml');
+?>
