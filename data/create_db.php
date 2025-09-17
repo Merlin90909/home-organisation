@@ -39,6 +39,7 @@ $pdo->exec("
         priority INTEGER NOT NULL,
         status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open','done','snoozed','archived')),
         created_at TEXT NOT NULL DEFAULT (datetime('now')),
+        deleted BOOLEAN NOT NULL DEFAULT false,
         created_by INTEGER NOT NULL,
         created_for INTEGER NOT NULL,
         FOREIGN KEY (created_by) REFERENCES user(id),

@@ -15,10 +15,10 @@ class TaskService
     public function getTaskByRoomId(int $id): array
     {
         $stmt = $this->pdo->prepare(
-            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.status, t.created_at
+            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.status, t.created_at, t.deleted
              FROM task t
              INNER JOIN room_to_task rt ON rt.task_id = t.id
-             WHERE rt.room_id = :id
+             WHERE rt.room_id = :id & t.deleted = false
              ORDER BY t.due_at"
         );
         $stmt->execute(['id' => $id]);
@@ -29,19 +29,18 @@ class TaskService
 
     public function deleteTaskById(int $id): bool
     {
-        $stmt = $this->pdo->prepare("DELETE FROM task WHERE id = :id");
+        $stmt = $this->pdo->prepare('Update task set deleted = true where id = :id');
         return $stmt->execute(['id' => $id]);
     }
 
     public function getTask(int $limit = 3, bool $descending = true): array
     {
         $stmt = $this->pdo->prepare(
-            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.status, t.created_at,
-                    GROUP_CONCAT(DISTINCT ro.name) AS rooms
+            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.status, t.created_at, t.deleted
              FROM task t
              LEFT JOIN room_to_task rt ON rt.task_id = t.id
              LEFT JOIN room ro ON ro.id = rt.room_id
-             WHERE t.due_at IS NOT NULL
+             WHERE t.due_at IS NOT NULL AND t.deleted = false
              GROUP BY t.id
              ORDER BY t.due_at ASC
              LIMIT :limit"
@@ -79,12 +78,31 @@ class TaskService
     public function getAllTasks(bool $descending = true): array
     {
         $stmt = $this->pdo->prepare(
-            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.status, t.created_at,
-            GROUP_CONCAT(DISTINCT ro.name) AS rooms
+            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.status, t.created_at, t.deleted
      FROM task t
      LEFT JOIN room_to_task rt ON rt.task_id = t.id
      LEFT JOIN room ro ON ro.id = rt.room_id
-     WHERE t.due_at IS NOT NULL
+     WHERE t.due_at IS NOT NULL AND t.deleted = false
+     GROUP BY t.id
+     ORDER BY t.due_at ASC"
+        );
+        $stmt->execute();
+
+        $task = $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        if ($descending) {
+            $task = array_reverse($task);
+        }
+        return $task;
+    }
+
+    public function getArchiveTasks(bool $descending = true): array
+    {
+        $stmt = $this->pdo->prepare(
+            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.status, t.created_at, t.deleted
+     FROM task t
+     LEFT JOIN room_to_task rt ON rt.task_id = t.id
+     LEFT JOIN room ro ON ro.id = rt.room_id
+     WHERE t.due_at IS NOT NULL AND t.deleted = 1
      GROUP BY t.id
      ORDER BY t.due_at ASC"
         );

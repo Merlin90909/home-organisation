@@ -3,6 +3,7 @@
 use App\Controller\AccountController;
 use App\Controller\AccountSubmitController;
 use App\Controller\AllTasksController;
+use App\Controller\ArchiveController;
 use App\Controller\DashboardController;
 use App\Controller\ErrorController;
 use App\Controller\ImprintController;
@@ -33,6 +34,7 @@ return [
         '/warehouse' => WarehouseController::class,
         '/account' => AccountController::class,
         '/all-tasks' => AllTasksController::class,
+        '/archive' => ArchiveController::class,
     ],
     'POST' => [
         '/login-submit' => LoginSubmitController::class,
