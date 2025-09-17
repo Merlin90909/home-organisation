@@ -28,7 +28,7 @@ class TaskDeleteController implements ControllerInterface
             : null;
 
         if ($taskId === null || $roomId === null) {
-            $rooms = $this->roomsService->getRooms();
+            $rooms = $this->roomsService->getRooms($session['user_id']);
 
             return new HtmlResponse($this->htmlRenderer->render('rooms.phtml', [
                 'rooms' => $rooms,
