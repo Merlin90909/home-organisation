@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Framework\Services\HtmlRenderer;
 
 class ArchiveService
 {
@@ -12,7 +11,7 @@ class ArchiveService
 
     public function getTaskItems(): array
     {
-        $rawItems = $this->taskService->getArchiveTasks(true);
+        $rawItems = $this->taskService->getArchiveTasks();
         if (empty($rawItems) || !is_array($rawItems)) {
             return [];
         }

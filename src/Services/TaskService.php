@@ -15,7 +15,7 @@ class TaskService
     public function getTaskByRoomId(int $id): array
     {
         $stmt = $this->pdo->prepare(
-            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.status, t.created_at, t.deleted
+            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.repeat, t.repeat_rule, t.status, t.created_at, t.deleted
              FROM task t
              INNER JOIN room_to_task rt ON rt.task_id = t.id
              WHERE rt.room_id = :id & t.deleted = false
@@ -36,7 +36,7 @@ class TaskService
     public function getTask(int $limit = 3, bool $descending = true): array
     {
         $stmt = $this->pdo->prepare(
-            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.status, t.created_at, t.deleted
+            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.repeat, t.repeat_rule, t.status, t.created_at, t.deleted
              FROM task t
              LEFT JOIN room_to_task rt ON rt.task_id = t.id
              LEFT JOIN room ro ON ro.id = rt.room_id
@@ -70,7 +70,7 @@ class TaskService
             $difference = $now->diff($dt);
             $remaining = $difference->format('%a Tage, %h Std, %i Min');
         } else {
-            $remaining = 'abgelaufen';
+            $remaining = 'ABGELAUFEN!!!';
         }
         return $remaining . ' (am ' . $dt->format('d.m.Y H:i') . ')';
     }
@@ -78,7 +78,7 @@ class TaskService
     public function getAllTasks(bool $descending = true): array
     {
         $stmt = $this->pdo->prepare(
-            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.status, t.created_at, t.deleted
+            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.repeat, t.repeat_rule, t.status, t.created_at, t.deleted
      FROM task t
      LEFT JOIN room_to_task rt ON rt.task_id = t.id
      LEFT JOIN room ro ON ro.id = rt.room_id
@@ -98,7 +98,7 @@ class TaskService
     public function getArchiveTasks(bool $descending = true): array
     {
         $stmt = $this->pdo->prepare(
-            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.status, t.created_at, t.deleted
+            "SELECT t.id, t.title, t.notes, t.due_at, t.priority,t.repeat, t.repeat_rule, t.status, t.created_at, t.deleted
      FROM task t
      LEFT JOIN room_to_task rt ON rt.task_id = t.id
      LEFT JOIN room ro ON ro.id = rt.room_id

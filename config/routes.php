@@ -30,7 +30,7 @@ return [
         '/impressum' => ImprintController::class,
         '/404' => ErrorController::class,
         '/rooms' => RoomsController::class,
-        '/room' => RoomController::class,
+        '/room/:id' => RoomController::class,
         '/warehouse' => WarehouseController::class,
         '/account' => AccountController::class,
         '/all-tasks' => AllTasksController::class,

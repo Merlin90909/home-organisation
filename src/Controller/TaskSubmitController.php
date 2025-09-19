@@ -24,6 +24,8 @@ class TaskSubmitController implements ControllerInterface
     {
         $roomId = isset($post['room_id']) ? (int)$post['room_id'] : null;
 
+       // dd($post);
+
         $create = $this->taskCreateService->create(
             $session['user_id'],
             $post['room_id'],
@@ -31,6 +33,8 @@ class TaskSubmitController implements ControllerInterface
             $post['task_notes'],
             $post['task_due_at'],
             $post['task_priority'],
+            $post['task_repeat'],
+            $post['task_repeat_rule'],
             $post['task_status'],
             $post['task_created_at']
         );

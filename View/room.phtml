@@ -3,6 +3,7 @@
 require_once(__DIR__ . '/header.phtml');
 ?>
 <?php
+date_default_timezone_set('Europe/Berlin');
 $room = is_array($room ?? null) ? $room : []; ?>
     <div class="rooms-wrapper">
         <div class="rooms room-detail">
@@ -96,6 +97,29 @@ $room = is_array($room ?? null) ? $room : []; ?>
                     </select>
                 </div>
 
+                <div>
+                    <label for="task_repeat">Wiederholung</label>
+                    <select id="task_repeat" name="task_repeat">
+                        <option value="false">Nein</option>
+                        <option value="true">Ja</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="task_repeat_rule">Wiederholungsregel</label>
+                    <select id="task_repeat_rule" name="task_repeat_rule">
+                        <option value="false">------</option>
+                        <option value="60_minutes">1 Stunde</option>
+                        <option value="120_minutes">2 Stunden</option>
+                        <option value="1_day">1 Tag</option>
+                        <option value="2_days">2 Tage</option>
+                        <option value="7_days">7 Tage</option>
+                        <option value="14_days">14 Tage</option>
+                        <option value="28_days">28 Tage</option>
+                    </select>
+                </div>
+
+                <!--Status wird ausgelagert-->
                 <div>
                     <label for="task_status">Status</label>
                     <select id="task_status" name="task_status">

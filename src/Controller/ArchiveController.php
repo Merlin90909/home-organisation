@@ -20,7 +20,7 @@ class ArchiveController implements ControllerInterface
         $items = $this->archiveService->getTaskItems();
 
 
-        return new HtmlResponse($this->htmlRenderer->render('allTasks.phtml', [
+        return new HtmlResponse($this->htmlRenderer->render('archive.phtml', [
             'items' => $items,
             'allTasksService' => $this->archiveService,
             'post' => $post
