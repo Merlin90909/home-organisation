@@ -23,27 +23,88 @@ use App\Controller\WarehouseSubmitController;
 
 return [
     'GET' => [
-        '/' => DashboardController::class,
-        '/login' => LoginController::class,
-        '/register' => RegisterController::class,
-        '/logout' => LogoutController::class,
-        '/impressum' => ImprintController::class,
-        '/404' => ErrorController::class,
-        '/rooms' => RoomsController::class,
-        '/room/:id' => RoomController::class,
-        '/warehouse' => WarehouseController::class,
-        '/account' => AccountController::class,
-        '/all-tasks' => AllTasksController::class,
-        '/archive' => ArchiveController::class,
+        '/' => [
+            'Controller' => DashboardController::class,
+            'requestMethod' => 'GET'
+        ],
+        '/login' => [
+            'Controller' => LoginController::class,
+            'requestMethod' => 'GET'
+        ],
+        '/register' => [
+            'Controller' => RegisterController::class,
+            'requestMethod' => 'GET'
+        ],
+        '/logout' => [
+            'Controller' => LogoutController::class,
+            'requestMethod' => 'GET'
+        ],
+        '/impressum' => [
+            'Controller' => ImprintController::class,
+            'requestMethod' => 'GET'
+        ],
+        '/404' => [
+            'Controller' => ErrorController::class,
+            'requestMethod' => 'GET'
+        ],
+        '/rooms' => [
+            'Controller' => RoomsController::class,
+            'requestMethod' => 'GET'
+        ],
+        '/room/:id' => [
+            'Controller' => RoomController::class,
+            'requestMethod' => 'GET',
+            'id' => 'int'
+        ],
+        '/warehouse' => [
+            'Controller' => WarehouseController::class,
+            'requestMethod' => 'GET'
+        ],
+        '/account' => [
+            'Controller' => AccountController::class,
+            'requestMethod' => 'GET'
+        ],
+        '/all-tasks' => [
+            'Controller' => AllTasksController::class,
+            'requestMethod' => 'GET'
+        ],
+        '/archive' => [
+            'Controller' => ArchiveController::class,
+            'requestMethod' => 'GET'
+        ],
     ],
     'POST' => [
-        '/login-submit' => LoginSubmitController::class,
-        '/register-submit' => RegisterSubmitController::class,
-        '/logout-submit' => LogoutSubmitController::class,
-        '/rooms-submit' => RoomsSubmitController::class,
-        '/task-submit' => TaskSubmitController::class,
-        '/task-delete' => TaskDeleteController::class,
-        '/warehouse-submit' => WarehouseSubmitController::class,
-        '/account-submit' => AccountSubmitController::class,
+        '/login-submit' => [
+            'Controller' => LoginSubmitController::class,
+            'requestMethod' => 'POST'
+        ],
+        '/register-submit' => [
+            'Controller' => RegisterSubmitController::class,
+            'requestMethod' => 'POST'
+        ],
+        '/logout-submit' => [
+            'Controller' => LogoutSubmitController::class,
+            'requestMethod' => 'POST'
+        ],
+        '/rooms-submit' => [
+            'Controller' => RoomsSubmitController::class,
+            'requestMethod' => 'POST'
+        ],
+        '/task-submit' => [
+            'Controller' => TaskSubmitController::class,
+            'requestMethod' => 'POST'
+        ],
+        '/task-delete' => [
+            'Controller' => TaskDeleteController::class,
+            'requestMethod' => 'POST'
+        ],
+        '/warehouse-submit' => [
+            'Controller' => WarehouseSubmitController::class,
+            'requestMethod' => 'POST'
+        ],
+        '/account-submit' => [
+            'Controller' => AccountSubmitController::class,
+            'requestMethod' => 'POST'
+        ],
     ]
 ];

@@ -19,16 +19,15 @@ class TaskCreateService
         string $priority,
         bool $repeat,
         string $repeat_rule,
-        string $status,
         string $created_at
     ) {
-        if (empty($userId) || empty($roomId) || empty($title) || empty($notes) || empty($due_at) || empty($priority) || empty($repeat) || empty($repeat_rule) || empty($status)) {
+        if (empty($userId) || empty($roomId) || empty($title) || empty($notes) || empty($due_at) || empty($priority) || empty($repeat) || empty($repeat_rule)) {
             return false;
         }
 
         $statement = $this->pdo->prepare(
-            'INSERT INTO task (created_by, created_for, title, notes, due_at, priority, repeat, repeat_rule, status, created_at) 
-                    VALUES (:created_by, :created_for, :title, :notes, :due_at, :priority, :repeat, :repeat_rule, :status, :created_at)'
+            'INSERT INTO task (created_by, created_for, title, notes, due_at, priority, repeat, repeat_rule, created_at) 
+                    VALUES (:created_by, :created_for, :title, :notes, :due_at, :priority, :repeat, :repeat_rule, :created_at)'
         );
         $statement->execute([
             'created_by' => $userId,
@@ -39,7 +38,6 @@ class TaskCreateService
             'priority' => $priority,
             'repeat' => $repeat,
             'repeat_rule' => $repeat_rule,
-            'status' => $status,
             'created_at' => $created_at
         ]);
         $taskId = $this->pdo->lastInsertId();

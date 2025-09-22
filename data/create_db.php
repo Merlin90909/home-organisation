@@ -37,8 +37,6 @@ $pdo->exec("
         notes TEXT,
         due_at TEXT,
         priority INTEGER NOT NULL,
-        /*status wird ausgelagert, aber noch zum Funktionieren des Projekts behalten*/
-        status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open','done','snoozed','archived')),
         repeat BOOLEAN NOT NULL DEFAULT false,
         repeat_rule INTEGER,
         created_at TEXT NOT NULL DEFAULT (datetime('now')),

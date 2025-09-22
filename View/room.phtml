@@ -119,15 +119,6 @@ $room = is_array($room ?? null) ? $room : []; ?>
                     </select>
                 </div>
 
-                <!--Status wird ausgelagert-->
-                <div>
-                    <label for="task_status">Status</label>
-                    <select id="task_status" name="task_status">
-                        <option value="open">Offen</option>
-                        <option value="done">Erledigt</option>
-                    </select>
-                </div>
-
                 <input type="hidden" name="task_created_at" value="<?= date('Y-m-d H:i:s') ?>">
 
                 <button type="submit">Task anlegen</button>
