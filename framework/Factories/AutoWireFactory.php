@@ -24,8 +24,11 @@ class AutoWireFactory implements FactoryInterface
 
         $objects = [];
 
-
         foreach ($parameters as $object) {
+            if (!class_exists($object)) {
+                continue;
+            }
+            
             $objects[] = $this->objectManagerService->get($object);
         }
 

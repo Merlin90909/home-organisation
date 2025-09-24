@@ -14,4 +14,9 @@ class NameValidator implements ValidatorInterface
         }
         return true;
     }
+
+    public function getMessages(): array
+    {
+        // TODO: Implement getMessages() method.
+    }
 }

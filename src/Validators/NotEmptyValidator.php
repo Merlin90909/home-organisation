@@ -11,8 +11,15 @@ class NotEmptyValidator implements ValidatorInterface
     {
         if (empty($input)) {
             return false;
-        }else{
+        } else {
             return true;
         }
+    }
+
+    public function getMessages(): array
+    {
+        return [
+            'Die Eingabe ist leer!'
+        ];
     }
 }

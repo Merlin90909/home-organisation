@@ -6,9 +6,9 @@ use Framework\Interfaces\ValidatorInterface;
 
 class EmptyValidator implements ValidatorInterface
 {
-public function __construct()
-{
-}
+    public function __construct()
+    {
+    }
 
     public function validate($input): bool
     {
@@ -17,5 +17,10 @@ public function __construct()
         } else {
             return true;
         }
+    }
+
+    public function getMessages(): array
+    {
+        // TODO: Implement getMessages() method.
     }
 }

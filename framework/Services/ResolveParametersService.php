@@ -12,7 +12,7 @@ class ResolveParametersService
         $reflection = new ReflectionClass($className);
         $constructor = $reflection->getConstructor();
 
-        if($constructor === null) {
+        if ($constructor === null) {
             return [];
         }
 

@@ -20,4 +20,9 @@ class EmailValidator implements ValidatorInterface
         }
         return false;
     }
+
+    public function getMessages(): array
+    {
+        // TODO: Implement getMessages() method.
+    }
 }

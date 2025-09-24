@@ -74,7 +74,7 @@ class RouterService
 
                     $routeParameters[$paramName] = $pathPart;
 
-                    if (!$this->is_type($pathPart, $expectedType)) {
+                    if (!is_type($pathPart, $expectedType)) {
                         $status = false;
                         break;
                     }
@@ -92,14 +92,5 @@ class RouterService
         }
 
         return null;
-    }
-
-    private function is_type(mixed $value, string $type): bool
-    {
-        return match ($type) {
-            'int' => (is_int($value) || (is_string($value) && ctype_digit($value))),
-            'string' => is_string($value),
-            default => false,
-        };
     }
 }
