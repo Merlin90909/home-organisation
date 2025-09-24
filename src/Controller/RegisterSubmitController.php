@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Services\RegisterService;
 
 //use App\Validators\PasswordIdentValidator;
+use App\Validators\EmailValidator;
 use App\Validators\NameValidator;
 use App\Validators\PasswordLengthValidator;
 use App\Validators\EmptyValidator;
@@ -32,6 +33,8 @@ class RegisterSubmitController implements ControllerInterface
 
     function handle(httpRequests $httpRequest): ResponseInterface
     {
+
+
         $inputs = [
             $httpRequest->getPayload()['fName'],
             $httpRequest->getPayload()['lName'],

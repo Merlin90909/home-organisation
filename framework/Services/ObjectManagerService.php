@@ -2,6 +2,7 @@
 
 namespace Framework\Services;
 
+use Framework\Factories\AutoWireFactory;
 use Framework\Interfaces\FactoryInterface;
 use RuntimeException;
 
@@ -25,7 +26,7 @@ class ObjectManagerService
 
     public function build(string $className)
     {
-        $factoryName = $this->factories[$className];
+        $factoryName = $this->factories[$className] ?? AutoWireFactory::class;
         $factory = new $factoryName($this);
 
         if (!$factory instanceof FactoryInterface) {

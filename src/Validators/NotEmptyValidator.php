@@ -4,17 +4,14 @@ namespace App\Validators;
 
 use Framework\Interfaces\ValidatorInterface;
 
-class EmptyValidator implements ValidatorInterface
+class NotEmptyValidator implements ValidatorInterface
 {
-public function __construct()
-{
-}
 
     public function validate($input): bool
     {
-        if ($input === '' || $input === null) {
+        if (empty($input)) {
             return false;
-        } else {
+        }else{
             return true;
         }
     }

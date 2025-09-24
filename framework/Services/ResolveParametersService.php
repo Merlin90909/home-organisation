@@ -12,6 +12,10 @@ class ResolveParametersService
         $reflection = new ReflectionClass($className);
         $constructor = $reflection->getConstructor();
 
+        if($constructor === null) {
+            return [];
+        }
+
         $parameters = $constructor->getParameters();
 
         $parameterNames = [];

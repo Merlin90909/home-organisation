@@ -3,18 +3,21 @@
 namespace App\Validators;
 
 use Framework\Interfaces\ValidatorInterface;
-use PDO;
 
 class EmailValidator implements ValidatorInterface
 {
+    public function __construct(
+        private NotEmptyValidator $notEmptyValidator,
+    ) {
+    }
 
     public function validate($input): bool
     {
-
-
-        if($input ){
-            return false;
+        $minLength = new MinLengthValidator(3);
+        if ($this->notEmptyValidator->validate($input) &&
+            $minLength->validate($input)) {
+            return true;
         }
-        return true;
+        return false;
     }
 }

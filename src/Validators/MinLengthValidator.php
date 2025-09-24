@@ -4,15 +4,15 @@ namespace App\Validators;
 
 use Framework\Interfaces\ValidatorInterface;
 
-class EmptyValidator implements ValidatorInterface
+class minLengthValidator implements ValidatorInterface
 {
-public function __construct()
-{
-}
+    public function __construct(private int $minLenght)
+    {
+    }
 
     public function validate($input): bool
     {
-        if ($input === '' || $input === null) {
+        if (strlen($input) < $this->minLenght) {
             return false;
         } else {
             return true;
