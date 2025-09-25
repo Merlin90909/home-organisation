@@ -1350,3 +1350,1377 @@ body:not(.dashboard-body) > h1 {
     box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
     outline: none;
 }
+/*Fehlerseite*/
+.page-404-wrapper {
+    display: grid;
+    place-items: center;
+    min-height: calc(100vh - 140px);
+    padding: 32px 16px;
+    text-align: center;
+}
+
+.page-404 {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .015));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+    padding: 32px 28px;
+    width: min(900px, 92vw);
+}
+
+.page-404 h1 {
+    margin: 0 0 8px 0;
+    font-size: clamp(48px, 10vw, 96px);
+    line-height: .85;
+    letter-spacing: .5px;
+    background: linear-gradient(90deg, var(--primary-strong), var(--primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 10px 30px rgba(59, 130, 246, .25);
+    white-space: nowrap;
+    padding-right: .1em; /* ensures gradient-clip doesn't hide the last glyph when tight */
+}
+
+.page-404 p {
+    font-size: 18px;
+    color: var(--muted);
+    margin: 0 0 18px 0;
+}
+
+.page-404 .button {
+    display: inline-block;
+    padding: 12px 20px;
+    background: var(--primary);
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    box-shadow: 0 6px 18px rgba(59, 130, 246, .25);
+}
+
+.page-404 .button:hover,
+.page-404 .button:focus-visible {
+    background: var(--primary-strong);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(59, 130, 246, .35);
+    outline: none;
+}
+
+/*Dashboard*/
+:root {
+    --bg: #0f172a; /* slate-900 */
+    --bg-elev: #111827; /* gray-900 */
+    --surface: #111827;
+    --surface-2: #0b1220;
+    --text: #e5e7eb; /* gray-200 */
+    --muted: #94a3b8; /* slate-400 */
+    --primary: #60a5fa; /* blue-400 */
+    --primary-strong: #3b82f6; /* blue-500 */
+    --border: #1f2937; /* gray-800 */
+    --chip-bg: #0b1220;
+}
+
+* {
+    box-sizing: border-box
+}
+
+html, body {
+    height: 100%
+}
+
+body.dashboard-body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    background: radial-gradient(1200px 600px at 10% -10%, rgba(59, 130, 246, .25), transparent 30%),
+    radial-gradient(900px 600px at 110% 0%, rgba(99, 102, 241, .2), transparent 35%),
+    var(--bg);
+    color: var(--text);
+}
+
+.container {
+    width: min(1100px, 92vw);
+    margin-inline: auto;
+}
+
+/* Topbar */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: saturate(140%) blur(10px);
+    background: rgba(17, 24, 39, .6);
+    border-bottom: 1px solid var(--border);
+}
+
+.topbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+}
+
+/* Topbar: Account link styling */
+.topbar a,
+.topbar a:visited {
+    color: var(--text);
+    text-decoration: underline;
+}
+
+.topbar a:hover,
+.topbar a:focus-visible {
+    color: var(--primary);
+    outline: none;
+}
+
+.brand {
+    font-weight: 700;
+    letter-spacing: .2px;
+}
+
+.logout .btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer
+}
+
+.logout .btn:hover {
+    border-color: var(--primary);
+    color: var(--primary)
+}
+
+/* Nav links */
+.nav-links a,
+.nav-links a:visited {
+    color: var(--text);
+    text-decoration: underline;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+/* Hero */
+.hero {
+    position: relative;
+    border-bottom: 1px solid var(--border);
+}
+
+.hero__content {
+    padding: 44px 0 32px;
+}
+
+.hero__text h1 {
+    margin: 0 0 6px 0;
+    font-size: clamp(28px, 4vw, 36px);
+}
+
+.hero__text p {
+    margin: 0;
+    color: var(--muted);
+}
+
+/* Grid + Cards */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 16px;
+    padding: 24px 0 56px;
+}
+
+.card {
+    grid-column: span 12;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .02), rgba(255, 255, 255, .01));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+}
+
+.card__header {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255, 255, 255, .015);
+}
+
+.card__header h2 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.25;
+    letter-spacing: .2px;
+}
+
+/* Header title + actions layout */
+.card__header h2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px; /* space between title and actions */
+}
+
+.card__header .title-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* space between the two action links */
+}
+
+/* Make header action links look like Lager/Räume verwalten */
+.card__header .cta-link,
+.card__header .cta-link:visited {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 16px; /* same feel as .lager-link */
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .015));
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--text);
+}
+
+.card__header .cta-link:hover,
+.card__header .cta-link:focus-visible {
+    border-color: var(--primary);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+    outline: none;
+}
+
+@media (max-width: 480px) {
+    /* Allow wrapping on small screens */
+    .card__header h2 { flex-wrap: wrap; }
+    .card__header .title-actions { width: 100%; justify-content: flex-start; }
+}
+
+.card__body {
+    padding: 16px 18px;
+}
+
+/* Lists */
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list__item {
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+}
+
+.list__item:last-child {
+    border-bottom: none;
+}
+
+.is-empty {
+    color: var(--muted);
+    font-style: italic;
+}
+
+/* Chips */
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chip {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--chip-bg);
+    border: 1px solid var(--border);
+}
+
+/* Category links: same behavior as header nav links */
+.chips a,
+.chips a:visited {
+    color: var(--text);
+    text-decoration: underline;
+}
+
+.chips a:hover {
+    color: var(--primary);
+}
+
+/* FAQ */
+.faq {
+    margin-bottom: 10px;
+}
+
+.faq summary {
+    cursor: pointer;
+}
+
+.faq p {
+    color: var(--muted);
+    margin: 8px 0 0 0;
+}
+
+.card__body h3 {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: var(--primary);
+}
+
+/* Footer */
+.page-footer {
+    border-top: 1px solid var(--border);
+    background: rgba(17, 24, 39, .6);
+}
+
+.page-footer .container {
+    padding: 18px 0;
+    color: var(--muted);
+}
+
+/* Responsive */
+@media (min-width: 720px) {
+    .card:nth-of-type(1) {
+        grid-column: span 7;
+    }
+
+    .card:nth-of-type(2) {
+        grid-column: span 5;
+    }
+
+    /* FAQ und Lager nebeneinander */
+    .card.card--faq {
+        grid-column: span 8;
+    }
+
+    .card.card--lager {
+        grid-column: span 4;
+    }
+}
+
+
+/* Registration Overlay (applies to pages without .dashboard-body) */
+body:not(.dashboard-body) {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    background: radial-gradient(1200px 600px at 10% -10%, rgba(59, 130, 246, .25), transparent 30%),
+    radial-gradient(900px 600px at 110% 0%, rgba(99, 102, 241, .2), transparent 35%),
+    var(--bg);
+    color: var(--text);
+}
+
+/* Center the simple document flow */
+body:not(.dashboard-body) > h1,
+body:not(.dashboard-body) > p,
+body:not(.dashboard-body) > h2,
+body:not(.dashboard-body) > form {
+    width: min(600px, 92vw);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body:not(.dashboard-body) > h1 {
+    margin-top: 48px;
+    margin-bottom: 8px;
+    font-size: clamp(28px, 4vw, 36px);
+}
+
+body:not(.dashboard-body) > p {
+    margin: 0 0 16px 0;
+    color: var(--muted);
+    text-align: center;
+}
+
+/* Begrüßungsabsatz direkt nach H1 */
+body:not(.dashboard-body) > h1 + p {
+    width: min(600px, 92vw);
+    margin: 0 auto 16px;
+    text-align: center;
+    color: var(--muted);
+}
+
+body:not(.dashboard-body) > h2 {
+    margin: 18px auto 10px auto;
+    font-size: 18px;
+    color: var(--text);
+}
+
+/* Form as a card */
+body:not(.dashboard-body) form {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .02), rgba(255, 255, 255, .01));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+    padding: 20px;
+    margin-top: 8px;
+    margin-bottom: 48px;
+}
+
+/* Fields */
+body:not(.dashboard-body) label {
+    display: block;
+    margin: 10px 0 6px;
+    color: var(--text);
+}
+
+body:not(.dashboard-body) input[type="text"],
+body:not(.dashboard-body) input[type="email"],
+body:not(.dashboard-body) input[type="password"],
+body:not(.dashboard-body) input[type="number"],
+body:not(.dashboard-body) input[type="datetime-local"],
+body:not(.dashboard-body) textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: #0b1220;
+    color: var(--text);
+    outline: none;
+}
+
+body:not(.dashboard-body) textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+body:not(.dashboard-body) input[type="text"]:focus,
+body:not(.dashboard-body) input[type="email"]:focus,
+body:not(.dashboard-body) input[type="password"]:focus,
+body:not(.dashboard-body) input[type="number"]:focus,
+body:not(.dashboard-body) input[type="datetime-local"]:focus,
+body:not(.dashboard-body) textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, .25);
+}
+
+/* Buttons & links */
+body:not(.dashboard-body) button,
+body:not(.dashboard-body) input[type="submit"] {
+    display: inline-block;
+    padding: 10px 14px;
+    margin-top: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, .02);
+    color: var(--text);
+    cursor: pointer;
+}
+
+body:not(.dashboard-body) button:hover,
+body:not(.dashboard-body) input[type="submit"]:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+body:not(.dashboard-body) form a {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--text);
+    text-decoration: underline;
+}
+
+body:not(.dashboard-body) form a:hover {
+    color: var(--primary);
+}
+
+/* Spacing for line breaks inside the simple echo template */
+body:not(.dashboard-body) form br {
+    line-height: 8px;
+}
+
+/* Registration Overlay paragraph styling */
+body:not(.dashboard-body) .reg-intro {
+    margin: 0 0 16px 0;
+    color: var(--muted);
+    text-align: center;
+}
+
+/* Login Overlay (gleicher Look wie Registrierung/Dashboard) */
+body:not(.dashboard-body).login-overlay {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    background: radial-gradient(1200px 600px at 10% -10%, rgba(59, 130, 246, .25), transparent 30%),
+    radial-gradient(900px 600px at 110% 0%, rgba(99, 102, 241, .2), transparent 35%),
+    var(--bg);
+    color: var(--text);
+}
+
+/* Intro-Absatz im Login */
+body:not(.dashboard-body).login-overlay > h1 + p {
+    width: min(600px, 92vw);
+    margin: 0 auto 16px;
+    text-align: center;
+    color: var(--muted);
+}
+
+/* H1, H2, Formular wie bei Registrierung */
+body:not(.dashboard-body).login-overlay > h1,
+body:not(.dashboard-body).login-overlay > p,
+body:not(.dashboard-body).login-overlay > h2,
+body:not(.dashboard-body).login-overlay > form {
+    width: min(600px, 92vw);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body:not(.dashboard-body).login-overlay > h1 {
+    margin-top: 48px;
+    margin-bottom: 8px;
+    font-size: clamp(28px, 4vw, 36px);
+}
+
+body:not(.dashboard-body).login-overlay > h2 {
+    margin: 18px auto 10px auto;
+    font-size: 18px;
+    color: var(--text);
+}
+
+/* Formular-Card */
+body:not(.dashboard-body).login-overlay form {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .02), rgba(255, 255, 255, .01));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+    padding: 20px;
+    margin-top: 8px;
+    margin-bottom: 48px;
+}
+
+/* Felder */
+body:not(.dashboard-body).login-overlay label {
+    display: block;
+    margin: 10px 0 6px;
+    color: var(--text);
+}
+
+body:not(.dashboard-body).login-overlay input[type="email"],
+body:not(.dashboard-body).login-overlay input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: #0b1220;
+    color: var(--text);
+    outline: none;
+}
+
+body:not(.dashboard-body).login-overlay input[type="email"]:focus,
+body:not(.dashboard-body).login-overlay input[type="password"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, .25);
+}
+
+/* Buttons & Links */
+body:not(.dashboard-body).login-overlay input[type="submit"] {
+    display: inline-block;
+    padding: 10px 14px;
+    margin-top: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, .02);
+    color: var(--text);
+    cursor: pointer;
+}
+
+body:not(.dashboard-body).login-overlay input[type="submit"]:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+body:not(.dashboard-body).login-overlay form a {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--text);
+    text-decoration: underline;
+}
+
+body:not(.dashboard-body).login-overlay form a:hover {
+    color: var(--primary);
+}
+
+/* Zeilenabstand bei <br> */
+body:not(.dashboard-body).login-overlay form br {
+    line-height: 8px;
+}
+
+/* Impressum: Farben & Layout-Typ (dokumentenartig, wie deine Overlays) */
+body.legal-page {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    background: radial-gradient(1200px 600px at 10% -10%, rgba(59, 130, 246, .25), transparent 30%),
+    radial-gradient(900px 600px at 110% 0%, rgba(99, 102, 241, .2), transparent 35%),
+    var(--bg);
+    color: var(--text);
+}
+
+/* zentrierter, ruhiger Dokument-Flow */
+.legal-page main {
+    width: min(800px, 92vw);
+    margin: 48px auto 56px;
+}
+
+/* Typografie auf Dashboard-Niveau */
+.legal-page h1 {
+    margin: 0 0 8px 0;
+    font-size: clamp(28px, 4vw, 36px);
+}
+
+.legal-page > header p,
+.legal-page .intro {
+    margin: 0 0 16px 0;
+    color: var(--muted);
+    text-align: left;
+}
+
+.legal-page h2 {
+    margin: 24px 0 10px 0;
+    font-size: 18px;
+    color: var(--text);
+}
+
+/* Text & Links */
+.legal-page p {
+    line-height: 1.65;
+    color: var(--text);
+}
+
+.legal-page a {
+    color: var(--text);
+    text-decoration: underline;
+}
+
+.legal-page a:hover {
+    color: var(--primary);
+}
+
+/* Definition-Listen für Adressblöcke */
+.legal-page dl {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 8px 16px;
+    margin: 0;
+}
+
+.legal-page dt {
+    color: var(--muted);
+}
+
+.legal-page dd {
+    margin: 0;
+}
+
+/* Feiner Absatzstil für Rechtstexte */
+.legal-page .fineprint {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Spacing */
+.legal-page section {
+    margin-top: 20px;
+}
+
+/*Kategorien*/
+.kategorie
+    /* Kategorien – Seiten-Template (wiederverwendbar) */
+.category-page {
+    margin: 0;
+    background: radial-gradient(1200px 600px at 10% -10%, rgba(59, 130, 246, .25), transparent 30%),
+    radial-gradient(900px 600px at 110% 0%, rgba(99, 102, 241, .2), transparent 35%),
+    var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+.category-page .container {
+    width: min(1000px, 92vw);
+    margin: 0 auto;
+    padding: 32px 0 56px;
+}
+
+/* zentrierte Überschrift */
+.category-header {
+    text-align: center;
+    margin: 16px 0 20px;
+}
+
+.category-header h1 {
+    margin: 0;
+    font-size: clamp(32px, 5vw, 40px);
+    line-height: 1.2;
+}
+
+.category-header p {
+    margin: 6px 0 0 0;
+    color: var(--muted);
+}
+
+/* Zwei optisch getrennte Bereiche */
+.category-sections {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+@media (min-width: 720px) {
+    .category-sections {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.category-panel {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .02), rgba(255, 255, 255, .01));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+    padding: 18px;
+}
+
+.category-panel h2 {
+    margin: 0 0 12px 0;
+    font-size: 20px;
+    line-height: 1.25;
+    color: var(--text);
+}
+
+.category-panel p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+/* Links im Panel – wie Header-Links */
+.category-panel a,
+.category-panel a:visited {
+    color: var(--text);
+    text-decoration: underline;
+}
+
+.category-panel a:hover {
+    color: var(--primary);
+}
+
+/* Titel in Karten */
+.card-title {
+    margin: 0 0 1rem 0;
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+/* Read-only Felder dezenter darstellen */
+.field input[readonly] {
+    background: #f8f8f8;
+    color: #555;
+    border-color: rgba(0, 0, 0, .12);
+    pointer-events: none; /* keine Focus-Styles */
+}
+
+/* Optional: Passwort-Hinweis enger anbinden */
+.field input + .help {
+    margin-top: .35rem;
+}
+
+/* ---------------------
+   Spacing & Form Layout
+   --------------------- */
+/* Mehr Abstand zwischen Feldern */
+.field + .field {
+    margin-top: 14px;
+}
+
+/* Standard-Formgrid falls vorhanden (z.B. Konto-Seite) */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+}
+
+@media (min-width: 720px) {
+    .form-grid {
+        gap: 20px;
+    }
+
+    .card.card--faq {
+        grid-column: span 8;
+    }
+
+    .card.card--lager {
+        grid-column: span 4;
+    }
+}
+
+/* Mehr Abstand zwischen Abschnitten/Karten */
+.card + .card {
+    margin-top: 24px;
+}
+
+/* Größere, klarere Überschriften in Overlays und Legal-Pages */
+body:not(.dashboard-body) > h1 {
+    font-size: clamp(32px, 5vw, 40px);
+}
+
+.legal-page h1 {
+    font-size: clamp(32px, 5vw, 40px);
+}
+
+.legal-page h2 {
+    font-size: 20px;
+}
+
+/* ---------------------
+   Rooms page styling
+   --------------------- */
+.rooms-wrapper {
+    width: min(800px, 92vw);
+    margin: 32px auto 56px;
+}
+
+.rooms {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .02), rgba(255, 255, 255, .01));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+    padding: 20px;
+}
+
+.rooms h1 {
+    margin: 0 0 12px 0;
+    font-size: clamp(28px, 4vw, 36px);
+}
+
+/* Inline Titlebar with back link */
+.room-detail .room-titlebar {
+    display: flex;
+    align-items: baseline; /* aligns with the h1 baseline */
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 12px 0; /* keep same spacing as original h1 */
+}
+
+.room-detail .room-titlebar h1 {
+    margin: 0; /* override default .rooms h1 margin inside titlebar */
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, .02);
+    color: var(--text);
+    text-decoration: none; /* button-like */
+    transition: border-color .2s ease, color .2s ease, transform .1s ease;
+}
+
+.back-link:hover,
+.back-link:focus-visible {
+    border-color: var(--primary);
+    color: var(--primary);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+.rooms form label {
+    display: block;
+    margin: 10px 0 6px;
+    color: var(--text);
+}
+
+.rooms form input[type="text"],
+.rooms form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: #0b1220;
+    color: var(--text);
+    outline: none;
+}
+
+.rooms form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.rooms form input[type="text"]:focus,
+.rooms form textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, .25);
+}
+
+.rooms form button[type="submit"] {
+    display: inline-block;
+    padding: 10px 14px;
+    margin-top: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, .02);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.rooms form button[type="submit"]:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Simple spacing between fields */
+.rooms form > div + div {
+    margin-top: 12px;
+}
+
+/* Links in Cards: nie lila bei :visited */
+.card a,
+.card a:visited {
+    color: var(--text);
+}
+
+/* Rooms: Links verhalten sich wie übrige Links */
+.room-card a,
+.room-card a:visited,
+.rooms a,
+.rooms a:visited {
+    color: var(--text);
+    text-decoration: underline;
+}
+
+.room-card a:hover,
+.rooms a:hover {
+    color: var(--primary);
+}
+
+/* CTA-Card auf dem Dashboard */
+.card--cta .card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.card--cta .cta-link,
+.card--cta .cta-link:visited {
+    display: block;
+    text-align: center;
+    padding: 16px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .015));
+    font-size: 20px;
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--text); /* keine Farbänderung, auch nicht visited */
+}
+
+.card--cta .cta-link:hover {
+    border-color: var(--primary); /* nur Rahmen/Hintergrund reagiert */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+}
+
+/* Liste der weiteren Aktionen */
+.quick-actions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quick-actions a,
+.quick-actions a:visited {
+    color: var(--text);
+    text-decoration: underline;
+}
+
+.quick-actions a:hover {
+    color: var(--primary);
+}
+
+/* rooms.css */
+.room-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.room-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    color: var(--text);
+}
+
+.room-card h2 {
+    margin: 0 0 .5rem 0;
+    font-size: 1.2rem;
+}
+
+.empty-hint {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.rooms form div {
+    margin-bottom: .75rem;
+}
+
+.rooms label {
+    display: block;
+    margin-bottom: .25rem;
+    font-weight: 600;
+}
+
+.rooms input[type="text"],
+.rooms textarea {
+    width: 100%;
+    padding: .5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.rooms .room-desc {
+    margin: 0 0 10px 0;
+    color: var(--muted);
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.rooms button {
+    padding: .5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 12px;
+}
+
+.task-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .02), rgba(255, 255, 255, .01));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+    color: var(--text);
+}
+
+.task-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .35);
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.task-header h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    letter-spacing: .2px;
+}
+
+.task-body p {
+    margin: 6px 0;
+    color: var(--text);
+}
+
+.task-body p:first-of-type {
+    color: var(--muted);
+}
+
+/* Delete button im Stil der Seite */
+.delete-form {
+    margin: 0;
+}
+
+.delete-btn {
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, .02);
+    color: var(--text);
+    padding: 6px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color .2s ease, color .2s ease, transform .1s ease;
+}
+
+.delete-btn:hover,
+.delete-btn:focus-visible {
+    border-color: var(--primary);
+    color: var(--primary);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+/* Lager card */
+.card--lager .card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.lager-link,
+.lager-link:visited {
+    display: inline-block;
+    text-align: center;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .015));
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--text);
+}
+
+.lager-link:hover,
+.lager-link:focus-visible {
+    border-color: var(--primary);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+    outline: none;
+}
+
+
+.item-form .form-group {
+    margin-bottom: 16px;
+}
+
+.item-form label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.item-form input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: #0b1220;
+    color: var(--text);
+    outline: none;
+}
+
+.item-form input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, .25);
+}
+
+.item-form .btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: var(--primary);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background .2s ease, transform .15s ease;
+}
+
+.item-form .btn:hover {
+    background: var(--primary-strong);
+    transform: translateY(-1px);
+}
+
+/* ---------------------
+   Warehouse page tweaks
+   --------------------- */
+.card--warehouse-stock {
+    margin-top: 24px;
+}
+
+.section-title {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: var(--text);
+}
+
+/* Stock table styling to match cards */
+.stock-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.stock-table thead th {
+    text-align: left;
+    padding: 8px 6px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+}
+
+.stock-table tbody td {
+    padding: 10px 6px;
+    border-bottom: 1px dashed var(--border);
+}
+
+.stock-table tbody tr:last-child td {
+    border-bottom: none; /* cleaner end of list */
+}
+
+
+/* Base card appearance */
+.task-card {
+    border: 1px solid #e5e7eb; /* neutral gray */
+    border-radius: 8px;
+    padding: 10px 12px;
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Warnung: Ablauf innerhalb 60 Minuten */
+.task-card.is-warning {
+    border: 3px solid #f59e0b; /* deutlicher, aber ohne Hintergrundwechsel */
+}
+
+.task-card.is-warning:hover,
+.task-card.is-warning:focus-visible {
+    border-color: #f59e0b; /* nicht auf --primary wechseln */
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .35); /* gleicher Hover-Schatten wie normal */
+}
+
+/* Abgelaufen: rot */
+.task-card.is-expired {
+    border: 3px solid #e63946; /* deutlicher, aber ohne Hintergrund-/Textwechsel */
+}
+
+.task-card.is-expired:hover,
+.task-card.is-expired:focus-visible {
+    border-color: #e63946; /* nicht auf --primary wechseln */
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .35);
+}
+/* Generic form controls inside cards (Account, etc.) */
+.card .field label {
+    display: block;
+    margin: 10px 0 6px;
+    color: var(--text);
+}
+
+.card input[type="text"],
+.card input[type="email"],
+.card input[type="password"],
+.card input[type="number"],
+.card input[type="datetime-local"],
+.card textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: #0b1220;
+    color: var(--text);
+    outline: none;
+}
+
+.card textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.card input[type="text"]:focus,
+.card input[type="email"]:focus,
+.card input[type="password"]:focus,
+.card input[type="number"]:focus,
+.card input[type="datetime-local"]:focus,
+.card textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, .25);
+}
+
+/* Buttons in Cards */
+.card button,
+.card .btn {
+    display: inline-block;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, .02);
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color .2s ease, color .2s ease, transform .1s ease;
+}
+
+.card button:hover,
+.card .btn:hover,
+.card button:focus-visible,
+.card .btn:focus-visible {
+    border-color: var(--primary);
+    color: var(--primary);
+    outline: none;
+    transform: translateY(-1px);
+}
+/* ---------------------
+   Tasks overview page
+   --------------------- */
+.tasks-page .tasks-header {
+    padding: 24px 0 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+.tasks-page .tasks-header h1 {
+    margin: 0 0 6px 0;
+    font-size: clamp(28px, 4vw, 36px);
+}
+
+.tasks-page .tasks-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.tasks-page .tasks-toolbar .cta-link,
+.tasks-page .tasks-toolbar .cta-link:visited {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .015));
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--text);
+}
+
+.tasks-page .tasks-toolbar .cta-link:hover,
+.tasks-page .tasks-toolbar .cta-link:focus-visible {
+    border-color: var(--primary);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+    outline: none;
+}
+
+.error-messages {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .02), rgba(255, 255, 255, .01));
+    border: 1px solid var(--border);
+    border-left: 4px solid #e63946; /* red accent consistent with .is-expired */
+    border-radius: 14px; /* same radius as cards */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+    padding: 14px 16px;
+    margin: 12px 0 18px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--text);
+}
+.error-messages ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    list-style: disc;
+}
+.error-messages li {
+    margin: 6px 0;
+}

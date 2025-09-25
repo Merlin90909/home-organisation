@@ -3,6 +3,7 @@
 namespace App\Validators;
 
 use Framework\Validators\PayloadValidator;
+use Framework\Validators\ValidatorChain;
 
 class LogInSubmitValidator extends PayloadValidator
 {

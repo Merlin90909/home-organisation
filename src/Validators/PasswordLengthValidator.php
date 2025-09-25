@@ -20,6 +20,8 @@ class PasswordLengthValidator implements ValidatorInterface
 
     public function getMessages(): array
     {
-        // TODO: Implement getMessages() method.
+        return [
+            'Das Passwort ist nicht lang genug!'
+        ];
     }
 }

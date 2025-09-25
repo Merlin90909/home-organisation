@@ -4,75 +4,76 @@ namespace App\Controller;
 
 use App\Services\RegisterService;
 
-//use App\Validators\PasswordIdentValidator;
-use App\Validators\EmailValidator;
-use App\Validators\NameValidator;
-use App\Validators\PasswordLengthValidator;
-use App\Validators\EmptyValidator;
-use App\Validators\PasswordSpecialCharValidator;
+use App\Validators\RegisterSubmitValidator;
 use Framework\Interfaces\ControllerInterface;
 use Framework\Interfaces\ResponseInterface;
 use Framework\Requests\httpRequests;
 use Framework\Responses\RedirectResponse;
-use Framework\Services\UserService;
 
 class RegisterSubmitController implements ControllerInterface
 {
 
     public function __construct(
         private RegisterService $registerService,
-        private EmptyValidator $emptyValidator,
-        private UserService $userService,
-        private PasswordLengthValidator $passwordLengthValidator,
-        private PasswordSpecialCharValidator $passwordSpecialCharValidator,
-        private NameValidator $nameValidator,
-        //private PasswordIdentValidator $passwordIdentValidator
-    )
-    {
+        private RegisterSubmitValidator $payloadValidator
+    ) {
     }
 
     function handle(httpRequests $httpRequest): ResponseInterface
     {
+        $valid = $this->payloadValidator->validate($httpRequest->getPayload());
+        if (!$valid) {
+            dd($this->payloadValidator->getMessages());
+        }
 
-
-        $inputs = [
+        $isRegisted = $this->registerService->register(
             $httpRequest->getPayload()['fName'],
             $httpRequest->getPayload()['lName'],
             $httpRequest->getPayload()['email'],
             $httpRequest->getPayload()['password'],
-            $httpRequest->getPayload()['password2']
-        ];
+            $httpRequest->getPayload()['password2'],
+        );
 
-        foreach ($inputs as $input) {
-            if (!$this->emptyValidator->validate($input)) {
-                return new RedirectResponse('/register?error=failed_empty_input');
-            }
+        if (!$isRegisted) {
+            return new RedirectResponse('/register?error=register_failed');
         }
+        return new RedirectResponse('/login?register=success');
 
-        if ($this->userService->userExist($httpRequest->getPayload()['email'])) {
-            return new RedirectResponse('/register?error=failed_email_already_exists');
-        }
 
-        if (!$this->passwordLengthValidator->validate($httpRequest->getPayload()['password'])) {
-            return new RedirectResponse('/register?error=failed_password_length');
-        }
-        if (!$this->passwordSpecialCharValidator->validate($httpRequest->getPayload()['password'])) {
-            return new RedirectResponse('/register?error=failed_password_specialchar');
-        }
-        if (!$this->nameValidator->validate($httpRequest->getPayload()['fName'])) {
-            return new RedirectResponse('/register?error=failed_name_length');
-        }
-        if (!$this->nameValidator->validate($httpRequest->getPayload()['lName'])) {
-            return new RedirectResponse('/register?error=failed_name_length');
-        }
+        // $inputs = [
+        //     $httpRequest->getPayload()['fName'],
+        //     $httpRequest->getPayload()['lName'],
+        //     $httpRequest->getPayload()['email'],
+        //     $httpRequest->getPayload()['password'],
+        //     $httpRequest->getPayload()['password2']
+        // ];
+//
+        // foreach ($inputs as $input) {
+        //     if (!$this->emptyValidator->validate($input)) {
+        //         return new RedirectResponse('/register?error=failed_empty_input');
+        //     }
+        // }
+//
+        // if ($this->userService->userExist($httpRequest->getPayload()['email'])) {
+        //     return new RedirectResponse('/register?error=failed_email_already_exists');
+        // }
+//
+        // if (!$this->passwordLengthValidator->validate($httpRequest->getPayload()['password'])) {
+        //     return new RedirectResponse('/register?error=failed_password_length');
+        // }
+        // if (!$this->passwordSpecialCharValidator->validate($httpRequest->getPayload()['password'])) {
+        //     return new RedirectResponse('/register?error=failed_password_specialchar');
+        // }
+        // if (!$this->nameValidator->validate($httpRequest->getPayload()['fName'])) {
+        //     return new RedirectResponse('/register?error=failed_name_length');
+        // }
+        // if (!$this->nameValidator->validate($httpRequest->getPayload()['lName'])) {
+        //     return new RedirectResponse('/register?error=failed_name_length');
+        // }
         //ausgesetzt wegen Unklarheit mit $input
         //if(!$this->passwordIdentValidator->validate($post['password'], $post['password2'])) {
         //    return new RedirectResponse('/register?error=failed_passwords_not_identical');
-            //}
+        //}
 
-        $this->registerService->register(...$inputs);
-
-
-        return new RedirectResponse('/login?register=success');
     }
 }

@@ -17,6 +17,8 @@ class PasswordSpecialCharValidator implements ValidatorInterface
 
     public function getMessages(): array
     {
-        // TODO: Implement getMessages() method.
+        return [
+            'Das Passwort muss ein Sonderzeichen enthalten!'
+        ];
     }
 }

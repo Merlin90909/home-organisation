@@ -8,7 +8,7 @@ class PayloadValidator implements ValidatorInterface
 {
     private array $errors = [];
 
-    public function __construct(private readonly array $validators =[])
+    public function __construct(private readonly array $validators = [])
     {
     }
 
@@ -25,7 +25,7 @@ class PayloadValidator implements ValidatorInterface
 
             if (!$validator->validate($value)) {
                 $allValid = false;
-                $this->errors = array_merge($this->errors, $validator->getMessages());
+                $this->errors[$field] = array_merge($validator->getMessages());
             }
         }
 
