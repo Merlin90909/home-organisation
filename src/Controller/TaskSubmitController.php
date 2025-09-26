@@ -28,11 +28,9 @@ class TaskSubmitController implements ControllerInterface
     {
         $roomId = isset($httpRequest->getPayload()['room_id']) ? (int)$httpRequest->getPayload()['room_id'] : null;
         $valid = $this->payloadValidator->validate($httpRequest->getPayload());
-        //dd($valid);
 
         if (!$valid) {
             $errors = $this->payloadValidator->getMessages();
-            //dd($errors);
             $room = $this->roomsService->getRoom($roomId);
             $task = $this->taskService->getTaskByRoomId($roomId);
             $html = $this->htmlRenderer->render('room.phtml', [

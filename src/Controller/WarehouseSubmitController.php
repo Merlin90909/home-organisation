@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Services\WarehouseService;
+use App\Validators\WarehouseSubmitValidator;
 use Framework\Interfaces\ControllerInterface;
 use Framework\Interfaces\ResponseInterface;
 use Framework\Requests\httpRequests;
@@ -14,12 +15,28 @@ class WarehouseSubmitController implements ControllerInterface
 {
     public function __construct(
         private WarehouseService $warehouseService,
-        private HtmlRenderer $htmlRenderer
+        private HtmlRenderer $htmlRenderer,
+        private WarehouseSubmitValidator $payloadValidator
     ) {
     }
 
     function handle(httpRequests $httpRequest): ResponseInterface
     {
+        $valid = $this->payloadValidator->validate($httpRequest->getPayload());
+        if (!$valid) {
+            $errors = $this->payloadValidator->getMessages();
+            $items = $this->warehouseService->getItems($httpRequest->getSession()['user_id']);
+            $rooms = $this->warehouseService->getRoomNames($httpRequest->getSession()['user_id']);
+
+            $html = $this->htmlRenderer->render('warehouse.phtml', [
+                'errors' => $errors,
+                'items' => $items,
+                'rooms' => $rooms,
+
+            ]);
+            return new HtmlResponse($html);
+        }
+
         $warehouse = $this->warehouseService->edit(
             (int)($httpRequest->getSession()['user_id']),
             (int)($httpRequest->getPayload()['room_id']),

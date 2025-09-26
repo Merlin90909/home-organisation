@@ -56,6 +56,25 @@ require_once(__DIR__ . '/header.phtml');
             </div>
         </section>
 
+        <?php
+        if (!empty($errors)): ?>
+            <div class="error-messages">
+                <?php
+                foreach ($errors as $field => $messages): ?>
+                    <h3><?= htmlspecialchars(ucfirst($field)) ?></h3>
+                    <ul>
+                        <?php
+                        foreach ($messages as $message): ?>
+                            <li><?= htmlspecialchars($message) ?></li>
+                        <?php
+                        endforeach; ?>
+                    </ul>
+                <?php
+                endforeach; ?>
+            </div>
+        <?php
+        endif; ?>
+
         <section class="card card--warehouse-stock">
             <div class="card__header">
                 <h2>Aktueller Bestand</h2>
