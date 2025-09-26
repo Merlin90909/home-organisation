@@ -20,7 +20,6 @@ class DashboardController implements ControllerInterface
 
     function handle(httpRequests $httpRequest): ResponseInterface
     {
-        //wieder aktivieren
         if (!isset($httpRequest->getSession()['logged_in']) || $httpRequest->getSession()['logged_in'] !== true) {
             header('Location: /login');
         }

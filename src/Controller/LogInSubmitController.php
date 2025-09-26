@@ -32,8 +32,6 @@ class LogInSubmitController implements ControllerInterface
             ]);
 
             return new HtmlResponse($html);
-
-
         }
         $isLoggedin = $this->loginService->login(
             $httpRequest->getPayload()['email'],

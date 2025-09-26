@@ -9,11 +9,11 @@ require_once(__DIR__ . '/header.phtml');
             <form method="post" action="/rooms-submit">
                 <div>
                     <label for="room_name">Raumname:</label>
-                    <input type="text" id="room_name" name="room_name" required>
+                    <input type="text" id="room_name" name="room_name">
                 </div>
                 <div>
                     <label for="room_description">Beschreibung:</label>
-                    <textarea id="room_description" name="room_description" required></textarea>
+                    <textarea id="room_description" name="room_description"></textarea>
                 </div>
                 <div>
                     <button type="submit">Raum erstellen</button>
@@ -21,6 +21,25 @@ require_once(__DIR__ . '/header.phtml');
                            value="<?= isset($room['id']) ? htmlspecialchars($room['id']) : '' ?>">
                 </div>
             </form>
+            <?php
+            if (!empty($errors)): ?>
+                <div class="error-messages">
+                    <?php
+                    foreach ($errors as $field => $messages): ?>
+                        <h3><?= htmlspecialchars(ucfirst($field)) ?></h3>
+                        <ul>
+                            <?php
+                            foreach ($messages as $message): ?>
+                                <li><?= htmlspecialchars($message) ?></li>
+                            <?php
+                            endforeach; ?>
+                        </ul>
+                    <?php
+                    endforeach; ?>
+                </div>
+            <?php
+            endif; ?>
+
             <div class="room-list">
                 <?php
                 if (!empty($rooms) && is_array($rooms)): ?>
@@ -28,7 +47,7 @@ require_once(__DIR__ . '/header.phtml');
                     foreach ($rooms as $room): ?>
                         <article class="room-card">
                             <h2>
-                                <a href="/room/<?= urlencode($room['id'] ?? '') ?>">
+                                <a href="/room/<?= urlencode($room['id']) ?>">
                                     <?= htmlspecialchars($room['name'] ?? '') ?>
                                 </a>
                             </h2>
@@ -48,6 +67,7 @@ require_once(__DIR__ . '/header.phtml');
             </div>
         </div>
     </div>
+
 
 <?php
 require_once(__DIR__ . '/footer.phtml');

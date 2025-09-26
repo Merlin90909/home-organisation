@@ -30,5 +30,17 @@
     <br>
     <a href="/login">Einloggen</a>
 </form>
+<?php if (!empty($errors)): ?>
+    <div class="error-messages">
+        <?php foreach ($errors as $field => $messages): ?>
+            <h3><?= htmlspecialchars(ucfirst($field)) ?></h3>
+            <ul>
+                <?php foreach ($messages as $message): ?>
+                    <li><?= htmlspecialchars($message) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
 </body>
 </html>
