@@ -11,6 +11,8 @@ require __DIR__ . '/../boot/boot.php';
 $factories = require __DIR__ . '/../config/factories.php';
 $routes = require __DIR__ . '/../config/routes.php';
 
+date_default_timezone_set('Europe/Berlin');
+
 $objectManager = new ObjectManagerService($factories);
 $router = new RouterService($objectManager, $routes);
 

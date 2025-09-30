@@ -15,10 +15,10 @@ class DashboardService
         if (empty($rawItems) || !is_array($rawItems)) {
             return [];
         }
-
         $result = [];
         foreach ($rawItems as $t) {
             $title = $t['title'] ?? '';
+            //dd($t['due_at']);
 
             $rooms = trim((string)($t['rooms'] ?? ''));
             $roomTagHtml = '';

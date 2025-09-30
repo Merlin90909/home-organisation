@@ -64,7 +64,9 @@ class TaskService
         if ($dueAt instanceof DateTimeInterface) {
             $dt = clone $dueAt;
         } else {
+            date_default_timezone_set('Europe/Berlin');
             $dt = new DateTime((string)$dueAt);
+            //dd($dt);
         }
         if ($dt > $now) {
             $difference = $now->diff($dt);
