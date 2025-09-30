@@ -17,8 +17,6 @@ class RoomsSubmitController implements ControllerInterface
 {
     public function __construct(
         private RoomsCreateService $roomsCreateService,
-        private HtmlRenderer $htmlRenderer,
-        private RoomsService $roomsService,
         private RoomsSubmitValidator $payloadValidator,
     ) {
     }
@@ -44,15 +42,9 @@ class RoomsSubmitController implements ControllerInterface
             $httpRequest->getPayload()['room_description']
         );
         if (!$create) {
-            return new HtmlResponse($this->htmlRenderer->render('rooms.phtml', [
-                'rooms' => $this->roomsService->getRooms($httpRequest->getSession()['user_id']),
-                'error' => 'creation_failed'
-            ]));
+            return new RedirectResponse("/rooms");
         }
 
-        return new HtmlResponse($this->htmlRenderer->render('rooms.phtml', [
-            'rooms' => $this->roomsService->getRooms($httpRequest->getSession()['user_id']),
-            'error' => 'creation_success'
-        ]));
+        return new RedirectResponse("/rooms");
     }
 }

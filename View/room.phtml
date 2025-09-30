@@ -123,27 +123,29 @@ $room = is_array($room ?? null) ? $room : []; ?>
                 <button type="submit">Task anlegen</button>
 
             </form>
+            <?php
+            $errors = $_SESSION['flashMessages'] ?? [];
+            unset($_SESSION['flashMessages']);
+            ?>
+
+            <?php if (!empty($errors)): ?>
+                <div class="error-messages">
+
+                    <?php foreach ($errors as $field => $messages): ?>
+                        <h3><?= htmlspecialchars($field) ?></h3>
+                        <ul>
+                            <?php foreach ($messages as $msg): ?>
+                                <li><?= htmlspecialchars($msg) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
         </div>
     </div>
 
-<?php
-if (!empty($errors)): ?>
-    <div class="error-messages">
-        <?php
-        foreach ($errors as $field => $messages): ?>
-            <h3><?= htmlspecialchars(ucfirst($field)) ?></h3>
-            <ul>
-                <?php
-                foreach ($messages as $message): ?>
-                    <li><?= htmlspecialchars($message) ?></li>
-                <?php
-                endforeach; ?>
-            </ul>
-        <?php
-        endforeach; ?>
-    </div>
-<?php
-endif; ?>
+
 
 <?php
 require_once(__DIR__ . '/footer.phtml');

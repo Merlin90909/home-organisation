@@ -10,6 +10,7 @@ use Framework\Interfaces\ControllerInterface;
 use Framework\Interfaces\ResponseInterface;
 use Framework\Requests\httpRequests;
 use Framework\Responses\HtmlResponse;
+use Framework\Responses\RedirectResponse;
 use Framework\Services\HtmlRenderer;
 use Framework\Validators\PayloadValidator;
 
@@ -17,9 +18,6 @@ class TaskSubmitController implements ControllerInterface
 {
     public function __construct(
         private TaskCreateService $taskCreateService,
-        private RoomsService $roomsService,
-        private HtmlRenderer $htmlRenderer,
-        private TaskService $taskService,
         private TaskSubmitValidator $payloadValidator,
     ) {
     }
@@ -28,17 +26,16 @@ class TaskSubmitController implements ControllerInterface
     {
         $roomId = isset($httpRequest->getPayload()['room_id']) ? (int)$httpRequest->getPayload()['room_id'] : null;
         $valid = $this->payloadValidator->validate($httpRequest->getPayload());
-
         if (!$valid) {
-            $errors = $this->payloadValidator->getMessages();
-            $room = $this->roomsService->getRoom($roomId);
-            $task = $this->taskService->getTaskByRoomId($roomId);
-            $html = $this->htmlRenderer->render('room.phtml', [
-                'errors' => $errors,
-                'room' => $room,
-                'task' => $task,
-            ]);
-            return new HtmlResponse($html);
+            $allErrors = $this->payloadValidator->getMessages();
+
+            foreach ($allErrors as $field => $messages) {
+                foreach ($messages as $message) {
+                    $_SESSION['flashMessages'][$field][] = $message;
+                }
+            }
+
+            return new RedirectResponse("/room/{$roomId}");
         }
 
         $create = $this->taskCreateService->create(
@@ -54,22 +51,9 @@ class TaskSubmitController implements ControllerInterface
         );
 
         if (!$create) {
-            $room = $this->roomsService->getRoom($roomId);
-            $task = $this->taskService->getTaskByRoomId($roomId);
-
-            return new HtmlResponse($this->htmlRenderer->render('room.phtml', [
-                'room' => $room,
-                'task' => $task,
-            ]));
+            return new RedirectResponse("/room/{$roomId}");
         }
 
-        $room = $this->roomsService->getRoom($roomId);
-        $task = $this->taskService->getTaskByRoomId($roomId);
-
-        return new HtmlResponse($this->htmlRenderer->render('room.phtml', [
-            'room' => $room,
-            'task' => $task,
-            'timers' => $task,
-        ]));
+        return new RedirectResponse("/room/{$roomId}");
     }
 }
