@@ -9,6 +9,7 @@ use Framework\Interfaces\ControllerInterface;
 use Framework\Interfaces\ResponseInterface;
 use Framework\Requests\httpRequests;
 use Framework\Responses\HtmlResponse;
+use Framework\Responses\RedirectResponse;
 use Framework\Services\HtmlRenderer;
 use Framework\Validators\PayloadValidator;
 
@@ -26,13 +27,15 @@ class RoomsSubmitController implements ControllerInterface
     {
         $valid = $this->payloadValidator->validate($httpRequest->getPayload());
         if (!$valid) {
-            $errors = $this->payloadValidator->getMessages();
-            $html = $this->htmlRenderer->render('rooms.phtml', [
-                'errors' => $errors,
-                'rooms' => $this->roomsService->getRooms($httpRequest->getSession()['user_id']),
+            $allErrors = $this->payloadValidator->getMessages();
 
-            ]);
-            return new HtmlResponse($html);
+            foreach ($allErrors as $field => $messages) {
+                foreach ($messages as $message) {
+                    $_SESSION['flashMessages'][$field][] = $message;
+                }
+            }
+
+            return new RedirectResponse("/rooms");
         }
 
         $create = $this->roomsCreateService->create(

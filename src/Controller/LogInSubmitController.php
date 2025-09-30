@@ -7,9 +7,7 @@ use App\Validators\LogInSubmitValidator;
 use Framework\Interfaces\ControllerInterface;
 use Framework\Interfaces\ResponseInterface;
 use Framework\Requests\httpRequests;
-use Framework\Responses\HtmlResponse;
 use Framework\Responses\RedirectResponse;
-use Framework\Services\HtmlRenderer;
 
 class LogInSubmitController implements ControllerInterface
 {

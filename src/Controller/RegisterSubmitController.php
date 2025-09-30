@@ -4,14 +4,11 @@ namespace App\Controller;
 
 use App\Services\RegisterService;
 
-use App\Services\Utilities;
 use App\Validators\RegisterSubmitValidator;
 use Framework\Interfaces\ControllerInterface;
 use Framework\Interfaces\ResponseInterface;
 use Framework\Requests\httpRequests;
-use Framework\Responses\HtmlResponse;
 use Framework\Responses\RedirectResponse;
-use Framework\Services\HtmlRenderer;
 
 class RegisterSubmitController implements ControllerInterface
 {
