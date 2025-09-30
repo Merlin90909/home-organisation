@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Services\RegisterService;
 
+use App\Services\Utilities;
 use App\Validators\RegisterSubmitValidator;
 use Framework\Interfaces\ControllerInterface;
 use Framework\Interfaces\ResponseInterface;
@@ -18,7 +19,7 @@ class RegisterSubmitController implements ControllerInterface
     public function __construct(
         private RegisterService $registerService,
         private RegisterSubmitValidator $payloadValidator,
-        private HtmlRenderer $htmlRenderer,
+        private HtmlRenderer $htmlRenderer
     ) {
     }
 
@@ -26,11 +27,15 @@ class RegisterSubmitController implements ControllerInterface
     {
         $valid = $this->payloadValidator->validate($httpRequest->getPayload());
         if (!$valid) {
-            $errors = $this->payloadValidator->getMessages();
-            $html = $this->htmlRenderer->render('register.phtml', [
-                'errors' => $errors
-            ]);
-            return new HtmlResponse($html);
+            $allErrors = $this->payloadValidator->getMessages();
+
+            foreach ($allErrors as $field => $messages) {
+                foreach ($messages as $message) {
+                    $_SESSION['flashMessages'][$field][] = $message;
+                }
+            }
+
+            return new RedirectResponse("/register");
         }
 
         $isRegisted = $this->registerService->register(

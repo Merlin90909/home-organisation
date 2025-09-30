@@ -21,10 +21,6 @@ class RoomController implements ControllerInterface
 
     function handle(httpRequests $httpRequest): ResponseInterface
     {
-        if (!$httpRequest->getSessionLoggedIn()) {
-            header('Location: /login');
-            exit;
-        }
 
         $roomId = $httpRequest->getRouteParameters('id');
 

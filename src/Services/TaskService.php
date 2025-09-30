@@ -18,7 +18,7 @@ class TaskService
             "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.repeat, t.repeat_rule, t.created_at, t.deleted
              FROM task t
              INNER JOIN room_to_task rt ON rt.task_id = t.id
-             WHERE rt.room_id = :id & t.deleted = false
+             WHERE rt.room_id = :id AND t.deleted = false
              ORDER BY t.due_at"
         );
         $stmt->execute(['id' => $id]);
@@ -115,28 +115,65 @@ class TaskService
         return $task;
     }
 
-    public function repeatTask(string $due_at, bool $repeat, string $repeate_rule): bool
+    public function repeatTask(int $taskId): bool
     {
-        if ($repeat === true) {
-            $goal = strtotime($due_at);
-            $now = strtotime("now");
+        $stmt = $this->pdo->prepare(
+            "SELECT t.*, rt.room_id FROM task t
+             LEFT JOIN room_to_task rt ON rt.task_id = t.id
+             WHERE t.id = :id AND t.deleted = false"
+        );
+        $stmt->execute(['id' => $taskId]);
+        $task = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            $diff = $goal - $now;
-
-            if ($diff <= 0) {
-                $stmt = $this->pdo->prepare(
-                    "SELECT t.id, t.title, t.notes, t.due_at, t.priority,t.repeat, t.repeat_rule, t.created_at, t.deleted 
-                    FROM task t
-                    LEFT JOIN room_to_task rt ON rt.task_id = t.id
-                    LEFT JOIN room ro ON ro.id = rt.room_id
-                    WHERE t.repeat is true AND t.deleted = false
-                    GROUP BY t.id"
-                );
-
-            }
-            return true;
-        } else {
+        if (!$task) {
             return false;
         }
+
+        if (!(bool)$task['repeat']) {
+            return false;
+        }
+
+        $rule = trim((string)$task['repeat_rule']);
+        if ($rule === '' || $rule === 'false') {
+            return false;
+        }
+
+        $increments = [
+            '60_minutes' => '+1 hour',
+            '120_minutes' => '+2 hours',
+            '1_day' => '+1 day',
+            '2_days' => '+2 days',
+            '7_days' => '+7 days',
+            '14_days' => '+14 days',
+            '28_days' => '+28 days',
+        ];
+
+        $inc = $increments[$rule] ?? null;
+        if ($inc === null) {
+            return false;
+        }
+
+        $baseTimestamp = isset($task['due_at']) && $task['due_at']
+            ? strtotime((string)$task['due_at'])
+            : time();
+
+        if ($baseTimestamp === false) {
+            return false;
+        }
+
+        $newDueAt = date('Y-m-d H:i:s', strtotime($inc, $baseTimestamp));
+
+        $creator = new TaskCreateService($this->pdo);
+        return $creator->create(
+            (int)$task['created_by'],
+            (int)($task['room_id'] ?? $task['created_for']),
+            (string)$task['title'],
+            (string)$task['notes'],
+            $newDueAt,
+            (string)$task['priority'],
+            true,
+            (string)$task['repeat_rule'],
+            date('Y-m-d H:i:s')
+        );
     }
 }

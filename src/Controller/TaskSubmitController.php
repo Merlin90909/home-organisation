@@ -37,7 +37,6 @@ class TaskSubmitController implements ControllerInterface
                 'errors' => $errors,
                 'room' => $room,
                 'task' => $task,
-                'timers' => $task,
             ]);
             return new HtmlResponse($html);
         }
@@ -58,12 +57,9 @@ class TaskSubmitController implements ControllerInterface
             $room = $this->roomsService->getRoom($roomId);
             $task = $this->taskService->getTaskByRoomId($roomId);
 
-
             return new HtmlResponse($this->htmlRenderer->render('room.phtml', [
                 'room' => $room,
                 'task' => $task,
-                'timers' => $task,
-                'error' => 'creation_failed'
             ]));
         }
 
@@ -74,7 +70,6 @@ class TaskSubmitController implements ControllerInterface
             'room' => $room,
             'task' => $task,
             'timers' => $task,
-            'success' => 'creation_success'
         ]));
     }
 }

@@ -2703,24 +2703,59 @@ body:not(.dashboard-body) > h1 {
     outline: none;
 }
 
+/* Allgemeiner Container für Fehlernachrichten */
 .error-messages {
-    background: linear-gradient(180deg, rgba(255, 255, 255, .02), rgba(255, 255, 255, .01));
-    border: 1px solid var(--border);
-    border-left: 4px solid #e63946; /* red accent consistent with .is-expired */
-    border-radius: 14px; /* same radius as cards */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
-    padding: 14px 16px;
-    margin: 12px 0 18px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    color: var(--text);
+    background: var(--surface-2);
+    border-left: 4px solid #e63946;
+    padding: 16px;
+    border-radius: 6px;
+    margin: 20px 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
 }
+
+.error-messages h3 {
+    margin: 10px 0 6px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #e63946;
+}
+
 .error-messages ul {
-    margin: 0;
-    padding-left: 1.2rem;
+    margin: 0 0 10px 20px;
+    padding: 0;
     list-style: disc;
 }
+
 .error-messages li {
-    margin: 6px 0;
+    margin: 4px 0;
+    color: var(--text);
+}
+
+/* Inline-Fehlerlisten unter Inputs */
+.field-error {
+    margin: 6px 0 10px;
+    padding-left: 18px;
+    list-style: disc;
+    color: #e63946;
+    font-size: 14px;
+}
+
+.field-error li {
+    margin: 2px 0;
+}
+
+/* Markiere fehlerhafte Felder */
+input.is-invalid,
+textarea.is-invalid,
+select.is-invalid {
+    border-color: #e63946;
+    background-color: #fff5f5;
+}
+
+/* Align error summary width with form */
+body:not(.dashboard-body) > .error-messages {
+    width: min(600px, 92vw);
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 48px;
 }
