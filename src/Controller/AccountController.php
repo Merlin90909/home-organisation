@@ -19,10 +19,10 @@ class AccountController implements ControllerInterface
 
     function handle(httpRequests $httpRequest): ResponseInterface
     {
-        if (!$httpRequest->getSessionLoggedIn()) {
-            header('Location: /login');
-            exit;
-        }
+       // if (!$httpRequest->getSessionLoggedIn()) {
+       //     header('Location: /login');
+       //     exit;
+       // }
 
         $user = $this->accountService->showParameters($httpRequest->getSession()['user_id']);
 

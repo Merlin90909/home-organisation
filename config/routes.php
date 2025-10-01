@@ -25,15 +25,17 @@ return [
     'GET' => [
         '/' => [
             'Controller' => DashboardController::class,
-            'requestMethod' => 'GET'
+            'requestMethod' => 'GET',
         ],
         '/login' => [
             'Controller' => LoginController::class,
-            'requestMethod' => 'GET'
+            'requestMethod' => 'GET',
+            'public' => true,
         ],
         '/register' => [
             'Controller' => RegisterController::class,
-            'requestMethod' => 'GET'
+            'requestMethod' => 'GET',
+            'public' => true,
         ],
         '/logout' => [
             'Controller' => LogoutController::class,
@@ -41,7 +43,8 @@ return [
         ],
         '/impressum' => [
             'Controller' => ImprintController::class,
-            'requestMethod' => 'GET'
+            'requestMethod' => 'GET',
+            'public' => true,
         ],
         '/404' => [
             'Controller' => ErrorController::class,
@@ -76,11 +79,13 @@ return [
     'POST' => [
         '/login-submit' => [
             'Controller' => LoginSubmitController::class,
-            'requestMethod' => 'POST'
+            'requestMethod' => 'POST',
+            'public' => true
         ],
         '/register-submit' => [
             'Controller' => RegisterSubmitController::class,
-            'requestMethod' => 'POST'
+            'requestMethod' => 'POST',
+            'public' => true
         ],
         '/logout-submit' => [
             'Controller' => LogoutSubmitController::class,

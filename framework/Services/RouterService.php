@@ -5,6 +5,7 @@ namespace Framework\Services;
 use App\Controller\ErrorController;
 use Framework\Interfaces\ControllerInterface;
 use Framework\Requests\httpRequests;
+use Framework\Responses\RedirectResponse;
 
 class RouterService
 {
@@ -20,6 +21,7 @@ class RouterService
     public function route($httpRequest)
     {
         $method = strtoupper($httpRequest->getMethod() ?? 'GET');
+        $routeConfig = null;
 
         $methodRoutes = $this->routes[$method] ?? [];
 
@@ -37,11 +39,20 @@ class RouterService
             }
         }
 
+        //Überprüfung ob Public true oder defaulse
+        if ($routeConfig !== null) {
+            $isPublic = $routeConfig['public'] ?? false;
+            if (!$isPublic && !$httpRequest->getSessionLoggedIn()) {
+                return new RedirectResponse('/login');
+            }
+        }
+
         /** @var ControllerInterface $controller */
         $controller = $this->objectManager->get($controllerName);
 
         return $controller->handle($httpRequest);
     }
+
 
     private function matchRoute(httpRequests $httpRequest): ?string
     {
@@ -52,7 +63,6 @@ class RouterService
         $methodRoutes = $this->routes[$httpRequest->getMethod()] ?? [];
 
         foreach ($methodRoutes as $route => $config) {
-
             $routeParameters = [];
 
             $routeParts = explode('/', $route);

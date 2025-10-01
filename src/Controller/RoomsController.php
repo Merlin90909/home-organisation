@@ -19,10 +19,10 @@ class RoomsController implements ControllerInterface
 
     function handle(httpRequests $httpRequest): ResponseInterface
     {
-        if (!$httpRequest->getSessionLoggedIn()) {
-            header('Location: /login');
-            exit;
-        }
+        //if (!$httpRequest->getSessionLoggedIn()) {
+        //    header('Location: /login');
+        //    exit;
+        //}
 
         $rooms = $this->roomsService->getRooms($httpRequest->getSession()['user_id']);
 

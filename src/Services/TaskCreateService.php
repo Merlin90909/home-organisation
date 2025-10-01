@@ -21,9 +21,6 @@ class TaskCreateService
         string $repeat_rule,
         string $created_at
     ) {
-        if (empty($userId) || empty($roomId) || empty($title) || empty($notes) || empty($due_at) || empty($priority) || empty($repeat) || empty($repeat_rule)) {
-            return false;
-        }
 
         $statement = $this->pdo->prepare(
             'INSERT INTO task (created_by, created_for, title, notes, due_at, priority, repeat, repeat_rule, created_at) 

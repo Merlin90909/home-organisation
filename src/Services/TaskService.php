@@ -18,7 +18,7 @@ class TaskService
             "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.repeat, t.repeat_rule, t.created_at, t.deleted
              FROM task t
              INNER JOIN room_to_task rt ON rt.task_id = t.id
-             WHERE rt.room_id = :id AND t.deleted = false
+             WHERE rt.room_id = :id AND t.deleted = 0
              ORDER BY t.due_at"
         );
         $stmt->execute(['id' => $id]);
@@ -29,7 +29,7 @@ class TaskService
 
     public function deleteTaskById(int $id): bool
     {
-        $stmt = $this->pdo->prepare('Update task set deleted = true where id = :id');
+        $stmt = $this->pdo->prepare('Update task set deleted = 1 where id = :id');
         return $stmt->execute(['id' => $id]);
     }
 
@@ -40,7 +40,7 @@ class TaskService
              FROM task t
              LEFT JOIN room_to_task rt ON rt.task_id = t.id
              LEFT JOIN room ro ON ro.id = rt.room_id
-             WHERE t.due_at IS NOT NULL AND t.deleted = false
+             WHERE t.due_at IS NOT NULL AND t.deleted = 0
              GROUP BY t.id
              ORDER BY t.due_at ASC
              LIMIT :limit"
@@ -64,9 +64,7 @@ class TaskService
         if ($dueAt instanceof DateTimeInterface) {
             $dt = clone $dueAt;
         } else {
-            date_default_timezone_set('Europe/Berlin');
-            $dt = new DateTime((string)$dueAt);
-            //dd($dt);
+             $dt = new DateTime((string)$dueAt);
         }
         if ($dt > $now) {
             $difference = $now->diff($dt);
@@ -84,7 +82,7 @@ class TaskService
      FROM task t
      LEFT JOIN room_to_task rt ON rt.task_id = t.id
      LEFT JOIN room ro ON ro.id = rt.room_id
-     WHERE t.due_at IS NOT NULL AND t.deleted = false
+     WHERE t.due_at IS NOT NULL AND t.deleted = 0
      GROUP BY t.id
      ORDER BY t.due_at ASC"
         );
@@ -122,7 +120,7 @@ class TaskService
         $stmt = $this->pdo->prepare(
             "SELECT t.*, rt.room_id FROM task t
              LEFT JOIN room_to_task rt ON rt.task_id = t.id
-             WHERE t.id = :id AND t.deleted = false"
+             WHERE t.id = :id AND t.deleted = 0"
         );
         $stmt->execute(['id' => $taskId]);
         $task = $stmt->fetch(PDO::FETCH_ASSOC);
