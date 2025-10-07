@@ -29,12 +29,19 @@ class AccountController implements ControllerInterface
         //User löschen funktioniert
         //$this->ormService->delete($user);
 
-        //User updaten
-        //dd($this->ormService->save($user));
-        //dd($this->ormService->update($user));
+        //User updaten funktioniert
+       //$user->first_Name = 'Alexander';
+       //$this->ormService->update($user);
 
+        //User create funktioniert
+        //$this->ormService->create($user);
+
+        //User save funktioniert
+        $user->first_Name = 'Jens';
+        $this->ormService->save($user);
 
         dd($user);
+
         //$user->firstName = 'Jens';
         //$user->save($user);
         //$user2 = $this->ormService->save($user);

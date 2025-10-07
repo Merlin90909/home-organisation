@@ -41,26 +41,35 @@ class OrmService
             return $this->create($entity);
         }
         return $this->update($entity);
-
     }
 
     public function update(EntityInterface $entity): bool
     {
+        // alle Daten; Ausgabe als Array
         $data = get_object_vars($entity);
-        $set= explode(':', $data);
-
-
-        //$data = get_object_vars($entity);
-        //$set = implode(' = ?, ', array_keys($data)) . ' = ?';
-        //$sql = 'UPDATE ' . $entity::getTable() . ' SET ' . $set . ' WHERE id = ?';
-        //$stmt = $this->pdo->prepare($sql);
-        //return $stmt->execute([...array_values($data), $entity->getId()]);
-        return '';
+        //id wird nicht geupdated (Counter)
+        if (array_key_exists('id', $data)) {
+            unset($data['id']);
+        }
+        // dynamisches Erstellen der Query
+        $assignments = [];
+        foreach (array_keys($data) as $col) {
+            $assignments[] = $col . ' = :' . $col;
+        }
+        $sql = 'UPDATE ' . $entity::getTable() . ' SET ' . implode(', ', $assignments) . ' WHERE id = :id';
+        $stmt = $this->pdo->prepare($sql);
+        $params = $data;
+        $params['id'] = $entity->getId();
+        //Ausführung
+        return $stmt->execute($params);
     }
-
-    private function create(EntityInterface $entity): bool
+    //von private auf public ändern, wenn save funktioniert
+    public function create(EntityInterface $entity): bool
     {
         $data = get_object_vars($entity);
+        if (array_key_exists('id', $data)) {
+            unset($data['id']);
+        }
         $sql = sprintf(
             'INSERT INTO %s (%s) VALUES (%s)',
             $entity::getTable(),
@@ -68,8 +77,15 @@ class OrmService
             ':' . implode(',:', array_keys($data))
         );
 
-        $this->pdo->prepare($sql)->execute($data);
-        $entity->setId($this->pdo->lastInsertId());
+        $stmt = $this->pdo->prepare($sql);
+        $ok = $stmt->execute($data);
+        if (!$ok) {
+            return false;
+        }
+
+        if (method_exists($entity, 'setId')) {
+            $entity->setId((int) $this->pdo->lastInsertId());
+        }
         return true;
     }
 }
