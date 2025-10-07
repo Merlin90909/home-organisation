@@ -2,11 +2,16 @@
 
 namespace App\Services;
 
+
+use PDO;
+
 class DashboardService
 {
 
-    public function __construct(private TaskService $taskService)
-    {
+    public function __construct(
+        private TaskService $taskService,
+        private PDO $pdo
+    ) {
     }
 
     public function getTaskItems(int $limit = 3): array
@@ -45,6 +50,7 @@ class DashboardService
             $notesHtml = nl2br($notes);
 
             $result[] = [
+                'id' => $t['id'] ?? $t['task_id'],
                 'title' => $title,
                 'roomTagHtml' => $roomTagHtml,
                 'dueText' => $dueText,
@@ -54,4 +60,12 @@ class DashboardService
         }
         return $result;
     }
+
+    public function checkedTask(int $id): bool
+    {
+        $stmt = $this->pdo->prepare('Update task set checked = 1 where id = :id');
+        return $stmt->execute(['id' => $id]);
+    }
+
+
 }

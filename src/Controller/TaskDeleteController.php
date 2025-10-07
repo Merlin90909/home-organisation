@@ -21,12 +21,9 @@ class TaskDeleteController implements ControllerInterface
 
     function handle(httpRequests $httpRequest): ResponseInterface
     {
-        $taskId = isset($httpRequest->getPayload()['task_id']) && ctype_digit((string)$httpRequest->getPayload()['task_id'])
-            ? (int)$httpRequest->getPayload()['task_id']
-            : null;
-        $roomId = isset($httpRequest->getPayload()['room_id']) && ctype_digit((string)$httpRequest->getPayload()['room_id'])
-            ? (int)$httpRequest->getPayload()['room_id']
-            : null;
+        $taskId = (int)$httpRequest->getPayload()['task_id'];
+
+        $roomId = (int)$httpRequest->getPayload()['room_id'];
 
         if ($taskId === null || $roomId === null) {
             $rooms = $this->roomsService->getRooms($httpRequest->getSession()['user_id']);
@@ -41,7 +38,7 @@ class TaskDeleteController implements ControllerInterface
         $room = $this->roomsService->getRoom($roomId);
 
         if (!$room) {
-            return new HtmlResponse($this->htmlRenderer->render('404.phtml',[]));
+            return new HtmlResponse($this->htmlRenderer->render('404.phtml', []));
         }
 
         $task = $this->taskService->getTaskByRoomId($roomId);

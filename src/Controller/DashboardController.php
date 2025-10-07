@@ -20,11 +20,6 @@ class DashboardController implements ControllerInterface
 
     function handle(httpRequests $httpRequest): ResponseInterface
     {
-        //if (!$httpRequest->getSessionLoggedIn()) {
-        //    header('Location: /login');
-        //    exit;
-        //}
-
         $items = $this->dashboardService->getTaskItems();
 
         return new HtmlResponse($this->htmlRenderer->render('home.phtml', [

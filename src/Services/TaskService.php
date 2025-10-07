@@ -64,7 +64,7 @@ class TaskService
         if ($dueAt instanceof DateTimeInterface) {
             $dt = clone $dueAt;
         } else {
-             $dt = new DateTime((string)$dueAt);
+            $dt = new DateTime((string)$dueAt);
         }
         if ($dt > $now) {
             $difference = $now->diff($dt);
@@ -114,6 +114,7 @@ class TaskService
         }
         return $task;
     }
+
 
     public function repeatTask(int $taskId): bool
     {

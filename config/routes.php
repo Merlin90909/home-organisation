@@ -5,6 +5,7 @@ use App\Controller\AccountSubmitController;
 use App\Controller\AllTasksController;
 use App\Controller\ArchiveController;
 use App\Controller\DashboardController;
+use App\Controller\DashboardSubmitController;
 use App\Controller\ErrorController;
 use App\Controller\ImprintController;
 use App\Controller\LoginController;
@@ -18,6 +19,7 @@ use App\Controller\TaskSubmitController;
 use App\Controller\RoomController;
 use App\Controller\RoomsController;
 use App\Controller\RoomsSubmitController;
+use App\Controller\TestController;
 use App\Controller\WarehouseController;
 use App\Controller\WarehouseSubmitController;
 
@@ -75,6 +77,10 @@ return [
             'Controller' => ArchiveController::class,
             'requestMethod' => 'GET'
         ],
+        //'test' =>[
+        //    'Controller' =>TestController::class,
+        //    'requestMethod' => 'GET'
+        //]
     ],
     'POST' => [
         '/login-submit' => [
@@ -111,5 +117,9 @@ return [
             'Controller' => AccountSubmitController::class,
             'requestMethod' => 'POST'
         ],
+        '/dashboard-submit' => [
+            'Controller' => DashboardSubmitController::class,
+            'requestMethod' => 'POST'
+        ]
     ]
 ];

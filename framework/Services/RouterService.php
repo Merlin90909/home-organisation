@@ -39,7 +39,7 @@ class RouterService
             }
         }
 
-        //Überprüfung ob Public true oder defaulse
+        //Überprüfung ob Public true oder default
         if ($routeConfig !== null) {
             $isPublic = $routeConfig['public'] ?? false;
             if (!$isPublic && !$httpRequest->getSessionLoggedIn()) {

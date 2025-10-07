@@ -41,6 +41,7 @@ $pdo->exec("
         repeat_rule INTEGER,
         created_at TEXT NOT NULL DEFAULT (datetime('now')),
         deleted BOOLEAN NOT NULL DEFAULT false,
+        checked BOOLEAN NOT NULL DEFAULT false,
         created_by INTEGER NOT NULL,
         created_for INTEGER NOT NULL,
         FOREIGN KEY (created_by) REFERENCES user(id),
