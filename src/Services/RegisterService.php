@@ -2,32 +2,34 @@
 
 namespace App\Services;
 
+use App\Entities\UserEntity;
+use Framework\Services\OrmService;
 use PDO;
 
 class RegisterService
 {
-    public function __construct(private PDO $pdo)
+    public function __construct(private OrmService $ormService)
     {
     }
 
-    function register(string $first_Name, string $last_Name, string $email, string $password, string $password2): bool
-    {
+    function register(
+        string $first_Name,
+        string $last_Name,
+        string $email,
+        string $password,
+        string $password2
+    ): bool {
         if ($password !== $password2) {
             return false;
         }
 
-
-        $statement = $this->pdo->prepare(
-            'INSERT INTO user (first_Name, last_Name, email, password) VALUES (:firstName, :lastName, :email, :password)'
+        $user = new UserEntity(
+            id: 0,
+            first_Name: $first_Name,
+            last_Name: $last_Name,
+            email: $email,
+            password: $password
         );
-
-        $statement->execute([
-            'firstName' => $first_Name,
-            'lastName' => $last_Name,
-            'email' => $email,
-            'password' => $password,
-        ]);
-
-        return true;
+        return $this->ormService->save($user);
     }
 }
