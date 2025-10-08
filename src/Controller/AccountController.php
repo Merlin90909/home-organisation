@@ -17,7 +17,7 @@ class AccountController implements ControllerInterface
     public function __construct(
         private HtmlRenderer $htmlRenderer,
         private AccountService $accountService,
-        //private OrmService $ormService
+        private OrmService $ormService
     ) {
     }
 
@@ -42,11 +42,27 @@ class AccountController implements ControllerInterface
         //$user->first_Name = 'Alexander';
         //$this->ormService->save($user);
 
-        //dd($user);
 
         //$user->firstName = 'Jens';
         //$user->save($user);
         //$user2 = $this->ormService->save($user);
+
+        //Find All
+        //$users = $this->ormService->findAll(UserEntity::class);
+
+        //FindBy
+        $users = $this->ormService->findBy([
+            //'first_Name' => 'Alexander',
+            'last_Name' => 'Prangenberg'
+            ], UserEntity::class);
+
+        //FindOneBy
+        $users = $this->ormService->findOneBy([
+            'first_Name' => 'Alexander'
+        ], UserEntity::class);
+        dd($users);
+
+        //dd($user);
 
         return new HtmlResponse($this->htmlRenderer->render('account.phtml', [
             'user' => $user,

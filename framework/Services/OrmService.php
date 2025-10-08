@@ -15,13 +15,86 @@ class OrmService
     /**
      * @param class-string<EntityInterface> $entityClass
      */
-    function findById(int $id, string $entityClass): object
+    function findById(int $id, string $entityClass): ?object
     {
         $stmt = $this->pdo->prepare('SELECT * FROM ' . $entityClass::getTable() . ' WHERE id = :id');
         $stmt->execute([
             'id' => $id
         ]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return new $entityClass(...$row);
+    }
+
+    /**
+     * @param class-string<EntityInterface> $entityClass
+     */
+    function findAll(string $entityClass): array
+    {
+        $table = $entityClass::getTable();
+        $stmt = $this->pdo->prepare('SELECT * FROM ' . $table);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $entities = [];
+        foreach ($rows as $row) {
+            $entities[] = new $entityClass(...$row);
+        }
+        return $entities;
+    }
+
+    /**
+     * @param class-string<EntityInterface> $entityClass
+     */
+    function findBy(array $filter, string $entityClass): array
+    {
+        $table = $entityClass::getTable();
+        $where = [];
+        $params = [];
+
+        foreach ($filter as $col => $val) {
+            $key = $col;
+            $where[] = $col . ' = :' . $key;
+            $params[$key] = $val;
+        }
+        $sql = 'SELECT * FROM ' . $table;
+        if (!empty($where)) {
+            $sql .= ' WHERE ' . implode(' AND ', $where);
+        }
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $entities = [];
+        foreach ($rows as $row) {
+            $entities[] = new $entityClass(...$row);
+        }
+        return $entities;
+    }
+
+    /**
+     * @param class-string<EntityInterface> $entityClass
+     */
+    function findOneBy(array $filter, string $entityClass): ?object
+    {
+        $table = $entityClass::getTable();
+        $where = [];
+        $params = [];
+
+        foreach ($filter as $col => $val) {
+            $key = $col;
+            $where[] = $col . ' = :' . $key;
+            $params[$key] = $val;
+        }
+        $sql = 'SELECT * FROM ' . $table;
+        if (!empty($where)) {
+            $sql .= ' WHERE ' . implode(' AND ', $where);
+        }
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            return null;
+        }
         return new $entityClass(...$row);
     }
 
@@ -63,6 +136,7 @@ class OrmService
         //Ausführung
         return $stmt->execute($params);
     }
+
     //von private auf public ändern, wenn save funktioniert
     public function create(EntityInterface $entity): bool
     {
@@ -84,7 +158,7 @@ class OrmService
         }
 
         if (method_exists($entity, 'setId')) {
-            $entity->setId((int) $this->pdo->lastInsertId());
+            $entity->setId((int)$this->pdo->lastInsertId());
         }
         return true;
     }
