@@ -52,14 +52,17 @@ class AccountController implements ControllerInterface
 
         //FindBy
         $users = $this->ormService->findBy([
-            //'first_Name' => 'Alexander',
-            'last_Name' => 'Prangenberg'
-            ], UserEntity::class);
+            'first_Name' => 'Alexander',
+            'last_Name' => 'Albrecht'
+            ], UserEntity::class,
+        1, [
+            'first_Name' => 'ASC'
+            ] );
 
         //FindOneBy
-        $users = $this->ormService->findOneBy([
-            'first_Name' => 'Alexander'
-        ], UserEntity::class);
+       //$users = $this->ormService->findOneBy([
+       //    'first_Name' => 'Alexander'
+       //], UserEntity::class);
         dd($users);
 
         //dd($user);

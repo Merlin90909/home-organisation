@@ -18,21 +18,67 @@ class OrmService
     function findById(int $id, string $entityClass): ?object
     {
         $stmt = $this->pdo->prepare('SELECT * FROM ' . $entityClass::getTable() . ' WHERE id = :id');
-        $stmt->execute([
-            'id' => $id
-        ]);
+        $stmt->execute(['id' => $id]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return new $entityClass(...$row);
+        return $row ? new $entityClass(...$row) : null;
     }
 
     /**
      * @param class-string<EntityInterface> $entityClass
      */
-    function findAll(string $entityClass): array
+    public function findAll(string $entityClass, ?array $orderBy = null): array
+    {
+        return $this->findBy([], $entityClass);
+    }
+
+    /**
+     * @param class-string<EntityInterface> $entityClass
+     */
+    public function findBy(array $filters, string $entityClass, ?int $limit = null, ?array $orderBy = null): array
     {
         $table = $entityClass::getTable();
-        $stmt = $this->pdo->prepare('SELECT * FROM ' . $table);
-        $stmt->execute();
+        $where = [];
+        $parameters = [];
+
+        if (array_is_list($filters)) {
+            foreach ($filters as $filter) {
+                $groupParts = [];
+                foreach ($filter as $key => $val) {
+                    $groupParts[] = "$key = :$key";
+                    $parameters[$key] = $val;
+                }
+                if (!empty($groupParts)) {
+                    $where[] = '(' . implode(' OR ', $groupParts) . ')';
+                }
+            }
+        } else {
+            foreach ($filters as $key => $val) {
+                $where[] = "$key = :$key";
+                $parameters[$key] = $val;
+            }
+        }
+
+        $sql = 'SELECT * FROM ' . $table;
+
+        if (!empty($where)) {
+            $sql .= ' WHERE ' . implode(' AND ', $where);
+        }
+
+        if (!empty($orderBy)) {
+            $orderParts = [];
+            foreach ($orderBy as $key => $val) {
+                $dir = strtoupper((string)$val) === 'ASC' ? 'ASC' : 'DESC';
+                $orderParts[] = "$key $dir";
+            }
+            $sql .= ' ORDER BY ' . implode(', ', $orderParts);
+        }
+
+        if ($limit !== null && $limit > 0) {
+            $sql .= ' LIMIT ' . (int)$limit;
+        }
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($parameters);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $entities = [];
@@ -45,57 +91,9 @@ class OrmService
     /**
      * @param class-string<EntityInterface> $entityClass
      */
-    function findBy(array $filter, string $entityClass): array
+    public function findOneBy(array $filter, string $entityClass, ?array $orderBy = null): ?object
     {
-        $table = $entityClass::getTable();
-        $where = [];
-        $params = [];
-
-        foreach ($filter as $col => $val) {
-            $key = $col;
-            $where[] = $col . ' = :' . $key;
-            $params[$key] = $val;
-        }
-        $sql = 'SELECT * FROM ' . $table;
-        if (!empty($where)) {
-            $sql .= ' WHERE ' . implode(' AND ', $where);
-        }
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($params);
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $entities = [];
-        foreach ($rows as $row) {
-            $entities[] = new $entityClass(...$row);
-        }
-        return $entities;
-    }
-
-    /**
-     * @param class-string<EntityInterface> $entityClass
-     */
-    function findOneBy(array $filter, string $entityClass): ?object
-    {
-        $table = $entityClass::getTable();
-        $where = [];
-        $params = [];
-
-        foreach ($filter as $col => $val) {
-            $key = $col;
-            $where[] = $col . ' = :' . $key;
-            $params[$key] = $val;
-        }
-        $sql = 'SELECT * FROM ' . $table;
-        if (!empty($where)) {
-            $sql .= ' WHERE ' . implode(' AND ', $where);
-        }
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($params);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (!$row) {
-            return null;
-        }
-        return new $entityClass(...$row);
+        return $this->findBy($filter, $entityClass, 1)[0] ?? null;
     }
 
     function delete(EntityInterface $entity): bool
