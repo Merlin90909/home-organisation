@@ -36,35 +36,44 @@ class OrmService
     /**
      * @param class-string<EntityInterface> $entityClass
      */
-    public function findBy(array $filters, string $entityClass, ?int $limit = null, ?array $orderBy = null): array
-    {
+    public function findBy(
+        array $filters,
+        string $entityClass,
+        ?int $limit = null,
+        ?array $orderBy = null
+    ): array {
         $table = $entityClass::getTable();
         $where = [];
         $parameters = [];
 
         if (array_is_list($filters)) {
+            $groupIndex = 0;
             foreach ($filters as $filter) {
                 $groupParts = [];
                 foreach ($filter as $key => $val) {
-                    $groupParts[] = "$key = :$key";
-                    $parameters[$key] = $val;
+                    $paramKey = $key . '_' . $groupIndex;
+                    $groupParts[] = "$key = :$paramKey";
+                    $parameters[$paramKey] = $val;
                 }
                 if (!empty($groupParts)) {
-                    $where[] = '(' . implode(' OR ', $groupParts) . ')';
+                    $where[] = '(' . implode(' AND ', $groupParts) . ')';
                 }
+                $groupIndex++;
             }
         } else {
             foreach ($filters as $key => $val) {
-                $where[] = "$key = :$key";
-                $parameters[$key] = $val;
+                $paramKey = $key . '_0';
+                $where[] = "$key = :$paramKey";
+                $parameters[$paramKey] = $val;
             }
         }
 
         $sql = 'SELECT * FROM ' . $table;
 
         if (!empty($where)) {
-            $sql .= ' WHERE ' . implode(' AND ', $where);
+            $sql .= ' WHERE ' . implode(' OR ', $where);
         }
+
 
         if (!empty($orderBy)) {
             $orderParts = [];
@@ -75,9 +84,11 @@ class OrmService
             $sql .= ' ORDER BY ' . implode(', ', $orderParts);
         }
 
+
         if ($limit !== null && $limit > 0) {
             $sql .= ' LIMIT ' . (int)$limit;
         }
+
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($parameters);
@@ -104,7 +115,7 @@ class OrmService
         $tableName = $entity::getTable();
 
         $id = $entity->getId();
-        if($id === null){
+        if ($id === null) {
             return false;
         }
         $sql = $this->queryBuilder

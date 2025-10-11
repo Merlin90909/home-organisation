@@ -25,6 +25,16 @@ class SelectQueryBuilder
         return $this;
     }
 
+    public function orwhere(array $filters): self
+    {
+        foreach ($filters as $filter) {
+            foreach ($filter as $item) {
+            $this->orwhere[$this->orWhereCounter] = $filter;
+            }
+            $this->orWhereCounter++;
+        }
+    }
+
     public function orderBy(string $column, string $direction = 'ASC'): self
     {
         $dir = strtoupper($direction);

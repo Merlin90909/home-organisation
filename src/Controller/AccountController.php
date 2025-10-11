@@ -32,8 +32,8 @@ class AccountController implements ControllerInterface
         //$this->ormService->delete($user);
 
         //User updaten funktioniert
-       //$user->first_Name = 'Alexander';
-       //$this->ormService->update($user);
+        //$user->first_Name = 'Alexander';
+        //$this->ormService->update($user);
 
         //User create funktioniert
         //$this->ormService->create($user);
@@ -51,23 +51,34 @@ class AccountController implements ControllerInterface
         //$users = $this->ormService->findAll(UserEntity::class);
 
         //FindBy
-       // $users = $this->ormService->findBy([
-       //     'first_Name' => 'Alexander',
-       //     'last_Name' => 'Albrecht'
-       //     ], UserEntity::class,
-       // 1, [
-       //     'first_Name' => 'ASC'
-       //     ] );
+        $users = $this->ormService->findBy(
+            [
+                [
+                    'first_Name' => 'Alexander',
+                    'last_Name' => 'Albrecht'
+                ],
+                [
+                    'first_Name' => 'Jens'
+                ]
+            ]
+            , UserEntity::class,
+            4, [
+                'first_Name' => 'ASC'
+            ]
+        );
 
         //FindOneBy
-       //$users = $this->ormService->findOneBy([
-       //    'first_Name' => 'Alexander'
-       //], UserEntity::class);
-        //dd($users);
+        //$users = $this->ormService->findOneBy([
+        //    'first_Name' => 'Alexander'
+        //], UserEntity::class);
+
+
+
+        dd($users);
 
         //Delete funktioniert
-        $user = $this->ormService->findById(2, UserEntity::class);
-        $deleted = $this->ormService->delete($user);
+        //$user = $this->ormService->findById(8, UserEntity::class);
+        //$deleted = $this->ormService->delete($user);
         //$this->ormService->delete($user);
 
         //dd($user);
