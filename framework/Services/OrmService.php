@@ -4,7 +4,6 @@ namespace Framework\Services;
 
 use App\Entities\UserEntity;
 use Framework\Interfaces\EntityInterface;
-use Framework\Services\QueryBuilder\DeleteQueryBuilder;
 use Framework\Services\QueryBuilder\QueryBuilder;
 use PDO;
 
@@ -68,30 +67,34 @@ class OrmService
             }
         }
 
-        $sql = 'SELECT * FROM ' . $table;
+        $qb = $this->queryBuilder->select();
 
-        if (!empty($where)) {
-            $sql .= ' WHERE ' . implode(' OR ', $where);
+        $select = $qb
+            ->select()
+            ->from($table);
+
+        if (array_is_list($filters)) {
+            foreach ($filters as $filter) {
+                $select->where($filter);
+            }
+        } else {
+            $select->where($filters);
         }
-
 
         if (!empty($orderBy)) {
-            $orderParts = [];
-            foreach ($orderBy as $key => $val) {
-                $dir = strtoupper((string)$val) === 'ASC' ? 'ASC' : 'DESC';
-                $orderParts[] = "$key $dir";
+            foreach ($orderBy as $column => $direction) {
+                $select->orderBy($column, $direction);
             }
-            $sql .= ' ORDER BY ' . implode(', ', $orderParts);
         }
-
-
         if ($limit !== null && $limit > 0) {
-            $sql .= ' LIMIT ' . (int)$limit;
+            $select->limit($limit);
         }
+        $sql = $select->build();
+        //dd($sql);
 
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($parameters);
+        $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $entities = [];
@@ -112,10 +115,10 @@ class OrmService
     //sollte funktionieren; noch nicht getestet
     public function delete(EntityInterface|array $entity): bool
     {
-        if(is_Array($entity)){
+        if (is_Array($entity)) {
             $ok = true;
-            foreach($entity as $item){
-                if($item instanceof EntityInterface){
+            foreach ($entity as $item) {
+                if ($item instanceof EntityInterface) {
                     $ok = $this->delete($item) && $ok;
                 }
             }

@@ -6,6 +6,10 @@ class SelectQueryBuilder
 {
     private array $columns = [];
     private string $tableName;
+    private array $orderParts = [];
+    private array $conditions = [];
+    private ?int $limitVal = null;
+
 
     public function select(string ...$columns): self
     {
@@ -19,20 +23,14 @@ class SelectQueryBuilder
         return $this;
     }
 
-    public function where(string $column, string $operator, mixed $value): self
+    public function where(array $conditions): self
     {
-        $this->conditions[] = sprintf("%s %s '%s'", $column, $operator, addslashes($value));
-        return $this;
-    }
-
-    public function orwhere(array $filters): self
-    {
-        foreach ($filters as $filter) {
-            foreach ($filter as $item) {
-            $this->orwhere[$this->orWhereCounter] = $filter;
-            }
-            $this->orWhereCounter++;
+        $groupParts = [];
+        foreach ($conditions as $key => $val) {
+            $groupParts[] = sprintf("%s = '%s'", $key, addslashes((string)$val));
         }
+        $this->conditions[] = '(' . implode(' AND ', $groupParts) . ')';
+        return $this;
     }
 
     public function orderBy(string $column, string $direction = 'ASC'): self
@@ -47,10 +45,24 @@ class SelectQueryBuilder
 
     public function limit(int $limit): self
     {
+        $this->limitVal = max(0, $limit);
         return $this;
     }
 
     public function build(): string
     {
+        $columnName = !empty($this->columns) ? implode(', ', $this->columns) : '*';
+        $sql = 'SELECT ' . $columnName . ' FROM ' . $this->tableName;
+
+        if (!empty($this->conditions)) {
+            $sql .= ' WHERE ' . implode(' OR ', $this->conditions);
+        }
+        if (!empty($this->orderParts)) {
+            $sql .= ' ORDER BY ' . implode(', ', $this->orderParts);
+        }
+        if ($this->limitVal !== null) {
+            $sql .= ' LIMIT ' . $this->limitVal;
+        }
+        return $sql . ';';
     }
 }

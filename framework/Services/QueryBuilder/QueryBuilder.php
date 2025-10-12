@@ -4,9 +4,9 @@ namespace Framework\Services\QueryBuilder;
 
 class QueryBuilder
 {
-    public function select(array $columns): SelectQueryBuilder
+    public function select(): SelectQueryBuilder
     {
-        return new SelectQueryBuilder($columns);
+        return new SelectQueryBuilder();
     }
 
     public function update(): UpdateQueryBuilder

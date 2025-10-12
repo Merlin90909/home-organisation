@@ -51,17 +51,33 @@ class AccountController implements ControllerInterface
         //$users = $this->ormService->findAll(UserEntity::class);
 
         //FindBy
-        $users = $this->ormService->findBy(
-            [
-                [
-                    'first_Name' => 'Lenny',
-                ],
-                [
-                    'first_Name' => 'Jens'
-                ]
-            ]
-            , UserEntity::class, 4 , []
-        );
+       // $users = $this->ormService->findBy(
+       //     [
+       //         [
+       //             'first_Name' => 'Lenny',
+       //         ],
+       //         [
+       //             'first_Name' => 'Jens'
+       //         ]
+       //     ]
+       //     , UserEntity::class, 4 , []
+       // );
+        // findBy mit neuer Logik
+        //$select = $this->ormService->findBy(
+        //    [
+        //        [
+        //            'first_Name'=>'Alexander',
+        //        ],
+        //        [
+        //            'last_Name' => 'Prangenberg'
+        //        ]
+        //    ],
+        //    UserEntity::class,
+        //    2,
+        //    ['first_Name' => 'ASC']
+        //);
+        //dd($select);
+
 
         //FindOneBy
         //$users = $this->ormService->findOneBy([
