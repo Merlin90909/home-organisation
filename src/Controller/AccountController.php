@@ -92,8 +92,8 @@ class AccountController implements ControllerInterface
         //dd($users);
 
         //Delete
-        //$user = $this->ormService->findById(8, UserEntity::class);
-        //$deleted = $this->ormService->delete($users);
+        //$user = $this->ormService->findById(9, UserEntity::class);
+        //$deleted = $this->ormService->delete($user);
         //$this->ormService->delete($user);
 
         //dd($deleted);
