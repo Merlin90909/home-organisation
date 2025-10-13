@@ -23,13 +23,14 @@ class RegisterService
             return false;
         }
 
-        $user = new UserEntity(
-            id: 0,
-            first_Name: $first_Name,
-            last_Name: $last_Name,
-            email: $email,
-            password: $password
-        );
+        $user = new UserEntity();
+        $user->id = 0;
+        $user->first_Name = $first_Name;
+        $user->last_Name = $last_Name;
+        $user->email = $email;
+        $user->password = $password;
+
+
         return $this->ormService->save($user);
     }
 }

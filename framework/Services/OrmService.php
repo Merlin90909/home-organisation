@@ -144,7 +144,7 @@ class OrmService
 
     public function save(EntityInterface $entity): bool
     {
-        if ($entity->getId() == 0) {
+        if ($entity->getId() <= 0) {
             return $this->create($entity);
         }
         return $this->update($entity);
