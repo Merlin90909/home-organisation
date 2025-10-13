@@ -6,8 +6,9 @@ class UpdateQueryBuilder
 {
     private ?string $tableName = null;
     private array $setValues = [];
-
     private array $conditions = [];
+    private array $params = [];
+
 
     public function from(string $tableName): self
     {
@@ -26,17 +27,19 @@ class UpdateQueryBuilder
     public function where(array $conditions): self
     {
         $groupParts = [];
-        foreach ($conditions as $key => $val) {
-            $groupParts[] = sprintf("%s = '%s'", $key, addslashes((string)$val));
+        foreach ($conditions as $column => $value) {
+            $placeholder = 'where_' . count($this->params);
+            $groupParts[] = sprintf('%s = :%s', $column, $placeholder);
+            $this->params[$placeholder] = $value;
         }
         $this->conditions[] = '(' . implode(' AND ', $groupParts) . ')';
         return $this;
     }
 
-    public function build(): string
+    public function build(): array
     {
         $sql = sprintf(
-            "UPDATE %s SET %s",
+            'UPDATE %s SET %s',
             $this->tableName,
             implode(', ', $this->setValues)
         );
@@ -45,6 +48,6 @@ class UpdateQueryBuilder
             $sql .= ' WHERE ' . implode(' AND ', $this->conditions);
         }
 
-        return $sql . ';';
+        return ['sql' => $sql . ';', 'params' => $this->params];
     }
 }

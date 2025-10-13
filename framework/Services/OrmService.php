@@ -151,10 +151,8 @@ class OrmService
 
     private function update(EntityInterface $entity): bool
     {
-        // alle Daten; Ausgabe als Array
         $data = get_object_vars($entity);
         $tableName = $entity::getTable();
-        //id wird nicht geupdated (Counter)
         if (array_key_exists('id', $data)) {
             unset($data['id']);
         }
