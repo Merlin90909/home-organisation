@@ -150,7 +150,7 @@ class OrmService
         return $this->update($entity);
     }
 
-    public function update(EntityInterface $entity): bool
+    private function update(EntityInterface $entity): bool
     {
         // alle Daten; Ausgabe als Array
         $data = get_object_vars($entity);
@@ -171,7 +171,7 @@ class OrmService
         return $stmt->execute();
     }
 
-    public function create(EntityInterface $entity): bool
+    private function create(EntityInterface $entity): bool
     {
         $data = get_object_vars($entity);
         $tableName = $entity::getTable();
@@ -179,14 +179,15 @@ class OrmService
         if (array_key_exists('id', $data)) {
             unset($data['id']);
         }
-        $sql = $this->queryBuilder
+        $result = $this->queryBuilder
             ->insert()
             ->into($tableName)
             ->values($data)
             ->build();
-        //dd($sql);
-        $stmt = $this->pdo->prepare($sql);
-        $ok = $stmt->execute();
+        //dd($result);
+        $stmt = $this->pdo->prepare($result['sql']);
+        $ok = $stmt->execute($result['params']);
+
 
         if ($ok && method_exists($entity, 'setId')) {
             $entity->setId((int)$this->pdo->lastInsertId());

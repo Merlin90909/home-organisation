@@ -35,14 +35,6 @@ class UpdateQueryBuilder
 
     public function build(): string
     {
-        if ($this->tableName === null) {
-            throw new \LogicException("Table name not set for UPDATE query.");
-        }
-
-        if (empty($this->setValues)) {
-            throw new \LogicException("No values set for UPDATE query.");
-        }
-
         $sql = sprintf(
             "UPDATE %s SET %s",
             $this->tableName,

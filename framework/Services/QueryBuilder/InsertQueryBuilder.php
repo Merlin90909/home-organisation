@@ -6,7 +6,8 @@ class InsertQueryBuilder
 {
     private ?string $tableName = null;
     private array $columns = [];
-    private array $values = [];
+    private array $placeholders = [];
+    private array $params = [];
 
     public function into(string $tableName): self
     {
@@ -17,30 +18,24 @@ class InsertQueryBuilder
     public function values(array $data): self
     {
         foreach ($data as $column => $value) {
+            $placeholder = 'val_' . count($this->params);
             $this->columns[] = $column;
-            $this->values[] = sprintf("'%s'", addslashes((string)$value));
+            $this->placeholders[] = ':' . $placeholder;
+            $this->params[$placeholder] = $value;
         }
         return $this;
     }
 
-    public function build(): string
+    public function build(): array
     {
-        if ($this->tableName === null) {
-            throw new \LogicException("Table name not set for INSERT query.");
-        }
-
-        if (empty($this->columns) || empty($this->values)) {
-            throw new \LogicException("No columns or values set for INSERT query.");
-        }
-
         $sql = sprintf(
-            "INSERT INTO %s (%s) VALUES (%s);",
+            'INSERT INTO %s (%s) VALUES (%s);',
             $this->tableName,
             implode(', ', $this->columns),
-            implode(', ', $this->values)
+            implode(', ', $this->placeholders)
         );
 
-        return $sql;
+        return ['sql' => $sql, 'params' => $this->params];
     }
 
 }
