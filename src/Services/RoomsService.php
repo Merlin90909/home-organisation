@@ -31,7 +31,7 @@ class RoomsService
         $stmt = $this->pdo->prepare(
             "SELECT id, name, description
            FROM room
-          WHERE created_by = :userId"
+          WHERE user_id = :userId"
         );
         $stmt->execute([':userId' => $userId]);
 

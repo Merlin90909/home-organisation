@@ -16,10 +16,10 @@ class RoomsCreateService
         }
 
         $statement = $this->pdo->prepare(
-            'INSERT INTO room (created_by, name, description) VALUES (:created_by, :name, :description)'
+            'INSERT INTO room (user_id, name, description) VALUES (:user_id, :name, :description)'
         );
         $statement->execute([
-            'created_by' => $userId,
+            'user_id' => $userId,
             'name' => $name,
             'description' => $description
         ]);

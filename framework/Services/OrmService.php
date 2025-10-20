@@ -18,15 +18,7 @@ class OrmService
      */
     function findById(int $id, string $entityClass): ?object
     {
-        $table = $entityClass::getTable();
-
-        $this->queryBuilder->select()
-            ->select()
-            ->from($table)
-            ->where(['id' => $id])
-            ->build();
-
-        //return $entities;
+        return $this->findBy(['id' => $id], $entityClass, 1)[0] ?? null;
     }
 
     /**
@@ -54,6 +46,7 @@ class OrmService
             ->select()
             ->from($table);
 
+
         if (array_is_list($filters)) {
             foreach ($filters as $filter) {
                 $select->where($filter);
@@ -71,18 +64,48 @@ class OrmService
             $select->limit($limit);
         }
         $result = $select->build();
-        //dd($result);
 
         $stmt = $this->pdo->prepare($result['sql']);
         $stmt->execute($result['params']);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $entities = [];
-        foreach ($rows as $row) {
-            $entities[] = new $entityClass(...$row);
+        $reflection = new \ReflectionClass($entityClass);
+        $constructor = $reflection->getConstructor();
+
+        $entityParams = [];
+        if ($constructor) {
+            foreach ($constructor->getParameters() as $parameter) {
+                $type = $parameter->getType();
+                if ($type instanceof \ReflectionNamedType) {
+                    $typeName = $type->getName();
+                    if (class_exists($typeName) && (new \ReflectionClass($typeName))->isSubclassOf(
+                            EntityInterface::class
+                        )) {
+                        $entityParams[] = [
+                            'name' => $parameter->getName(),
+                            'type' => $typeName,
+                        ];
+                    }
+                }
+            }
         }
+
+        $entities = [];
+
+        foreach ($rows as $row) {
+            $args = $row;
+            foreach ($entityParams as $ep) {
+                $name = $ep['name'];
+                $type = $ep['type'];
+                $args[$name] = $this->findById((int)$args[$name . '_id'], $type);
+                unset($args[$name . '_id']);
+            }
+            $entities[] = new $entityClass(...$args);
+        }
+
         return $entities;
     }
+
 
     /**
      * @param class-string<EntityInterface> $entityClass

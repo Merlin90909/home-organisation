@@ -27,9 +27,9 @@ $pdo->exec("
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT(30) NOT NULL,
         description TEXT,
-        created_by INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
         created_at TEXT NOT NULL DEFAULT (datetime('now')),
-        FOREIGN KEY (created_by) REFERENCES user(id)
+        FOREIGN KEY (user_id) REFERENCES user(id)
 );
     CREATE TABLE task(
         id INTEGER PRIMARY KEY AUTOINCREMENT,

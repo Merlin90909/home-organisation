@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entities\RoomEntity;
 use App\Entities\UserEntity;
 use App\Services\AccountService;
 use Framework\Interfaces\ControllerInterface;
@@ -51,32 +52,26 @@ class AccountController implements ControllerInterface
         //$users = $this->ormService->findAll(UserEntity::class);
 
         //FindBy
-        // $users = $this->ormService->findBy(
-        //     [
-        //         [
-        //             'first_Name' => 'Lenny',
-        //         ],
-        //         [
-        //             'first_Name' => 'Jens'
-        //         ]
-        //     ]
-        //     , UserEntity::class, 4 , []
-        // );
-        // findBy mit neuer Logik
-        //$select = $this->ormService->findBy(
-        //    [
-        //        [
-        //            'first_Name'=>'Alexander',
-        //        ],
-        //        [
-        //            'last_Name' => 'Prangenberg'
-        //        ]
-        //    ],
-        //    UserEntity::class,
-        //    2,
-        //    ['first_Name' => 'ASC']
-        //);
-        //dd($select);
+         $users = $this->ormService->findBy(
+             [
+                 [
+                     'name' => 'Bad',
+                 ],
+             ]
+             , RoomEntity::class, 4 , []
+         );
+         //findBy mit neuer Logik
+        $select = $this->ormService->findBy(
+            [
+                [
+                    'name'=>'Bad',
+                ],
+
+            ],
+            RoomEntity::class,5,
+            []
+        );
+        dd($select);
 
         //update neu
         //$user = $this->ormService->findById(13, UserEntity::class );
