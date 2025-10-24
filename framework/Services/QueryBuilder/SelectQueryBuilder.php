@@ -2,16 +2,25 @@
 
 namespace Framework\Services\QueryBuilder;
 
+use Framework\Dtos\QueryDto;
+
 final class SelectQueryBuilder extends AbstractQueryBuilder
 {
     private array $columns = [];
     private array $orderParts = [];
     private ?int $limitVal = null;
 
+    private array $join = [];
 
     public function select(string ...$columns): self
     {
         $this->columns = $columns;
+        return $this;
+    }
+
+    public function join(array $join): self
+    {
+        $this->join = $join;
         return $this;
     }
 
@@ -31,10 +40,14 @@ final class SelectQueryBuilder extends AbstractQueryBuilder
         return $this;
     }
 
-    public function build(): array
+    public function build(): QueryDto
     {
         $columnName = !empty($this->columns) ? implode(', ', $this->columns) : '*';
         $sql = 'SELECT ' . $columnName . ' FROM ' . $this->tableName;
+
+        if (!empty($this->join)) {
+            $sql .= ' INNER JOIN ' . implode(', ', $this->join);
+        }
 
         if (!empty($this->conditions)) {
             $sql .= ' WHERE ' . implode(' OR ', $this->conditions);
@@ -46,6 +59,6 @@ final class SelectQueryBuilder extends AbstractQueryBuilder
             $sql .= ' LIMIT ' . $this->limitVal;
         }
 
-        return ['sql' => $sql . ';', 'params' => $this->params];
+        return new QueryDto($sql, $this->params);
     }
 }

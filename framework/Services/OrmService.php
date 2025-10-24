@@ -9,7 +9,7 @@ use PDO;
 
 class OrmService
 {
-    public function __construct(private PDO $pdo, private QueryBuilder $queryBuilder)
+    public function __construct(private PDO $pdo, private QueryBuilder $queryBuilder, private LoggerService $loggerService)
     {
     }
 
@@ -36,7 +36,8 @@ class OrmService
         array $filters,
         string $entityClass,
         ?int $limit = null,
-        ?array $orderBy = null
+        ?array $orderBy = null,
+        ?array $join = null
     ): array {
         $table = $entityClass::getTable();
 
@@ -45,7 +46,6 @@ class OrmService
         $select = $qb
             ->select()
             ->from($table);
-
 
         if (array_is_list($filters)) {
             foreach ($filters as $filter) {
@@ -64,9 +64,11 @@ class OrmService
             $select->limit($limit);
         }
         $result = $select->build();
+        //dd($result);
 
+        $this->loggerService->log($result->query);
         $stmt = $this->pdo->prepare($result['sql']);
-        $stmt->execute($result['params']);
+        $stmt->execute($result->parameters);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $reflection = new \ReflectionClass($entityClass);
@@ -93,16 +95,15 @@ class OrmService
         $entities = [];
 
         foreach ($rows as $row) {
-            $args = $row;
             foreach ($entityParams as $ep) {
                 $name = $ep['name'];
                 $type = $ep['type'];
-                $args[$name] = $this->findById((int)$args[$name . '_id'], $type);
-                unset($args[$name . '_id']);
+                $row[$name] = $this->findById((int)$row[$name . '_id'], $type);
+                //statt findBy einen Join
+                unset($row[$name . '_id']);
             }
-            $entities[] = new $entityClass(...$args);
+            $entities[] = new $entityClass(...$row);
         }
-
         return $entities;
     }
 
@@ -129,7 +130,7 @@ class OrmService
 
         $tableName = $entity::getTable();
 
-        $id = $entity->getId();
+        $id = $entity->id;
         if ($id === null) {
             return false;
         }
@@ -147,7 +148,7 @@ class OrmService
 
     public function save(EntityInterface $entity): bool
     {
-        if ($entity->getId() <= 0) {
+        if ($entity->id <= 0) {
             return $this->create($entity);
         }
         return $this->update($entity);
@@ -164,7 +165,7 @@ class OrmService
             ->update()
             ->from($tableName)
             ->set($data)
-            ->where(['id' => (string)$entity->getId()])
+            ->where(['id' => (string)$entity->id])
             ->build();
         //dd($result);
         $stmt = $this->pdo->prepare($result['sql']);

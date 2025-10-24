@@ -2,13 +2,15 @@
 
 namespace Framework\Services\QueryBuilder;
 
+use Framework\Dtos\QueryDto;
+
 abstract class AbstractQueryBuilder
 {
     protected ?string $tableName = null;
     protected array $params =[];
     protected array $conditions = [];
 
-   abstract public function build(): array;
+   abstract public function build(): QueryDto;
 
     public function from(string $tableName): self
     {
