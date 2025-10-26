@@ -18,11 +18,11 @@ final class SelectQueryBuilder extends AbstractQueryBuilder
         return $this;
     }
 
-    //public function join(array $join): self
-    //{
-    //    $this->join = $join;
-    //    return $this;
-    //}
+    public function join(string $table, string $left, string $right): self
+    {
+        $this->join[] = "INNER JOIN $table ON $left = $right";
+        return $this;
+    }
 
     public function orderBy(string $column, string $direction = 'ASC'): self
     {
@@ -45,9 +45,9 @@ final class SelectQueryBuilder extends AbstractQueryBuilder
         $columnName = !empty($this->columns) ? implode(', ', $this->columns) : '*';
         $sql = 'SELECT ' . $columnName . ' FROM ' . $this->tableName;
 
-        //if (!empty($this->join)) {
-        //    $sql .= ' INNER JOIN ' . implode(', ', $this->join);
-        //}
+        if (!empty($this->join)) {
+            $sql .= ' ' . implode(' ', $this->join);
+        }
 
         if (!empty($this->conditions)) {
             $sql .= ' WHERE ' . implode(' OR ', $this->conditions);

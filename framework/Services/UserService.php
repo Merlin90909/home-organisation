@@ -51,8 +51,8 @@ class UserService
     {
         return new UserDto(
             $user['user_id'],
-            $user['first_Name'],
-            $user['last_Name'],
+            $user['first_name'],
+            $user['last_name'],
             $user['email'],
             $user['password'],
         );

@@ -7,9 +7,9 @@ readonly class UserDto
 {
     //__construct = Objekt initialisieren
     public function __construct(
-        public int $id,
-        public string $first_Name,
-        public string $last_Name,
+        public int $user_id,
+        public string $first_name,
+        public string $last_name,
         public string $email,
         public string $password,
     ) {

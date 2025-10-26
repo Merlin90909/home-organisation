@@ -61,25 +61,25 @@ class AccountController implements ControllerInterface
        //    , RoomEntity::class, 4, []
        //);
        ////findBy mit neuer Logik
-       //$select = $this->ormService->findBy(
-       //    [
-       //        [
-       //            'name' => 'Bad',
-       //        ],
+       $select = $this->ormService->findBy(
+           [
+               [
+                   'name' => 'Bad',
+               ],
 
-       //    ],
-       //    RoomEntity::class,
-       //    5,
-       //    [],
+           ],
+           RoomEntity::class,
+           5,
+           [],
 
-       //);
+       );
+        dd($select);
 
-        $user = $this->ormService->findById(
-            1,
-            UserEntity::class
-        );
+        //$user = $this->ormService->findById(
+        //    1,
+        //    UserEntity::class
+        //);
 
-        dd($user);
         //update neu
         //$user = $this->ormService->findById(13, UserEntity::class );
         //$user->first_Name = 'Jens';

@@ -1,73 +1,35 @@
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM user WHERE (id = :where_0) LIMIT 1
-SELECT * FROM room WHERE (name = :where_0) LIMIT 5
-SELECT * FROM user WHERE (id = :where_0) LIMIT 1
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM user WHERE (id = :where_0) LIMIT 1
-SELECT * FROM room WHERE (name = :where_0) LIMIT 5
-SELECT * FROM user WHERE (id = :where_0) LIMIT 1
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM user WHERE (id = :where_0) LIMIT 1
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM user WHERE (id = :where_0) LIMIT 1
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM user WHERE (id = :where_0) LIMIT 1
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM user WHERE (id = :where_0) LIMIT 1
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM user WHERE (user = :where_0) LIMIT 1
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM user WHERE (user_id = :where_0) LIMIT 1
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM user WHERE (user_id = :where_0) LIMIT 1
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM user WHERE (user_id = :where_0) LIMIT 1
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM user WHERE (user_id = :where_0) LIMIT 1
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM user WHERE (user_id = :where_0) LIMIT 1
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM room WHERE (name = :where_0) LIMIT 4
-SELECT * FROM user WHERE (_id = :where_0)
-SELECT * FROM user WHERE (id = :where_0)
-SELECT * FROM user WHERE (user_id = :where_0)
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT room* FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT room.* FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT room.* FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT room* FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT room.* FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT .* FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5
+SELECT * FROM room INNER JOIN user ON room.user_id = user.user_id WHERE (name = :where_0) LIMIT 5

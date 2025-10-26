@@ -7,11 +7,11 @@ use Framework\Interfaces\EntityInterface;
 class UserEntity implements EntityInterface
 {
     public function __construct(
-        public string $first_Name,
-        public string $last_Name,
+        public int $user_id = 0,
+        public string $first_name,
+        public string $last_name,
         public string $email,
         public string $password,
-        public int $user_id = 0,
     ) {
     }
 
