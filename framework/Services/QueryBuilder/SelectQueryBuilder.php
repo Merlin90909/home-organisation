@@ -12,7 +12,7 @@ final class SelectQueryBuilder extends AbstractQueryBuilder
 
     private array $join = [];
 
-    public function select(string ...$columns): self
+    public function select(array ...$columns): self
     {
         $this->columns = $columns;
         return $this;
@@ -42,7 +42,21 @@ final class SelectQueryBuilder extends AbstractQueryBuilder
 
     public function build(): QueryDto
     {
-        $columnName = !empty($this->columns) ? implode(', ', $this->columns) : '*';
+        //dd($this->columns);
+        //foreach($this->columns as $column){
+        //    dd($column);
+        //}
+        $columnList = [];
+
+        foreach ($this->columns as $tableGroup) {
+            foreach ($tableGroup as $table => $columns) {
+                foreach ($columns as $column) {
+                    $columnList[] = "$table.$column";
+                }
+            }
+        }
+
+        $columnName = !empty($columnList) ? implode(', ', $columnList) : '*';
         $sql = 'SELECT ' . $columnName . ' FROM ' . $this->tableName;
 
         if (!empty($this->join)) {

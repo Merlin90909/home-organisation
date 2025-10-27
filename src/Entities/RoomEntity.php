@@ -10,7 +10,7 @@ class RoomEntity implements EntityInterface
         public int $id,
         public string $name,
         public string $description,
-        public UserEntity $user,
+        public UserEntity $user_id,
         public string $created_at,
     ) {
     }

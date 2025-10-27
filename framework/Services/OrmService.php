@@ -53,43 +53,27 @@ class OrmService
         ?int $limit = null,
         ?array $orderBy = null,
         ?array $join = null
+
     ): array {
         $table = $entityClass::getTable();
+        //dd($table);
+        $tableMap = $this->getEntityParams($entityClass);
 
         $qb = $this->queryBuilder->select();
 
         $select = $qb
-            ->select()
+            ->select($tableMap)
             ->from($table);
 
-        $reflection = new \ReflectionClass($entityClass);
-        $constructor = $reflection->getConstructor();
+        //$return = $this->getEntityParams($entityClass);
+        //dd($return);
 
-        $entityParams = [];
-        if ($constructor) {
-            foreach ($constructor->getParameters() as $parameter) {
-                $type = $parameter->getType();
-                if ($type instanceof \ReflectionNamedType) {
-                    $typeName = $type->getName();
-                    if (class_exists($typeName) && (new \ReflectionClass($typeName))->isSubclassOf(
-                            EntityInterface::class
-                        )) {
-                        $entityParams[] = [
-                            'name' => $parameter->getName(),
-                            'type' => $typeName,
-                        ];
-                    }
-                }
+        foreach ($tableMap as $joinTable => $columns) {
+            if ($joinTable === $table) {
+                continue;
             }
+            $select->join($joinTable, "$table.{$joinTable}_id", "$joinTable.{$joinTable}_id");
         }
-
-        foreach ($entityParams as $ep) {
-            $name = $ep['name'];
-            $type = $ep['type'];
-            $joinTable = $type::getTable();
-            $select->join($joinTable, "$table.{$name}_id", "$joinTable.{$name}_id");
-        }
-
 
         if (array_is_list($filters)) {
             foreach ($filters as $filter) {
@@ -104,9 +88,11 @@ class OrmService
                 $select->orderBy($column, $direction);
             }
         }
+
         if ($limit !== null && $limit > 0) {
             $select->limit($limit);
         }
+
         $result = $select->build();
         dd($result);
 
@@ -126,10 +112,56 @@ class OrmService
 
                 unset($row[$name . '_id']);
             }
+            dd($row);
             $entities[] = new $entityClass(...$row);
         }
         return $entities;
     }
+
+    /**
+     * @param class-string<EntityInterface> $entityClass
+     */
+    public function getEntityParams(string $entityClass): array
+    {
+        $reflection = new \ReflectionClass($entityClass);
+        $properties = $reflection->getProperties();
+        $constructor = $reflection->getConstructor();
+
+        $table = $entityClass::getTable();
+        $columns = [];
+
+        foreach ($properties as $property) {
+            $columns[] = $property->getName();
+        }
+
+        $tableMap = [
+            $table => $columns
+        ];
+
+        $entityParams = [];
+
+        if ($constructor) {
+            foreach ($constructor->getParameters() as $parameter) {
+                $type = $parameter->getType();
+                if ($type instanceof \ReflectionNamedType) {
+                    $typeName = $type->getName();
+                    if (class_exists($typeName) && (new \ReflectionClass($typeName))->isSubclassOf(
+                            EntityInterface::class
+                        )) {
+                        $entity = $this->getEntityParams($typeName);
+                        $tableMap = array_merge($tableMap, $entity);
+                        $entityParams[] = [
+                            'name' => $parameter->getName(),
+                            'type' => $typeName,
+                        ];
+                    }
+                }
+            }
+        }
+
+        return $tableMap;
+    }
+
 
     /**
      * @param class-string<EntityInterface> $entityClass
