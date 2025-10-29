@@ -45,6 +45,9 @@ class OrmService
         return $this->findBy([], $entityClass);
     }
 
+    public function getEntityData(){
+
+    }
     /**
      * @param class-string<EntityInterface> $entityClass
      */
@@ -65,6 +68,7 @@ class OrmService
 
         if ($constructor) {
             foreach ($constructor->getParameters() as $parameter) {
+                //dd($constructor);
                 $types = $parameter->getType();
                 //dd($types);
 
@@ -87,6 +91,7 @@ class OrmService
         $select = $qb
             ->select($tableMap)
             ->from($table);
+        //dd($select);
 
         //$return = $this->getEntityParams($entityClass);
         //dd($return);
@@ -126,6 +131,7 @@ class OrmService
 
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $entities = [];
+        $columns = [];
 
         foreach ($rows as $row) {
             $groupes = [];
@@ -133,6 +139,8 @@ class OrmService
             foreach ($row as $key => $value) {
                 [$prefix, $suffix] = explode('_', $key, 2);
                 $groupes[$prefix][$suffix] = $value;
+
+                //dd([$prefix, $suffix]);
             }
             //dd($groupes);
 
@@ -140,18 +148,52 @@ class OrmService
                 $name = $ep['name'];
                 $type = $ep['type'];
 
+                //hier Logik für Arrayswitch von _ zu ohne
+
+                $reflection = new \ReflectionClass($entityClass);
+                $constructor = $reflection->getConstructor();
+                //dd($constructor);
+                $parameterss = $constructor->getParameters();
+                //dump($parameterss);
+                foreach ($parameterss as $para) {
+                    foreach ($para as $item) {
+                        $paraName = $item;
+                        //dump($paraName);
+
+                        $columns[] = $paraName;
+                        //dump($columns);
+                        //$columns jetzt für Ausgabe benutzen
+                    }
+
+                }
+
+                //$array = array_replace($tableMap[$entityClass::getTable()], $columns);
                 $relatedTable = $type::getTable();
+                $array =array_values(array_combine ($tableMap[$relatedTable], $groupes[$relatedTable]));
+
+                //dd($groupes, $relatedTable);
+
+                //dd($tableMap, $columns, $groupes[$table], $array);
+
 
                 //dd($table, $relatedTable);
-
                 unset($groupes[$table][$relatedTable . '_id']);
 
                 $relatedPayload = $groupes[$relatedTable];
-                $groupes[$table][$name] = new $type(...$relatedPayload);
+                //dd($relatedPayload);
+                //$relatedPayload = array_values($relatedPayload);
+                //dd($relatedPayload);
+                //dd($type, $array);
+
+                $groupes[$table][$name] = new $type(...$array);
             }
 
-            $entities[] = new $entityClass(...($groupes[$table]));
-            //dd($groupes[$table]);
+            dd(get_class_vars($entityClass), $groupes[$table]);
+            $array2 = array_combine(get_class_vars($entityClass), $groupes[$table]);
+            dd($array2);
+
+            //dd($entityClass, $groupes[$table]);
+            $entities[] = new $entityClass(...$array2);
         }
         return $entities;
     }
@@ -174,7 +216,7 @@ class OrmService
         $properties = $reflection->getProperties();
         $constructor = $reflection->getConstructor();
 
-        $table = $entityClass::getTable();
+        $table = $this->getTableName($entityClass);
         $columns = [];
 
         foreach ($properties as $property) {
@@ -188,6 +230,7 @@ class OrmService
 
                 if (!empty($instance->columnName)) {
                     $columnName = $instance->columnName;
+                    //dd($columnName);
                 }
             }
 
@@ -221,7 +264,7 @@ class OrmService
                 }
             }
         }
-
+        //dd($tableMap);
         return $tableMap;
     }
 
