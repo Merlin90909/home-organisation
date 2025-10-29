@@ -45,9 +45,39 @@ class OrmService
         return $this->findBy([], $entityClass);
     }
 
-    public function getEntityData(){
+    public function getEntityData(string $entityClass): array
+    {
+        $reflection = new \ReflectionClass($entityClass);
+        $parameters = $reflection->getConstructor()->getParameters();
+        $table = $this->getTableName($entityClass);
 
+        $entityData[$entityClass]['tableName'][] = $table;
+
+        foreach ($parameters as $parameter) {
+            $parameterType = $parameter->getType()->getName();
+            $attributes = $parameter->getAttributes(\Framework\Attributes\OrmColumn::class)[0] ?? null;
+
+            $entityData[$entityClass]['columns'][] = $parameter->getName();
+            $columnName = $attributes ? $attributes->newInstance()->columnName : $parameter->getName();
+
+            if ($columnName !== $parameter->getName()) {
+                $entityData[$entityClass]['aliases'][$columnName] = $parameter->getName();
+            }
+
+            if (class_exists($parameterType) && (new \ReflectionClass($parameterType))->isSubclassOf(
+                    EntityInterface::class
+                )) {
+                $entityData[$entityClass]['relations'][$parameter->getName()] = [
+                    'entity' => $parameterType,
+                    'join' => $parameterType::getTable() . '_id',
+                    ];
+
+            }
+        }
+        dd($entityData);
+        return $entityData;
     }
+
     /**
      * @param class-string<EntityInterface> $entityClass
      */
@@ -58,33 +88,17 @@ class OrmService
         ?array $orderBy = null,
 
     ): array {
-        $table = $this->getTableName($entityClass);
+
+        //$dd []= $this->getEntityParams($entityClass);
+
+        $entityData[] = $this->getEntityData($entityClass);
+
+
         $tableMap = $this->getEntityParams($entityClass);
         //dd($tableMap);
 
         $entityParams = [];
-        $reference = new \ReflectionClass($entityClass);
-        $constructor = $reference->getConstructor();
 
-        if ($constructor) {
-            foreach ($constructor->getParameters() as $parameter) {
-                //dd($constructor);
-                $types = $parameter->getType();
-                //dd($types);
-
-                if ($types instanceof \ReflectionNamedType) {
-                    $t = $types->getName();
-                    //dd($t);
-                    if (class_exists($t) && (new \ReflectionClass($t))->isSubclassOf(EntityInterface::class)) {
-                        $entityParams[] = [
-                            'name' => $parameter->getName(),
-                            'type' => $t,
-                        ];
-                        //dd($entityParams);
-                    }
-                }
-            }
-        }
 
         $qb = $this->queryBuilder->select();
 
@@ -139,7 +153,6 @@ class OrmService
             foreach ($row as $key => $value) {
                 [$prefix, $suffix] = explode('_', $key, 2);
                 $groupes[$prefix][$suffix] = $value;
-
                 //dd([$prefix, $suffix]);
             }
             //dd($groupes);
@@ -164,12 +177,18 @@ class OrmService
                         //dump($columns);
                         //$columns jetzt für Ausgabe benutzen
                     }
-
                 }
+
+                //room =>
+                    //'id,
+                    //'name,
+                //user =>
+                    //'user_id'
+
 
                 //$array = array_replace($tableMap[$entityClass::getTable()], $columns);
                 $relatedTable = $type::getTable();
-                $array =array_values(array_combine ($tableMap[$relatedTable], $groupes[$relatedTable]));
+                $array = array_values(array_combine($tableMap[$relatedTable], $groupes[$relatedTable]));
 
                 //dd($groupes, $relatedTable);
 
@@ -188,9 +207,9 @@ class OrmService
                 $groupes[$table][$name] = new $type(...$array);
             }
 
-            dd(get_class_vars($entityClass), $groupes[$table]);
+            //dd(get_class_vars($entityClass), $groupes[$table]);
             $array2 = array_combine(get_class_vars($entityClass), $groupes[$table]);
-            dd($array2);
+            //dd($array2);
 
             //dd($entityClass, $groupes[$table]);
             $entities[] = new $entityClass(...$array2);
@@ -219,25 +238,6 @@ class OrmService
         $table = $this->getTableName($entityClass);
         $columns = [];
 
-        foreach ($properties as $property) {
-            $columnName = $property->getName();
-
-            $attributes = $property->getAttributes(\Framework\Attributes\OrmColumn::class);
-
-            if (!empty($attributes)) {
-                /** @var \Framework\Attributes\OrmColumn $instance */
-                $instance = $attributes[0]->newInstance();
-
-                if (!empty($instance->columnName)) {
-                    $columnName = $instance->columnName;
-                    //dd($columnName);
-                }
-            }
-
-            $columns[] = $columnName;
-            //dd($columns);
-        }
-
         $tableMap = [
             $table => $columns
         ];
@@ -264,7 +264,7 @@ class OrmService
                 }
             }
         }
-        //dd($tableMap);
+        dd($tableMap);
         return $tableMap;
     }
 
