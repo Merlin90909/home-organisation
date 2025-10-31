@@ -62,6 +62,7 @@ final class SelectQueryBuilder extends AbstractQueryBuilder
         }
 
         $columnName = !empty($columnList) ? implode(', ', $columnList) : '*';
+        //dd($columnName);
         $sql = 'SELECT ' . $columnName . ' FROM ' . $this->tableName;
 
         if (!empty($this->join)) {
@@ -76,6 +77,7 @@ final class SelectQueryBuilder extends AbstractQueryBuilder
         if ($this->limitVal !== null) {
             $sql .= ' LIMIT ' . $this->limitVal;
         }
+        //dd($sql);
         return new QueryDto($sql, $this->params);
     }
 }

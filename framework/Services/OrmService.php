@@ -131,6 +131,7 @@ class OrmService
 
     ): array {
         $allEntityData = $this->getEntityData($entityClass);
+        //dd($allEntityData);
         $singleEntityData = $allEntityData[$entityClass];
         $useTable = $singleEntityData['tableName'];
         $reversAliases = array_flip($singleEntityData['aliases'] ?? []);
@@ -197,27 +198,25 @@ class OrmService
             $parameters = $constructor->getParameters();
             $arguments = [];
 
+            $rootTable = $singleEntityData['tableName'];
+
             foreach ($parameters as $parameter) {
                 $parameterName = $parameter->getName();
                 $type = $parameter->getType();
-                //dd($type);
                 $parameterType = $type ? $type->getName() : null;
 
-                if ($parameterType && class_exists($parameterType) && (new \ReflectionClass(
-                        $parameterType
-                    ))->isSubclassOf(EntityInterface::class)) {
-                    $useTable = $parameterType::getTable();
-                    $useColumns = $tableMap[$useTable] ?? [];
+                if ($parameterType && class_exists($parameterType)
+                    && (new \ReflectionClass($parameterType))->isSubclassOf(EntityInterface::class)) {
+                    $relTable = $parameterType::getTable();
+                    $useColumns = $tableMap[$relTable] ?? [];
                     $useValues = [];
                     foreach ($useColumns as $columnName) {
-                        $useValues[] = $groupes[$useTable][$columnName] ?? null;
+                        $useValues[] = $groupes[$relTable][$columnName] ?? null;
                     }
                     $arguments[] = new $parameterType(...$useValues);
                 } else {
                     $reversedKey = $reversAliases[$parameterName] ?? $parameterName;
-                    //dd($reversedKey);
-                    $arguments[] = $groupes[$useTable][$reversedKey] ?? null;
-                    //dd($arguments);
+                    $arguments[] = $groupes[$rootTable][$reversedKey] ?? null;
                 }
             }
             $entities[] = new $entityClass(...$arguments);
