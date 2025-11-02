@@ -23,7 +23,7 @@ class TaskCreateService
     ) {
 
         $statement = $this->pdo->prepare(
-            'INSERT INTO task (created_by, created_for, title, notes, due_at, priority, repeat, repeat_rule, created_at) 
+            'INSERT INTO task (user_id, room_id, title, notes, due_at, priority, repeat, repeat_rule, created_at) 
                     VALUES (:created_by, :created_for, :title, :notes, :due_at, :priority, :repeat, :repeat_rule, :created_at)'
         );
         $statement->execute([

@@ -42,19 +42,19 @@ $pdo->exec("
         created_at TEXT NOT NULL DEFAULT (datetime('now')),
         deleted BOOLEAN NOT NULL DEFAULT false,
         checked BOOLEAN NOT NULL DEFAULT false,
-        created_by INTEGER NOT NULL,
-        created_for INTEGER NOT NULL,
-        FOREIGN KEY (created_by) REFERENCES user(id),
-        FOREIGN KEY (created_for) REFERENCES room(id)
+        user_id INTEGER NOT NULL,
+        room_id INTEGER NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES user(id),
+        FOREIGN KEY (room_id) REFERENCES room(id)
 );
     CREATE TABLE item(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT(30) NOT NULL,
         category TEXT(30) NOT NULL,
         amount INTEGER NOT NULL CHECk(amount >=0),
-        created_by INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
         room_id INTEGER NOT NULL,
-        FOREIGN KEY (created_by) REFERENCES user(id),
+        FOREIGN KEY (user_id) REFERENCES user(id),
         FOREIGN KEY (room_id) REFERENCES room(id)
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uniq_item_name_category

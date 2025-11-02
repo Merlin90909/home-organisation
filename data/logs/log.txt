@@ -35,3 +35,4 @@ SELECT room.id AS room_id, room.name AS room_name, room.description AS room_desc
 INSERT INTO user (firstName, lastName, email, password) VALUES (:val_0, :val_1, :val_2, :val_3);
 INSERT INTO user (firstName, lastName, email, password) VALUES (:val_0, :val_1, :val_2, :val_3);
 INSERT INTO user (first_name, last_name, email, password) VALUES (:val_0, :val_1, :val_2, :val_3);
+INSERT INTO user (first_name, last_name, email, password) VALUES (:val_0, :val_1, :val_2, :val_3);
