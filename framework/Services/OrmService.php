@@ -127,7 +127,7 @@ class OrmService
         array $filters,
         string $entityClass,
         ?int $limit = null,
-        ?array $orderBy = null,
+        ?array $orderBy = null
 
     ): array {
         $allEntityData = $this->getEntityData($entityClass);
@@ -281,6 +281,7 @@ class OrmService
         EntityInterface $entity
     ): bool {
         if ($entity->id <= 0) {
+            //dd(true);
             return $this->create($entity);
         }
         return $this->update($entity);
@@ -291,19 +292,30 @@ class OrmService
     ): bool {
         $data = get_object_vars($entity);
         $tableName = $entity::getTable();
-        if (array_key_exists('id', $data)) {
-            unset($data['id']);
+
+        $meta = $this->getEntityData($entity::class);
+        $aliases = $meta[$entity::class]['aliases'] ?? [];
+        $propToColumn = array_flip($aliases);
+
+        $mapped = [];
+        foreach ($data as $property => $value) {
+            if ($property === 'id') {
+                continue;
+            }
+            $column = $propToColumn[$property] ?? $property;
+            $mapped[$column] = $value;
         }
+
         $result = $this->queryBuilder
             ->update()
             ->from($tableName)
-            ->set($data)
+            ->set($mapped)
             ->where(['id' => (string)$entity->id])
             ->build();
         //dd($result);
-        $stmt = $this->pdo->prepare($result['sql']);
-
-        return $stmt->execute($result['params']);
+        $this->loggerService->log($result->query);
+        $stmt = $this->pdo->prepare($result->query);
+        return $stmt->execute($result->parameters);
     }
 
     private function create(
@@ -312,17 +324,29 @@ class OrmService
         $data = get_object_vars($entity);
         $tableName = $entity::getTable();
 
-        if (array_key_exists('id', $data)) {
-            unset($data['id']);
+        $meta = $this->getEntityData($entity::class);
+        $aliases = $meta[$entity::class]['aliases'] ?? [];
+        $propToColumn = array_flip($aliases);
+
+        $mapped = [];
+        foreach ($data as $property => $value) {
+            if ($property === 'id') {
+                continue;
+            }
+            $column = $propToColumn[$property] ?? $property;
+            $mapped[$column] = $value;
         }
+
         $result = $this->queryBuilder
             ->insert()
             ->into($tableName)
-            ->values($data)
+            ->values($mapped)
             ->build();
-        //dd($result);
-        $stmt = $this->pdo->prepare($result['sql']);
-        $ok = $stmt->execute($result['params']);
+
+
+        $this->loggerService->log($result->query);
+        $stmt = $this->pdo->prepare($result->query);
+        $ok = $stmt->execute($result->parameters);
 
 
         if ($ok && method_exists($entity, 'setId')) {

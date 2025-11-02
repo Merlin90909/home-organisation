@@ -11,7 +11,7 @@ use Framework\Interfaces\EntityInterface;
 class UserEntity implements EntityInterface
 {
     public function __construct(
-        public int $id,
+        public ?int $id = null,
         #[OrmColumn('first_name')]
         public string $firstName,
         #[OrmColumn('last_name')]
@@ -25,5 +25,4 @@ class UserEntity implements EntityInterface
     {
         return 'user';
     }
-
 }

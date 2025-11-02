@@ -2,9 +2,10 @@
 
 namespace Framework\Services\QueryBuilder;
 
+use AllowDynamicProperties;
 use Framework\Dtos\QueryDto;
 
-final class InsertQueryBuilder
+final class InsertQueryBuilder extends AbstractQueryBuilder
 {
     private array $columns = [];
     private array $placeholders = [];
@@ -35,8 +36,6 @@ final class InsertQueryBuilder
             implode(', ', $this->placeholders)
         );
 
-        //return ['sql' => $sql, 'params' => $this->params];
         return new QueryDto($sql, $this->params);
     }
-
 }

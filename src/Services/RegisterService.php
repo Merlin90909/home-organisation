@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Entities\UserEntity;
 use Framework\Services\OrmService;
-use PDO;
 
 class RegisterService
 {
@@ -13,6 +12,7 @@ class RegisterService
     }
 
     function register(
+        //
         string $first_Name,
         string $last_Name,
         string $email,
@@ -23,13 +23,7 @@ class RegisterService
             return false;
         }
 
-        $user = new UserEntity();
-        $user->id = 0;
-        $user->first_Name = $first_Name;
-        $user->last_Name = $last_Name;
-        $user->email = $email;
-        $user->password = $password;
-
+        $user = new UserEntity(null, $first_Name, $last_Name, $email, $password);
 
         return $this->ormService->save($user);
     }
