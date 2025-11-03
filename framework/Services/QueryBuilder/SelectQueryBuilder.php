@@ -31,7 +31,7 @@ final class SelectQueryBuilder extends AbstractQueryBuilder
     {
         $dir = strtoupper($direction);
         if ($dir !== 'ASC' && $dir !== 'DESC') {
-            $dir = 'ASC';
+            throw new Exception("Not valid order direction");
         }
         $this->orderParts[] = $column . ' ' . $dir;
         return $this;
@@ -39,17 +39,15 @@ final class SelectQueryBuilder extends AbstractQueryBuilder
 
     public function limit(int $limit): self
     {
+        if ($this->limitVal <= 0 && $this->limitVal !== null) {
+            throw new Exception("Not valid limit");
+        }
         $this->limitVal = max(0, $limit);
         return $this;
     }
 
     public function build(): QueryDto
     {
-        if ($this->limitVal <= 0 && $this->limitVal !== null) {
-            throw new Exception("Not valid limit");
-        }
-
-
         $columnList = [];
 
         foreach ($this->columns as $tableGroup) {

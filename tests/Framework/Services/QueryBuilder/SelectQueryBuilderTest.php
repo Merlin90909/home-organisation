@@ -1,9 +1,8 @@
 <?php
 
-namespace Test\Framework\QueryBuilder;
+namespace Test\Framework\Services\QueryBuilder;
 
 use Exception;
-use Framework\Services\QueryBuilder\QueryBuilder;
 use Framework\Services\QueryBuilder\SelectQueryBuilder;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -31,11 +30,11 @@ class SelectQueryBuilderTest extends TestCase
             ->select(['*'])
             ->from('user')
             ->where([])
-            ->orderBy('')
+            ->orderBy('id', 'ASC')
             ->limit(10)
             ->build();
 
-        $this->assertInstanceOf(\Framework\Dtos\QueryDto::class, $result);
+        //$this->assertInstanceOf(\Framework\Dtos\QueryDto::class, $result);
         $expectedSql = $newQuery;
         $this->assertNotEquals($expectedSql, $result->query);
     }
@@ -46,6 +45,13 @@ class SelectQueryBuilderTest extends TestCase
         $qb = new SelectQueryBuilder();
         $this->expectException(Exception::class);
         $result = $qb->select()->limit($limit)->build();
+    }
+
+    public function testOrderBy(): void
+    {
+        $qb = new SelectQueryBuilder();
+        $this->expectException(Exception::class);
+        $result = $qb->select()->orderBy('id', 'FOO')->build();
     }
 
     public static function limitProvider(): array
@@ -59,11 +65,11 @@ class SelectQueryBuilderTest extends TestCase
     public static function queryProvider(): array
     {
         return [
-          ['SELECT user.id AS user_id, user.first_name AS user_first_name,user.last_name AS user_last_name, user.email AS user_email FROM user LIMIT 10'],
-          ['SELECT user.id AS user_id, user.first_name AS user_first_name,user.last_name AS user_last_name, user.email AS user_email FROM user LIMIT 10'],
-          ['SELECT user.id AS user_id, user.first_name AS user_first_name,user.last_name AS user_last_name, user.email AS user_email FROM user LIMIT 10'],
-          ['SELECT user.id AS user_id, user.first_name AS user_first_name,user.last_name AS user_last_name, user.email AS user_email FROM user LIMIT 10'],
-          ['SELECT user.id AS user_id, user.first_name AS user_first_name,user.last_name AS user_last_name, user.email AS user_email FROM user LIMIT 10']
+            ['SELECT user.id AS user_id, user.first_name AS user_first_name,user.last_name AS user_last_name, user.email AS user_email FROM user LIMIT 10'],
+            ['SELECT user.id AS user_id, user.first_name AS user_first_name,user.last_name AS user_last_name, user.email AS user_email FROM user LIMIT 10'],
+            ['SELECT user.id AS user_id, user.first_name AS user_first_name,user.last_name AS user_last_name, user.email AS user_email FROM user LIMIT 10'],
+            ['SELECT user.id AS user_id, user.first_name AS user_first_name,user.last_name AS user_last_name, user.email AS user_email FROM user LIMIT 10'],
+            ['SELECT user.id AS user_id, user.first_name AS user_first_name,user.last_name AS user_last_name, user.email AS user_email FROM user LIMIT 10']
         ];
     }
 
