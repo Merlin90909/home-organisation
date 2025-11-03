@@ -11,7 +11,7 @@ class DeleteQueryBuilderTest extends TestCase
     {
         $qb = new DeleteQueryBuilder();
         $result = $qb->from('user')->where([])->build();
-        $expected = 'DELETE FROM '. 'user';
+        $expected = 'DELETE FROM ' . 'user';
 
         $this->assertNotEquals($expected, $result->query);
     }

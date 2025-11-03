@@ -98,6 +98,5 @@ class SelectQueryBuilderTest extends TestCase
             ->build();
         $expected = 'SELECT user.id AS user_id, user.email AS user_email FROM user';
         $this->assertNotEquals($expected, $result->query);
-
     }
 }
