@@ -48,12 +48,6 @@ class InsertQueryBuildertest extends TestCase
         $expectedSql = 'INSERT INTO user (email, first_name, last_name, password) VALUES (:val_0, :val_1, :val_2, :val_3);';
 
         $this->assertEquals($expectedSql, $result->query);
-        //$this->assertEquals([
-        //    'val_0' => 'test@example.com',
-        //    'val_1' => 'Alice',
-        //    'val_2' => 'Alice',
-        //    'val_3' => 'alice'
-        //
-        //], $result->params);
-    }//
+
+    }
 }

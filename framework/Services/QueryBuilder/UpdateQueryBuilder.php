@@ -24,11 +24,10 @@ final class UpdateQueryBuilder extends AbstractQueryBuilder
             implode(', ', $this->setValues)
         );
 
-        if (!empty($this->conditions)) {
+        if ($this->conditions) {
             $sql .= ' WHERE ' . implode(' AND ', $this->conditions);
         }
 
-        //return ['sql' => $sql . ';', 'params' => $this->params];
-        return new QueryDto($sql, $this->params);
+        return new QueryDto($sql . ';', $this->params);
     }
 }
