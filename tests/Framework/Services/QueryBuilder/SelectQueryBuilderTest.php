@@ -86,4 +86,18 @@ class SelectQueryBuilderTest extends TestCase
         $result = $qb->select()->join('user', 'user', '')->build();
         $this->assertEmpty($result->parameters);
     }
+
+    public function testAlias(): void
+    {
+        $qb = new SelectQueryBuilder();
+        $result = $qb
+            ->select([
+                'user' => ['id', 'name']
+            ])
+            ->from('user')
+            ->build();
+        $expected = 'SELECT user.id AS user_id, user.email AS user_email FROM user';
+        $this->assertNotEquals($expected, $result->query);
+
+    }
 }
