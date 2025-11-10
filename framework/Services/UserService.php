@@ -24,7 +24,7 @@ class UserService
         return true;
     }
 
-    public function getUserbyEmail(string $email): ?UserDto
+    public function getUserByEmail(string $email): ?UserDto
     {
         $stmt = $this->pdo->prepare(
             'SELECT *  FROM user WHERE email = :email LIMIT 1'

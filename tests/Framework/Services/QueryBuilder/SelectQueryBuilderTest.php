@@ -3,6 +3,7 @@
 namespace Test\Framework\Services\QueryBuilder;
 
 use Exception;
+use Framework\Services\OrmService;
 use Framework\Services\QueryBuilder\QueryBuilder;
 use Framework\Services\QueryBuilder\SelectQueryBuilder;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -12,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 class SelectQueryBuilderTest extends TestCase
 {
 
-    #[Test]
     public function testEmptySelectArray(): void
     {
         $qb = new QueryBuilder();

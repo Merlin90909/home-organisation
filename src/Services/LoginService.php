@@ -16,7 +16,8 @@ class LoginService
             return false;
         }
 
-        $user = $this->userService->getUserbyEmail($email);
+        // getUserByEmail mocken
+        $user = $this->userService->getUserByEmail($email);
 
 
         if (!$user) {
