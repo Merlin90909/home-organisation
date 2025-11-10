@@ -16,20 +16,25 @@ class LoginService
             return false;
         }
 
-        // getUserByEmail mocken
         $user = $this->userService->getUserByEmail($email);
-
+        //dd($user);
 
         if (!$user) {
             return false;
         }
-        if ($user->password !== $password) {
+
+        $userPassword = $user->password;
+        //dd($userPassword);
+
+        if ($userPassword != $password) {
+            //dd('false');
             return false;
         }
+            //dd('true');
         $_SESSION['logged_in'] = true;
         $_SESSION['user_id'] = $user->id;
         $_SESSION['user_email'] = $user->email;
-        $_SESSION['user_name'] = $user->first_name . ' ' . $user->last_name;
+        $_SESSION['user_name'] = $user->firstName . ' ' . $user->lastName;
 
         return true;
     }
