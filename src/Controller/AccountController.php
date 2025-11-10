@@ -18,7 +18,7 @@ class AccountController implements ControllerInterface
     public function __construct(
         private HtmlRenderer $htmlRenderer,
         private AccountService $accountService,
-        private OrmService $ormService
+        //private OrmService $ormService
     ) {
     }
 
@@ -61,18 +61,18 @@ class AccountController implements ControllerInterface
        //    , RoomEntity::class, 4, []
        //);
        ////findBy mit neuer Logik
-       $select = $this->ormService->findBy(
-           [
-               [
-                   'name' => 'Bad',
-               ],
-           ],
-           RoomEntity::class,
-           5,
-           [],
-
-       );
-        dd($select);
+       //$select = $this->ormService->findBy(
+       //    [
+       //        [
+       //            'name' => 'Bad',
+       //        ],
+       //    ],
+       //    RoomEntity::class,
+       //    5,
+       //    [],
+//
+       //);
+        //dd($select);
 
         //$user = $this->ormService->findById(
         //    1,

@@ -17,20 +17,17 @@ class LoginService
         }
 
         $user = $this->userService->getUserByEmail($email);
-        //dd($user);
 
         if (!$user) {
             return false;
         }
 
         $userPassword = $user->password;
-        //dd($userPassword);
 
         if ($userPassword != $password) {
-            //dd('false');
             return false;
         }
-            //dd('true');
+
         $_SESSION['logged_in'] = true;
         $_SESSION['user_id'] = $user->id;
         $_SESSION['user_email'] = $user->email;
