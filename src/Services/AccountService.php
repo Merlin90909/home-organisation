@@ -19,20 +19,10 @@ class AccountService
 
     public function showParameters(int $userId): EntityInterface
     {
-        //$stmt = $this->pdo->prepare(
-        //    'SELECT id, first_Name, last_Name, email
-        //            FROM user
-        //            WHERE id = :userId'
-        //);
-        //$stmt->execute(['userId' => $userId]);
-        //return $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
-
         $userParams = $this->ormService->findOneBy(
             ['id' => $userId],
             UserEntity::class
         );
-            //dd($userParams);
-
         return $userParams;
     }
 

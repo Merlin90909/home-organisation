@@ -19,7 +19,7 @@ class DashboardSubmitController implements ControllerInterface
     {
         $taskId = (int)$httpRequest->getPayload()['task_id'];
 
-        $checked = $this->dashboardService->checkedTask($taskId);
+        $checked = $this->dashboardService->checkTask($taskId);
 
         if ($checked) {
             return new RedirectResponse('/?checked_successfully');

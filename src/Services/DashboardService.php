@@ -3,14 +3,15 @@
 namespace App\Services;
 
 
-use PDO;
+use App\Entities\TaskEntity;
+use Framework\Services\OrmService;
 
 class DashboardService
 {
 
     public function __construct(
         private TaskService $taskService,
-        private PDO $pdo
+        private OrmService $ormService
     ) {
     }
 
@@ -23,7 +24,6 @@ class DashboardService
         $result = [];
         foreach ($rawItems as $t) {
             $title = $t['title'] ?? '';
-            //dd($t['due_at']);
 
             $rooms = trim((string)($t['rooms'] ?? ''));
             $roomTagHtml = '';
@@ -61,11 +61,10 @@ class DashboardService
         return $result;
     }
 
-    public function checkedTask(int $id): bool
+    public function checkTask(int $id): bool
     {
-        $stmt = $this->pdo->prepare('Update task set checked = 1 where id = :id');
-        return $stmt->execute(['id' => $id]);
+        $tasks = $this->ormService->findOneBy(['id' => $id], TaskEntity::class);
+        $tasks->checked = 1;
+        return $this->ormService->save($tasks);
     }
-
-
 }
