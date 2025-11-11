@@ -334,7 +334,12 @@ class OrmService
                 continue;
             }
             $column = $propToColumn[$property] ?? $property;
-            $mapped[$column] = $value;
+
+            if ($value instanceof EntityInterface) {
+                $mapped[$column] = $value->id ?? null;
+            } else {
+                $mapped[$column] = $value;
+            }
         }
 
         $result = $this->queryBuilder

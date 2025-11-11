@@ -27,7 +27,7 @@ $pdo->exec("
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT(30) NOT NULL,
         description TEXT,
-        user_id INTEGER NOT NULL,
+        user_id INTEGER,
         created_at TEXT NOT NULL DEFAULT (datetime('now')),
         FOREIGN KEY (user_id) REFERENCES user(id)
 );
@@ -62,8 +62,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS uniq_item_name_category
 
     CREATE TABLE user_to_room(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        owner_id INTEGER NOT NULL,
-        room_id INTEGER NOT NULL,
+        owner_id INTEGER ,
+        room_id INTEGER,
         FOREIGN KEY (owner_id) REFERENCES user(id),
         FOREIGN KEY (room_id) REFERENCES room(id)
 );
