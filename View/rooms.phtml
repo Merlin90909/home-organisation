@@ -26,19 +26,25 @@ require_once(__DIR__ . '/header.phtml');
             unset($_SESSION['flashMessages']);
             ?>
 
-            <?php if (!empty($errors)): ?>
+            <?php
+            if (!empty($errors)): ?>
                 <div class="error-messages">
 
-                    <?php foreach ($errors as $field => $messages): ?>
+                    <?php
+                    foreach ($errors as $field => $messages): ?>
                         <h3><?= htmlspecialchars($field) ?></h3>
                         <ul>
-                            <?php foreach ($messages as $msg): ?>
+                            <?php
+                            foreach ($messages as $msg): ?>
                                 <li><?= htmlspecialchars($msg) ?></li>
-                            <?php endforeach; ?>
+                            <?php
+                            endforeach; ?>
                         </ul>
-                    <?php endforeach; ?>
+                    <?php
+                    endforeach; ?>
                 </div>
-            <?php endif; ?>
+            <?php
+            endif; ?>
 
             <div class="room-list">
                 <?php
@@ -52,9 +58,7 @@ require_once(__DIR__ . '/header.phtml');
                                 </a>
                             </h2>
                             <p><?= nl2br(
-                                        htmlspecialchars(
-                                                $room->description,
-                                        )
+                                        htmlspecialchars($room->description)
                                 ) ?></p>
                         </article>
                     <?php

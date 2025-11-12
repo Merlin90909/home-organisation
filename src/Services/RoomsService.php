@@ -4,12 +4,13 @@ namespace App\Services;
 
 use App\Dtos\RoomDto;
 use App\Entities\RoomEntity;
+use Framework\Interfaces\EntityInterface;
 use Framework\Services\OrmService;
 use PDO;
 
 class RoomsService
 {
-    public function __construct(private PDO $pdo, private OrmService $ormService)
+    public function __construct(private OrmService $ormService)
     {
     }
 
@@ -33,19 +34,14 @@ class RoomsService
         );
     }
 
-    public function getRoom(int $id): ?array
+    public function getRoom(int $id): EntityInterface
     {
-        $stmt = $this->pdo->query(
-            '
-        SELECT  id, name, description 
-        FROM room 
-        WHERE id = ' . $id . ' LIMIT 1'
+        $room = $this->ormService->findOneBy(
+            [
+                'room.id' => $id
+            ],
+            RoomEntity::class
         );
-        $room = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$room) {
-            return null;
-        }
 
         return $room;
     }

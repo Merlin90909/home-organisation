@@ -4,21 +4,24 @@ require_once(__DIR__ . '/header.phtml');
 ?>
 <?php
 date_default_timezone_set('Europe/Berlin');
-$room = is_array($room ?? null) ? $room : []; ?>
+$room = ($room ?? null);
+//dd($room)?>
+
     <div class="rooms-wrapper">
         <div class="rooms room-detail">
             <div class="room-titlebar">
-                <h1>Raum: <?= htmlspecialchars($room['name']) ?></h1>
+                <h1>Raum: <?= htmlspecialchars($room->name) ?></h1>
                 <a href="/rooms" class="back-link" aria-label="Zurück zu den Räumen">← Zurück zu den Räumen</a>
             </div>
             <?php
-            if (!empty($room['description'])): ?>
-                <p class="room-desc"><?= htmlspecialchars($room['description']) ?></p>
+            if (!empty($room->description)): ?>
+                <p class="room-desc"><?= htmlspecialchars($room->description) ?></p>
             <?php
             endif; ?>
 
             <?php
-            $items = $task ?? ($room['task'] ?? []);
+            $items = $task ?? ($room->task ?? []);
+            //dd($items);
             ?>
 
             <h2>Aktuelle Task</h2>
@@ -26,14 +29,15 @@ $room = is_array($room ?? null) ? $room : []; ?>
             if (!empty($items)): ?>
                 <ul class="task-list">
                     <?php
-                    foreach ($items as $t): ?>
+                    foreach ($items as $t):
+                        ?>
                         <li class="task-card">
                             <div class="task-header">
                                 <h3><?= htmlspecialchars($t['title'] ?? '') ?></h3>
                                 <form action="/task-delete" method="post" class="delete-form">
-                                    <input type="hidden" name="task_id" value="<?= $t['id'] ?>">
-                                    <input type="hidden" name="room_id"
-                                           value="<?= isset($room['id']) ? (int)$room['id'] : '' ?>">
+                                    <input type="hidden" name="task.id" value="<?= $t['id'] ?>">
+                                    <input type="hidden" name="room.id"
+                                           value="<?= isset($room->id) ? (int)$room->id : '' ?>">
                                     <button type="submit" class="delete-btn">✕</button>
                                 </form>
                             </div>
@@ -70,7 +74,7 @@ $room = is_array($room ?? null) ? $room : []; ?>
 
             <h2>Neue Task hinzufügen</h2>
             <form action="/task-submit" method="post">
-                <input type="hidden" name="room_id" value="<?= isset($room['id']) ? (int)$room['id'] : '' ?>">
+                <input type="hidden" name="room_id" value="<?= isset($room->id) ? (int)$room->id : '' ?>">
 
                 <div>
                     <label for="task_title">Titel</label>
