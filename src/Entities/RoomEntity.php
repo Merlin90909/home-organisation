@@ -10,8 +10,9 @@ use Framework\Interfaces\EntityInterface;
 #[OrmTable('room')]
 class RoomEntity implements EntityInterface
 {
+    //setter Methode
+        public ?int $id = null;
     public function __construct(
-        public ?int $id = null,
         public string $name,
         public string $description,
         #[OrmColumn('user_id')]
@@ -19,6 +20,11 @@ class RoomEntity implements EntityInterface
         #[OrmColumn('created_at')]
         public string $created,
     ) {
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     public static function getTable(): string

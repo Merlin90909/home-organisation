@@ -353,7 +353,7 @@ class OrmService
         $stmt = $this->pdo->prepare($result->query);
         $ok = $stmt->execute($result->parameters);
 
-
+        // EntetyInterface setId einbauen
         if ($ok && method_exists($entity, 'setId')) {
             $entity->setId((int)$this->pdo->lastInsertId());
         }

@@ -27,4 +27,8 @@ class ItemEntity implements EntityInterface
     {
         return 'item';
     }
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 }

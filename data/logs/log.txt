@@ -115,3 +115,16 @@ INSERT INTO user_to_room (owner_id, room_id) VALUES (:val_0, :val_1);
 SELECT user.id AS user_id, user.first_name AS user_first_name, user.last_name AS user_last_name, user.email AS user_email, user.password AS user_password FROM user WHERE (id = :where_0) LIMIT 1
 SELECT user.id AS user_id, user.first_name AS user_first_name, user.last_name AS user_last_name, user.email AS user_email, user.password AS user_password FROM user WHERE (id = :where_0) LIMIT 1
 INSERT INTO room (name, description, user_id, created_at) VALUES (:val_0, :val_1, :val_2, :val_3);
+SELECT user.id AS user_id, user.first_name AS user_first_name, user.last_name AS user_last_name, user.email AS user_email, user.password AS user_password FROM user WHERE (email = :where_0) LIMIT 1
+SELECT user.id AS user_id, user.first_name AS user_first_name, user.last_name AS user_last_name, user.email AS user_email, user.password AS user_password FROM user WHERE (email = :where_0) LIMIT 1
+SELECT user.id AS user_id, user.first_name AS user_first_name, user.last_name AS user_last_name, user.email AS user_email, user.password AS user_password FROM user WHERE (email = :where_0) LIMIT 1
+SELECT user.id AS user_id, user.first_name AS user_first_name, user.last_name AS user_last_name, user.email AS user_email, user.password AS user_password FROM user WHERE (id = :where_0) LIMIT 1
+SELECT user.id AS user_id, user.first_name AS user_first_name, user.last_name AS user_last_name, user.email AS user_email, user.password AS user_password FROM user WHERE (id = :where_0) LIMIT 1
+SELECT user.id AS user_id, user.first_name AS user_first_name, user.last_name AS user_last_name, user.email AS user_email, user.password AS user_password FROM user WHERE (id = :where_0) LIMIT 1
+INSERT INTO room (name, description, user_id, created_at) VALUES (:val_0, :val_1, :val_2, :val_3);
+SELECT user.id AS user_id, user.first_name AS user_first_name, user.last_name AS user_last_name, user.email AS user_email, user.password AS user_password FROM user WHERE (id = :where_0) LIMIT 1
+SELECT user.id AS user_id, user.first_name AS user_first_name, user.last_name AS user_last_name, user.email AS user_email, user.password AS user_password FROM user WHERE (id = :where_0) LIMIT 1
+INSERT INTO room (name, description, user_id, created_at) VALUES (:val_0, :val_1, :val_2, :val_3);
+SELECT user.id AS user_id, user.first_name AS user_first_name, user.last_name AS user_last_name, user.email AS user_email, user.password AS user_password FROM user WHERE (id = :where_0) LIMIT 1
+INSERT INTO room (name, description, user_id, created_at) VALUES (:val_0, :val_1, :val_2, :val_3);
+INSERT INTO user_to_room (owner_id, room_id) VALUES (:val_0, :val_1);

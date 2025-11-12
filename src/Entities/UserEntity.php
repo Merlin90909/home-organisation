@@ -25,4 +25,8 @@ class UserEntity implements EntityInterface
     {
         return 'user';
     }
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 }

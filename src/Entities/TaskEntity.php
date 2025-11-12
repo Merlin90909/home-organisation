@@ -37,4 +37,8 @@ class TaskEntity implements EntityInterface
     {
         return 'task';
     }
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 }

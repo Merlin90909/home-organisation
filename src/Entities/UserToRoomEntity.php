@@ -23,4 +23,9 @@ class UserToRoomEntity implements EntityInterface
     {
         return 'user_to_room';
     }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 }

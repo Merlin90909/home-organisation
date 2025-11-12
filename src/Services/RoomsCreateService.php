@@ -14,7 +14,7 @@ class RoomsCreateService
     {
     }
 
-    function create(int $userId, string $name, string $description)
+    function create(int $userId, string $name, string $description): bool
     {
         if (empty($userId) || empty($name) || empty($description)) {
             return false;
@@ -27,14 +27,12 @@ class RoomsCreateService
             UserEntity::class
         );
 
-        $room = new RoomEntity(null, $name, $description, $user, date('Y-m-d H:i:s'));
+        $room = new RoomEntity($name, $description, $user, date('Y-m-d H:i:s'));
 
         $this->ormService->save($room);
 
         $roomId = $room->id;
-        dd($roomId);
         $userRoom = new UserToRoomEntity(null, $user, $roomId);
-
         $this->ormService->save($userRoom);
         return true;
     }
