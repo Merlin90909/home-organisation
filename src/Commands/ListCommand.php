@@ -11,7 +11,7 @@ class ListCommand implements CommandInterface
 
     public static function name(): string
     {
-        // TODO: Implement name() method.
+        return 'list';
     }
 
     public function __invoke(Output $output): ExitCode

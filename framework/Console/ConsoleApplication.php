@@ -24,9 +24,10 @@ class ConsoleApplication
         $this->commands[$command::name()] = $command;
     }
 
-    public function boot(string $directory): self
+    public function boot(string $directory, string $nameSpace): self
     {
-        $this->add(TestCommand::class);
+        $finder = new CommandFinder();
+        $this->commands = $finder->find(__DIR__ . '/../../src', 'App');
 
         return $this;
     }
@@ -36,18 +37,20 @@ class ConsoleApplication
         $output = new Output();
         $commandName = $_SERVER['argv'][1] ?? null;
 
+
         if (!$commandName) {
             $output->writeLine("Fehler: Kein Befehl angegeben.");
+            $output->writeNewLine();
             return ExitCode::Error;
         }
 
         if (!isset($this->commands[$commandName])) {
             $output->writeLine("Fehler: Befehl '$commandName' nicht gefunden.");
+            $output->writeNewLine();
             return ExitCode::Error;
         }
 
-        $command = $this->commands[$commandName];
+        $command = new $this->commands[$commandName];
         return $command($output);
-
     }
 }

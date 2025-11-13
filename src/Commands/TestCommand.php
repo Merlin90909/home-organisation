@@ -11,7 +11,7 @@ class TestCommand implements CommandInterface
 
     public static function name(): string
     {
-        return 'app:test';
+        return 'test';
     }
 
     public function __invoke(Output $output): ExitCode

@@ -1,11 +1,9 @@
 <?php
-//Startpunkt
-//an vendor und index orientieren
 
 use Framework\Console\ConsoleApplication;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$exitCode = new ConsoleApplication()->boot(__DIR__ . '/../src')->run();
+$console = new ConsoleApplication()->boot(__DIR__ . '/../src', 'App')->run();
 
-exit($exitCode->value);
+exit($console->value);
