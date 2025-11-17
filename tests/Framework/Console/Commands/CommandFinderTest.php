@@ -20,4 +20,14 @@ class CommandFinderTest extends TestCase
 
         $this->assertNotEquals($expected, $result);
     }
+
+    public function testIsValid(): void
+    {
+
+        $finder = new CommandFinder();
+        $expected = true;
+        $result = $finder->isValidCommand('');
+
+        $this->assertNotEquals($expected, $result);
+    }
 }

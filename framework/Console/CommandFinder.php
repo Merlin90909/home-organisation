@@ -41,7 +41,7 @@ class CommandFinder
         return $relativePath;
     }
 
-    private function isValidCommand(string $class): bool
+    public function isValidCommand(string $class): bool
     {
         if (!$class || !class_exists($class)) {
             return false;
