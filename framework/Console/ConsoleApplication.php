@@ -10,16 +10,6 @@ class ConsoleApplication
 
     public array $commands = [] ?? null;
 
-
-    /**
-     * @param class-string<CommandInterface> $command
-     * @return void
-     */
-    public function add(string $command): void
-    {
-        $this->commands[$command::name()] = $command;
-    }
-
     public function boot(string $directory, string $nameSpace): self
     {
         $finder = new CommandFinder();
@@ -32,8 +22,6 @@ class ConsoleApplication
     {
         $output = new Output();
         $commandName = $_SERVER['argv'][1] ?? null;
-        //dd($commandName);
-
 
         if (!$commandName) {
             $output->writeLine("Fehler: Kein Befehl angegeben.");
