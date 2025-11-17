@@ -20,3 +20,6 @@ composer.phar
 
 .env
 .env.local
+composer.json
+composer.lock
+phpunit.xml
