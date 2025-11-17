@@ -26,10 +26,9 @@ class ListCommand implements CommandInterface
         $finder = new CommandFinder();
         $this->commands = $finder->find(__DIR__ . '/../../src', 'App');
 
-        foreach($this->commands as $name => $value){
+        foreach ($this->commands as $name => $value) {
             $output->writeLine(" - " . $name);
             $output->writeNewLine();
-
         }
 
         return ExitCode::Success;

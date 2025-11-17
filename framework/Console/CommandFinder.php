@@ -13,8 +13,6 @@ class CommandFinder
     {
         $commandClasses = [];
 
-        //dd($directory);
-
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
 
         /** @var SplFileInfo $file */
@@ -22,25 +20,24 @@ class CommandFinder
             if (!$file->isFile()) {
                 continue;
             }
-            $class = $this->getClassName($file->getRealPath(), $directory);
-            //dd($class);
+            $class = $this->getClassName($file->getRealPath(), $directory, $nameSpace);
             if ($this->isValidCommand($class)) {
                 $commandClasses[$class::name()] = $class;
             }
         }
 
-        //dd($commandClasses);
-        //exit;
+
         return $commandClasses;
     }
 
-    public function getClassName(string $path, string $directory): string
+    public function getClassName(string $path, string $directory, string $nameSpace): string
     {
         $relativePath = substr($path, strlen(realpath($directory)));
-        $relativePath = 'App' . $relativePath;
+        $relativePath = $nameSpace . $relativePath;
         $relativePath = str_replace($directory, '', $relativePath);
         $relativePath = str_replace('.php', '', $relativePath);
         $relativePath = str_replace('/', '\\', $relativePath);
+
         return $relativePath;
     }
 
