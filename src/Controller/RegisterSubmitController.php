@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Services\RegisterService;
-
 use App\Validators\RegisterSubmitValidator;
 use Framework\Interfaces\ControllerInterface;
 use Framework\Interfaces\ResponseInterface;
