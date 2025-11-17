@@ -12,7 +12,7 @@ class UserEntity implements EntityInterface
 {
 
     public function __construct(
-        public ?int $id = null,
+        public ?int $id,
         #[OrmColumn('first_name')]
         public string $firstName,
         #[OrmColumn('last_name')]

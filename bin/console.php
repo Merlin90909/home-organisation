@@ -1,9 +1,13 @@
 <?php
 
 use Framework\Console\ConsoleApplication;
+use Framework\Dtos\DirectoryLocationDto;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$console = new ConsoleApplication()->boot(__DIR__ . '/../src', 'App')->run();
+$appDto = new DirectoryLocationDto(__DIR__ . '/../src', 'App');
+$frameworkDto = new DirectoryLocationDto(__DIR__ . '/../src', 'Framework');
+
+$console = new ConsoleApplication()->boot($appDto, $frameworkDto)->run();
 
 exit($console->value);

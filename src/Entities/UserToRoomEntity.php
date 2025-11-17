@@ -10,13 +10,12 @@ use Framework\Interfaces\EntityInterface;
 class UserToRoomEntity implements EntityInterface
 {
     public function __construct(
-        public ?int $id = null,
+        public ?int $id,
         #[OrmColumn('owner_id')]
-        public ?UserEntity $ownerId = null,
+        public ?UserEntity $ownerId,
         #[OrmColumn('room_id')]
-        public ?int $roomId = null
-    )
-    {
+        public ?int $roomId
+    ) {
     }
 
     public static function getTable(): string

@@ -2,6 +2,7 @@
 
 namespace Framework\Console;
 
+use Framework\Dtos\DirectoryLocationDto;
 use Framework\Enums\ExitCode;
 use Framework\Interfaces\CommandInterface;
 
@@ -10,10 +11,10 @@ class ConsoleApplication
 
     public array $commands = [] ?? null;
 
-    public function boot(string $directory, string $nameSpace): self
+    public function boot(DirectoryLocationDto ...$directories): self
     {
         $finder = new CommandFinder();
-        $this->commands = $finder->find(__DIR__ . '/../../src', 'App');
+        $this->commands = $finder->find($directories);
 
         return $this;
     }

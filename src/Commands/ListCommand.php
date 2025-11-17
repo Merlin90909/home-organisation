@@ -4,6 +4,7 @@ namespace App\Commands;
 
 use Framework\Console\CommandFinder;
 use Framework\Console\Output;
+use Framework\Dtos\DirectoryLocationDto;
 use Framework\Enums\ExitCode;
 use Framework\Interfaces\CommandInterface;
 
@@ -24,7 +25,12 @@ class ListCommand implements CommandInterface
         $output->writeNewLine();
 
         $finder = new CommandFinder();
-        $this->commands = $finder->find(__DIR__ . '/../../src', 'App');
+        $this->commands = $finder->find(
+            [
+                new DirectoryLocationDto(__DIR__ . '/../../src', 'App'),
+                new DirectoryLocationDto(__DIR__ . '/../../src', 'Framework')
+            ]
+        );
 
         foreach ($this->commands as $name => $value) {
             $output->writeLine(" - " . $name);

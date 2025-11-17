@@ -11,11 +11,11 @@ class RoomEntity implements EntityInterface
 {
 
     public function __construct(
-        public ?int $id = null,
+        public ?int $id,
         public string $name,
         public string $description,
         #[OrmColumn('user_id')]
-        public ?UserEntity $user = null,
+        public ?UserEntity $user,
         #[OrmColumn('created_at')]
         public string $created,
     ) {

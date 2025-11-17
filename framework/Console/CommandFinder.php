@@ -2,6 +2,7 @@
 
 namespace Framework\Console;
 
+use Framework\Dtos\DirectoryLocationDto;
 use Framework\Interfaces\CommandInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -9,23 +10,29 @@ use SplFileInfo;
 
 class CommandFinder
 {
-    public function find(string $directory, string $nameSpace): array
+    /**
+     * @param DirectoryLocationDto[] $directories
+     * @return array
+     */
+    public function find(array $directories): array
     {
         $commandClasses = [];
 
-        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
+        foreach ($directories as $directory) {
+            $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory->path));
 
-        /** @var SplFileInfo $file */
-        foreach ($iterator as $file) {
-            if (!$file->isFile()) {
-                continue;
-            }
-            $class = $this->getClassName($file->getRealPath(), $directory, $nameSpace);
-            if ($this->isValidCommand($class)) {
-                $commandClasses[$class::name()] = $class;
+            /** @var SplFileInfo $file */
+            foreach ($iterator as $file) {
+                if (!$file->isFile()) {
+                    continue;
+                }
+                /** @var class-string<CommandInterface> $class */
+                $class = $this->getClassName($file->getRealPath(), $directory->path, $directory->nameSpace);
+                if ($this->isValidCommand($class)) {
+                    $commandClasses[$class::name()] = $class;
+                }
             }
         }
-
 
         return $commandClasses;
     }

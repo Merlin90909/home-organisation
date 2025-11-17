@@ -10,11 +10,11 @@ use Framework\Interfaces\EntityInterface;
 class UserToTaskEntity implements EntityInterface
 {
     public function __construct(
-        public ?int $id = null,
+        public ?int $id,
         #[OrmColumn('owner_id')]
-        public ?UserEntity $user = null,
+        public ?UserEntity $user,
         #[OrmColumn('task_id')]
-        public ?TaskEntity $task = null
+        public ?TaskEntity $task
     ) {
     }
 

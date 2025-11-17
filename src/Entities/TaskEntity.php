@@ -10,7 +10,7 @@ use Framework\Interfaces\EntityInterface;
 class TaskEntity implements EntityInterface
 {
     public function __construct(
-        public ?int $id = null,
+        public ?int $id ,
         public string $title,
         public string $notes,
         #[OrmColumn('due_at')]
@@ -24,7 +24,7 @@ class TaskEntity implements EntityInterface
         public bool $deleted,
         public bool $checked,
         #[OrmColumn('user_id')]
-        public ?UserEntity $user = null,
+        public ?UserEntity $user ,
         #[OrmColumn('room_id')]
         public ?RoomEntity $room
 
