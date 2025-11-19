@@ -7,6 +7,7 @@ use Framework\Console\Output;
 use Framework\Dtos\InputArgumentDto;
 use Framework\Dtos\InputDefinitionDto;
 use Framework\Dtos\InputOptionDto;
+use Framework\Enums\Color;
 use Framework\Enums\ExitCode;
 use Framework\Interfaces\CommandInterface;
 
@@ -20,7 +21,15 @@ class TestCommand implements CommandInterface
 
     public function __invoke(Input $input, Output $output): ExitCode
     {
-        $output->writeLine('Das ist ein Test!');
+
+        $format = $input->getOptions('format');
+        //dd($format);
+
+        $text = 'Das ist ein Test!';
+
+        $output->textFormat(Color::toArray()[$format['format']->value]);
+
+        $output->writeLine($text);
         $output->writeNewLine();
 
         return ExitCode::Success;
@@ -48,6 +57,6 @@ class TestCommand implements CommandInterface
 
     public static function description(): string
     {
-        return 'a list of all test';
+        return 'just a test';
     }
 }

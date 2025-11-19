@@ -2,6 +2,8 @@
 
 namespace Framework\Console;
 
+use Framework\Enums\Color;
+
 class Output
 {
     //helperklasse fürs Lienienschreiben
@@ -18,6 +20,11 @@ class Output
     {
         //Ausgabe auf neuer Zeile
         echo "\n";
+    }
+
+    public function textFormat(Color $color): void
+    {
+        echo "\e[" . $color->value . 'm';
     }
 
 
