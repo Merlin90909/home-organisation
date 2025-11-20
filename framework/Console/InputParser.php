@@ -21,10 +21,13 @@ class  InputParser
                 $name = substr($argument, 2);
                 if (str_contains($argument, '=')) {
                     [$name, $val] = explode('=', $name, 2);
+                    //überprüfen ob name unter den Optionen ist(getDefinition)
                 } else {
                     $val = 'true';
                 }
-
+                //das fällt weg; Dto aus getDefinition benutzen und value hinzufügen
+                //$value gleich wert wie grün oder blau
+                //statt new Dto dieses Dto mit Value in option[name[
                 $options[$name] = new InputOptionDto(
                     $name,
                     '',

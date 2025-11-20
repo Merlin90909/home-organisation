@@ -21,7 +21,7 @@ class TestCommand implements CommandInterface
 
     public function __invoke(Input $input, Output $output): ExitCode
     {
-        $format = $input->getOptions('format');
+        $format = $input->getOptions();
 
         $text = 'Das ist ein Test!';
 
@@ -46,6 +46,15 @@ class TestCommand implements CommandInterface
                 new InputOptionDto(
                     'format',
                     'format color',
+                    null,
+                    '-f',
+                    null
+                )
+            )
+            ->addOption(
+                new InputOptionDto(
+                    'help',
+                    'show help',
                     null,
                     '-f',
                     null

@@ -4,7 +4,6 @@ namespace Framework\Console;
 
 use Framework\Dtos\DirectoryLocationDto;
 use Framework\Enums\ExitCode;
-use Framework\Interfaces\CommandInterface;
 
 class ConsoleApplication
 {
@@ -14,6 +13,7 @@ class ConsoleApplication
     {
         $finder = new CommandFinder();
         $this->commands = $finder->find($directories);
+        //
 
         return $this;
     }
@@ -39,6 +39,8 @@ class ConsoleApplication
         }
 
         $command = new $this->commands[$commandName]['path'];
+
+        //Command hat Interface, ja dann ConsoleAppication mitgeben
 
         return $command($input, $output);
     }

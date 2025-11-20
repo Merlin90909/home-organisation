@@ -28,9 +28,9 @@ class Output
         echo "\e[" . $color->value . 'm';
     }
 
-    public function getLocation(Location $location): void
+    public function showHelp($class)
     {
-        echo "$location->name";
+        echo $class::description();
     }
 
 }

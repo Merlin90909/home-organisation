@@ -3,6 +3,7 @@
 namespace App\Commands;
 
 use Framework\Console\CommandFinder;
+use Framework\Console\ConsoleApplication;
 use Framework\Console\Input;
 use Framework\Console\Output;
 use Framework\Dtos\DirectoryLocationDto;
@@ -10,12 +11,11 @@ use Framework\Dtos\InputArgumentDto;
 use Framework\Dtos\InputDefinitionDto;
 use Framework\Dtos\InputOptionDto;
 use Framework\Enums\ExitCode;
-use Framework\Enums\Location;
 use Framework\Interfaces\CommandInterface;
+use Framework\Interfaces\RequireCommandInterface;
 
-class ListCommand implements CommandInterface
+class ListCommand implements CommandInterface, RequireCommandInterface
 {
-
     public array $commands = [];
 
 
@@ -92,5 +92,20 @@ class ListCommand implements CommandInterface
     public static function description(): string
     {
         return 'a list of all commands';
+    }
+
+    //ToDo: fertigstellen;
+    public function getParameter(): null
+    {
+
+    }
+
+    public function setParameter(): null
+    {
+        $console = new ConsoleApplication();
+
+        //commands ziehen
+        //überprüfen, wenn Interface implementiert
+
     }
 }

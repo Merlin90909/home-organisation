@@ -7,13 +7,13 @@ use PHPUnit\Framework\TestCase;
 
 class InputParserTest extends TestCase
 {
-    public function testParse()
+    public function testParse(): void
     {
         $arguments = [];
         $input = new InputParser();
 
         $input->parse($arguments);
 
-
+        $this->assertEquals();
     }
 }

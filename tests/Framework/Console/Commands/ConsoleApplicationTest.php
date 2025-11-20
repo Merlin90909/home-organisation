@@ -3,6 +3,7 @@
 namespace Test\Framework\Console\Commands;
 
 use Framework\Console\ConsoleApplication;
+use Framework\Dtos\DirectoryLocationDto;
 use Framework\Enums\ExitCode;
 use PHPUnit\Framework\TestCase;
 
@@ -11,7 +12,8 @@ class ConsoleApplicationTest extends TestCase
     public function testBoot(): void
     {
         $app = new ConsoleApplication();
-        $result = $app->boot(__DIR__, 'Test\\Namespace');
+        $direction = new DirectoryLocationDto('', 'Test\\Namespace');
+        $result = $app->boot($direction);
 
         $this->assertInstanceOf(ConsoleApplication::class, $result);
         $this->assertIsArray($app->commands);
