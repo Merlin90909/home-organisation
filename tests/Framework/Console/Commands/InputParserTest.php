@@ -7,13 +7,15 @@ use PHPUnit\Framework\TestCase;
 
 class InputParserTest extends TestCase
 {
-    public function testParse(): void
+    public function testParseWithEmptyInput(): void
     {
-        $arguments = [];
-        $input = new InputParser();
+        $parser = new InputParser();
 
-        $input->parse($arguments);
+        $input = $parser->parse([]);
 
-        $this->assertEquals();
+        $this->assertNull($input->getCommandName());
+        $this->assertEmpty($input->getArguments());
+        $this->assertEmpty($input->getOptions());
     }
+
 }

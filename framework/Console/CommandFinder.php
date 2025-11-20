@@ -29,14 +29,16 @@ class CommandFinder
                 /** @var class-string<CommandInterface> $class */
                 $class = $this->getClassName($file->getRealPath(), $directory->path, $directory->nameSpace);
                 if ($this->isValidCommand($class)) {
+                    $instance = new $class();
                     $commandClasses[$class::name()] = [
                         'path' => $class,
-                        'description' => $class::description()
+                        'description' => $class::description(),
+                        'definition' => $instance->getDefinition()
                     ];
                 }
             }
         }
-
+        //dd($commandClasses);
         return $commandClasses;
     }
 

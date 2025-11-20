@@ -23,7 +23,7 @@ class HelpCommand implements CommandInterface
 
     public function getDefinition(): InputDefinitionDto
     {
-
+        return new InputDefinitionDto();
     }
 
     public function __invoke(Input $input, Output $output): ExitCode

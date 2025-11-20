@@ -3,6 +3,7 @@
 namespace Framework\Console;
 
 use Framework\Dtos\InputArgumentDto;
+use Framework\Dtos\InputDefinitionDto;
 use Framework\Dtos\InputOptionDto;
 
 class Input
@@ -36,18 +37,22 @@ class Input
         return $this->options;
     }
 
-    public function setArguments(array $arguments): void
+    public function setArguments(InputArgumentDto $arguments): void
     {
-        $this->arguments = $arguments;
+        $this->arguments[] = $arguments;
     }
 
-    public function setOptions(array $options): void
+    public function setOptions(InputOptionDto $options): void
     {
-        $this->options = $options;
+        $this->options[] = $options;
     }
 
     public function setCommandName(string $commandName): void
     {
         $this->commandName = $commandName;
     }
+   //public function getDefinition(InputDefinitionDto $input): array
+   //{
+
+   //}
 }

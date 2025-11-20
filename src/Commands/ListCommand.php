@@ -19,6 +19,7 @@ class ListCommand implements CommandInterface, RequireCommandInterface
     public array $commands = [];
 
 
+
     public static function name(): string
     {
         return 'list';
@@ -29,31 +30,26 @@ class ListCommand implements CommandInterface, RequireCommandInterface
         $output->writeLine('--Alle verfügbaren Commands:--');
         $output->writeNewLine();
 
-        $options = $input->getOptions();
-
+        $options = $input->getOptions() ?? null;
+        $filter = $options[0] ?? null;
+        $filterValue = $filter->value ?? null;
+        $commandName = $input->getCommandName();
         $finder = new CommandFinder();
 
-        if (isset($options['app'])) {
-            $this->commands = $finder->find([
-                new DirectoryLocationDto(__DIR__ . '/../../src', 'App')
-            ]);
-        }
-        elseif (isset($options['framework'])) {
-            $this->commands = $finder->find([
-                new DirectoryLocationDto(__DIR__ . '/../../framework', 'Framework')
-            ]);
-        }
-        else {
-            $this->commands = $finder->find([
+        $return_value = match ($filterValue) {
+            'app', 'src' => $finder->find([new DirectoryLocationDto(__DIR__ . '/../../src', 'App')]),
+            'framework' => $finder->find([new DirectoryLocationDto(__DIR__ . '/../../framework', 'Framework')]),
+            'default' => $finder->find([
                 new DirectoryLocationDto(__DIR__ . '/../../src', 'App'),
                 new DirectoryLocationDto(__DIR__ . '/../../framework', 'Framework')
-            ]);
-        }
+            ])
+        };
+        //dd($return_value);
 
-        $commands = array_keys($this->commands);
-
-        foreach ($commands as $commandName) {
-            $output->writeLine(" - " . $commandName . "  =>\t" . $this->commands[$commandName]['description']);
+        foreach ($return_value as $commandName => $command) {
+            $output->writeLine(
+                " - " . $commandName . "  =>\t" . $command['description']
+            );
             $output->writeNewLine();
         }
 
@@ -62,28 +58,13 @@ class ListCommand implements CommandInterface, RequireCommandInterface
 
     public function getDefinition(): InputDefinitionDto
     {
-        return new InputDefinitionDto()->addArgument(
-            new InputArgumentDto(
-                'list',
-                'a list of the commands in the location',
-                true
-            )
-        )
+        return new InputDefinitionDto()
             ->addOption(
                 new InputOptionDto(
-                    'framework',
-                    'framework data',
+                    'filter',
+                    'filter',
                     null,
                     '-sf',
-                    null
-                )
-            )
-            ->addOption(
-                new InputOptionDto(
-                    'app',
-                    'app data',
-                    null,
-                    '-af',
                     null
                 )
             );
@@ -97,7 +78,6 @@ class ListCommand implements CommandInterface, RequireCommandInterface
     //ToDo: fertigstellen;
     public function getParameter(): null
     {
-
     }
 
     public function setParameter(): null

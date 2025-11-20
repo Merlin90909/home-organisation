@@ -13,7 +13,6 @@ class ConsoleApplication
     {
         $finder = new CommandFinder();
         $this->commands = $finder->find($directories);
-        //
 
         return $this;
     }
@@ -22,8 +21,12 @@ class ConsoleApplication
     {
         $output = new Output();
         $inputParser = new InputParser();
+        //dd($this->commands);
+        $command = new $this->commands[$inputParser->commandName]['path'];
 
-        $input = $inputParser->parse($arguments);
+        $definition = $command->getDefinition();
+
+        $input = $inputParser->parse($arguments, $definition);
         $commandName = $input->getCommandName();
 
         if (!$commandName) {
@@ -39,8 +42,7 @@ class ConsoleApplication
         }
 
         $command = new $this->commands[$commandName]['path'];
-
-        //Command hat Interface, ja dann ConsoleAppication mitgeben
+        //Command hat Interface: ja, dann ConsoleAppication mitgeben
 
         return $command($input, $output);
     }

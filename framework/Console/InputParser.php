@@ -3,67 +3,60 @@
 namespace Framework\Console;
 
 use Framework\Dtos\InputArgumentDto;
+use Framework\Dtos\InputDefinitionDto;
 use Framework\Dtos\InputOptionDto;
 
 class  InputParser
 {
+    public string $commandName;
+    public array $parameters;
 
-    public function parse(array $arguments): Input
+    public function __construct()
     {
-        array_shift($arguments);
-        $commandName = array_shift($arguments);
+        $argument = $_SERVER['argv'];
+        array_shift($argument);
 
+        $this->commandName = array_shift($argument);
+        $this->parameters = $argument;
+        //dd($this->parameters, $this->commandName);
+        //dd($this->commandName);
+    }
+
+    public function parse(array $arguments, InputDefinitionDto $definition): Input
+    {
+        $input = new Input;
         $inputArguments = [];
         $options = [];
+        //dd($definition);
 
         foreach ($arguments as $argument) {
             if (str_starts_with($argument, '--')) {
                 $name = substr($argument, 2);
-                if (str_contains($argument, '=')) {
-                    [$name, $val] = explode('=', $name, 2);
-                    //überprüfen ob name unter den Optionen ist(getDefinition)
-                } else {
-                    $val = 'true';
-                }
-                //das fällt weg; Dto aus getDefinition benutzen und value hinzufügen
-                //$value gleich wert wie grün oder blau
-                //statt new Dto dieses Dto mit Value in option[name[
-                $options[$name] = new InputOptionDto(
-                    $name,
-                    '',
-                    $val,
-                    null,
-                    null
-                );
             } elseif (str_starts_with($argument, '-')) {
                 $name = substr($argument, 1);
-                if (str_contains($argument, '=')) {
-                    [$name, $val] = explode('=', $name, 2);
-                } else {
-                    $val = 'true';
+            }
+            if (str_contains($argument, '=')) {
+                [$name, $val] = explode('=', $name, 2);
+                foreach ($definition->options as $option) {
+                    if ($option->name === $name) {
+                        $option->value = $val;
+                        $input->setOptions($option);
+                    } else {
+                        dd('Option nicht gefunden!');
+                    }
                 }
-
-                $options[$name] = new InputOptionDto(
-                    $name,
-                    '',
-                    $val,
-                    $name,
-                    null
-                );
-            } else {
-                $inputArguments[$argument] = new InputArgumentDto(
-                    $argument,
-                    '',
-                    true
-                );
+                continue;
+            }
+            foreach ($definition->arguments as $value) {
+                if ($value->name === $argument) {
+                    $input->setArguments($value);
+                }
             }
         }
-        $input = new Input();
-        $input->setCommandName($commandName);
-        $input->setArguments($inputArguments);
-        $input->setOptions($options);
+        $input->setCommandName($this->commandName);
+        //$input->setArguments($inputArguments);
+        //$input->setOptions($options);
 
         return $input;
     }
-
 }
