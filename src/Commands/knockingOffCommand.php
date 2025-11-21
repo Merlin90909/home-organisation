@@ -2,11 +2,8 @@
 
 namespace App\Commands;
 
-use Framework\Console\CommandFinder;
 use Framework\Console\Input;
 use Framework\Console\Output;
-use Framework\Dtos\DirectoryLocationDto;
-use Framework\Dtos\InputArgumentDto;
 use Framework\Dtos\InputDefinitionDto;
 use Framework\Dtos\InputOptionDto;
 use Framework\Enums\ExitCode;
@@ -50,7 +47,6 @@ class knockingOffCommand implements CommandInterface
 
         //now
         $now[] = time();
-        //workStart = '7:30';
         $workStart[] = strtotime('07:45');
         $workEnd[] = strtotime('16:15'); //
 
@@ -69,7 +65,8 @@ class knockingOffCommand implements CommandInterface
         $return_value = match ($filterValue) {
             'past' => [$untilHoures, $untilMinutes],
             'remaining' => [$restHoures, $restMinutes],
-            'now' => $now
+            'now' => $now,
+            default => null
         };
 
         if ($filterValue == 'past') {
@@ -82,10 +79,13 @@ class knockingOffCommand implements CommandInterface
                 "Es verbleiben noch $return_value[0] Stunden und $return_value[1] Minuten auf der Arbeit."
             );
             $output->writeNewLine();
-        } else {
+        } elseif ($filterValue == 'now') {
             $output->writeLine("Aktuelle Zeit: " . date('H:i:s', $return_value[0]));
+            $output->writeNewLine();
+        } else {
+            $output->writeLine("This is not a correct input!");
+            $output->writeNewLine();
         }
-        $output->writeNewLine();
 
         return ExitCode::Success;
     }
