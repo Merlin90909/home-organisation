@@ -11,9 +11,8 @@ use Framework\Dtos\InputDefinitionDto;
 use Framework\Dtos\InputOptionDto;
 use Framework\Enums\ExitCode;
 use Framework\Interfaces\CommandInterface;
-use Framework\Interfaces\RequireCommandInterface;
 
-class ListCommand implements CommandInterface, RequireCommandInterface
+class ListCommand implements CommandInterface
 {
     public array $commands = [];
 
@@ -68,19 +67,5 @@ class ListCommand implements CommandInterface, RequireCommandInterface
     public static function description(): string
     {
         return 'a list of all commands';
-    }
-
-    //ToDo: fertigstellen;
-    public function getParameter(): null
-    {
-    }
-
-    public function setParameter(): null
-    {
-        $console = new ConsoleApplication();
-
-        //commands ziehen
-        //überprüfen, wenn Interface implementiert
-
     }
 }

@@ -52,10 +52,24 @@ class ConsoleApplication
             return ExitCode::Error;
         }
 
+        $commandClass = $this->commands[$commandName]['path'];
+        $instance = new $commandClass();
+        $definition = $instance->getDefinition();
+
         $output->writeLine("Command: " . $commandName);
         $output->writeNewLine();
         $output->writeLine("Beschreibung: " . $this->commands[$commandName]['description']);
         $output->writeNewLine();
+
+        if (!empty($definition->arguments)) {
+            $output->writeLine("Argumente:");
+            foreach ($definition->arguments as $arg) {
+                $output->writeLine("  " . $arg->name . " " . $arg->description);
+            }
+            $output->writeNewLine();
+        }
+
+        
 
         return ExitCode::Success;
     }
