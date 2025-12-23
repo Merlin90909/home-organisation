@@ -6,25 +6,27 @@ use Framework\Attributes\OrmColumn;
 use Framework\Attributes\OrmTable;
 use Framework\Interfaces\EntityInterface;
 
-#[OrmTable('user_to_task')]
-class UserToTaskEntity implements EntityInterface
+#[OrmTable('room_to_task')]
+class RoomToTaskEntity implements EntityInterface
 {
     public function __construct(
         public ?int        $id,
-        #[OrmColumn('owner_id')]
-        public ?UserEntity $user,
+        #[OrmColumn('room_id')]
+        public ?RoomEntity $room,
         #[OrmColumn('task_id')]
         public ?TaskEntity $task
     )
     {
     }
 
-    public static function getTable(): string
+    public
+    static function getTable(): string
     {
-        return 'User_to_task';
+        return 'room_to_task';
     }
 
-    public function setId(int $id): void
+    public
+    function setId(int $id): void
     {
         $this->id = $id;
     }
