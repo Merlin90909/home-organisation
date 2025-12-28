@@ -37,7 +37,7 @@ class LoginService
         $_SESSION['user_email'] = $user->email;
         $_SESSION['user_name'] = $user->firstName . ' ' . $user->lastName;
 
-        $this->eventManager->notify(new LoginObservable($user->id, $user->email, $password));
+        //$this->eventManager->notify(new LoginObservable($user->id, $user->email, $password));
 
         return true;
     }

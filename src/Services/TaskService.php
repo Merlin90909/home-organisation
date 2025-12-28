@@ -18,7 +18,7 @@ class TaskService
             "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.repeat, t.repeat_rule, t.created_at, t.deleted
              FROM task t
              INNER JOIN room_to_task rt ON rt.task_id = t.id
-             WHERE rt.room_id = :id AND t.deleted = 0
+             WHERE rt.room_id = :id AND t.deleted = ''
              ORDER BY t.due_at"
         );
         $stmt->execute(['id' => $id]);
@@ -40,7 +40,7 @@ class TaskService
              FROM task t
              LEFT JOIN room_to_task rt ON rt.task_id = t.id
              LEFT JOIN room ro ON ro.id = rt.room_id
-             WHERE t.due_at IS NOT NULL AND t.deleted = 0
+             WHERE t.due_at IS NOT NULL AND t.deleted = ''
              GROUP BY t.id
              ORDER BY t.due_at ASC
              LIMIT :limit"
@@ -82,7 +82,7 @@ class TaskService
      FROM task t
      LEFT JOIN room_to_task rt ON rt.task_id = t.id
      LEFT JOIN room ro ON ro.id = rt.room_id
-     WHERE t.due_at IS NOT NULL AND t.deleted = 0
+     WHERE t.due_at IS NOT NULL AND t.deleted = ''
      GROUP BY t.id
      ORDER BY t.due_at ASC"
         );
@@ -102,7 +102,7 @@ class TaskService
      FROM task t
      LEFT JOIN room_to_task rt ON rt.task_id = t.id
      LEFT JOIN room ro ON ro.id = rt.room_id
-     WHERE t.due_at IS NOT NULL AND t.deleted = 1
+     WHERE t.due_at IS NOT NULL AND t.deleted = true
      GROUP BY t.id
      ORDER BY t.due_at ASC"
         );
