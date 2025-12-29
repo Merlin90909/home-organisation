@@ -2,19 +2,23 @@
 
 namespace App\Controller;
 
+use App\Entities\TaskEntity;
 use App\Services\AccountService;
 use Framework\Interfaces\ControllerInterface;
 use Framework\Interfaces\ResponseInterface;
 use Framework\Requests\httpRequests;
 use Framework\Responses\HtmlResponse;
 use Framework\Services\HtmlRenderer;
+use Framework\Services\OrmService;
 
 class AccountController implements ControllerInterface
 {
     public function __construct(
-        private HtmlRenderer $htmlRenderer,
+        private HtmlRenderer   $htmlRenderer,
         private AccountService $accountService,
-    ) {
+        private OrmService     $ormService
+    )
+    {
     }
 
     function handle(httpRequests $httpRequest): ResponseInterface

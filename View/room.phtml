@@ -33,9 +33,9 @@ $room = ($room ?? null);
                         ?>
                         <li class="task-card">
                             <div class="task-header">
-                                <h3><?= htmlspecialchars($t['title'] ?? '') ?></h3>
+                                <h3><?= htmlspecialchars($t->title ?? '') ?></h3>
                                 <form action="/task-delete" method="post" class="delete-form">
-                                    <input type="hidden" name="task.id" value="<?= $t['id'] ?>">
+                                    <input type="hidden" name="task.id" value="<?= $t->id ?>">
                                     <input type="hidden" name="room.id"
                                            value="<?= isset($room->id) ? (int)$room->id : '' ?>">
                                     <button type="submit" class="delete-btn">✕</button>
@@ -45,10 +45,10 @@ $room = ($room ?? null);
                             <div class="task-body">
                                 <p><strong>Endet in:</strong>
                                     <?php
-                                    if (!empty($t['due_at'])) {
+                                    if (!empty($t->due)) {
                                         $now = new DateTime();
-                                        $dt = $t['due_at'] instanceof DateTime ? $t['due_at'] : new DateTime(
-                                                $t['due_at']
+                                        $dt = $t->due instanceof DateTime ? $t->due : new DateTime(
+                                                $t->due
                                         );
                                         if ($dt > $now) {
                                             $difference = $now->diff($dt);
@@ -60,7 +60,7 @@ $room = ($room ?? null);
                                     }
                                     ?>
                                 </p>
-                                <p><?= nl2br(htmlspecialchars($t['notes'] ?? '')) ?></p>
+                                <p><?= nl2br(htmlspecialchars($t->notes ?? '')) ?></p>
                             </div>
                         </li>
                     <?php

@@ -2,34 +2,34 @@
 
 namespace App\Services;
 
+use App\Entities\TaskEntity;
 use DateTime;
 use DateTimeInterface;
+use Framework\Services\OrmService;
 use PDO;
 
 class TaskService
 {
-    public function __construct(private PDO $pdo)
+    public function __construct(private PDO $pdo, private OrmService $ormService)
     {
     }
 
-    public function getTaskByRoomId(int $id): array
+    public function getTaskByRoomId(int $roomId): array
     {
-        $stmt = $this->pdo->prepare(
-            "SELECT t.id, t.title, t.notes, t.due_at, t.priority, t.repeat, t.repeat_rule, t.created_at, t.deleted
-             FROM task t
-             INNER JOIN room_to_task rt ON rt.task_id = t.id
-             WHERE rt.room_id = :id AND t.deleted = ''
-             ORDER BY t.due_at"
+
+        $tasks = $this->ormService->findBy(
+            [
+                'room_id' => $roomId
+            ],
+            TaskEntity::class
         );
-        $stmt->execute(['id' => $id]);
+        return $tasks;
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
-
 
     public function deleteTaskById(int $id): bool
     {
-        $stmt = $this->pdo->prepare('Update task set deleted = 1 where id = :id');
+        $stmt = $this->pdo->prepare('UPDATE task SET deleted = 1 WHERE id = :id');
         return $stmt->execute(['id' => $id]);
     }
 
@@ -114,7 +114,6 @@ class TaskService
         }
         return $task;
     }
-
 
     public function repeatTask(int $taskId): bool
     {
