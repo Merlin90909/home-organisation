@@ -18,15 +18,15 @@ class ArchiveService
 
         $result = [];
         foreach ($rawItems as $t) {
-            $title = $t['title'] ?? '';
+            $title = $t->title ?? '';
 
-            $rooms = trim((string)($t['rooms'] ?? ''));
+            $rooms = trim(($t->room->name ?? ''));
             $roomTagHtml = '';
             if ($rooms !== '') {
                 $roomTagHtml = '<small class="tag">(Raum: ' . $rooms . ')</small>';
             }
 
-            $dueAt = $t['due_at'] ?? null;
+            $dueAt = $t->due ?? null;
             $dueTs = $dueAt ? strtotime((string)$dueAt) : null;
             $now = time();
             $status = 'ok';
@@ -39,9 +39,9 @@ class ArchiveService
             }
 
             $dueTextRaw = $this->taskService->showTimer($dueAt);
-            $dueText = (string)$dueTextRaw;
+            $dueText = $dueTextRaw;
 
-            $notes = (string)($t['notes'] ?? '');
+            $notes = ($t->notes ?? '');
             $notesHtml = nl2br($notes);
 
             $result[] = [

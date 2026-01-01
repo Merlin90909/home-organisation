@@ -26,7 +26,7 @@ class DashboardService
         foreach ($rawItems as $t) {
             $title = $t->title ?? '';
 
-            $rooms = trim((string)($t->room_id ?? ''));
+            $rooms = trim((string)($t->room->name ?? ''));
             $roomTagHtml = '';
             if ($rooms !== '') {
                 $roomTagHtml = '<small class="tag">(Raum: ' . $rooms . ')</small>';
