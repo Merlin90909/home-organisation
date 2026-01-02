@@ -6,27 +6,24 @@ use Framework\Attributes\OrmColumn;
 use Framework\Attributes\OrmTable;
 use Framework\Interfaces\EntityInterface;
 
-#[OrmTable('item')]
-class ItemEntity implements EntityInterface
+#[OrmTable('item_to_room')]
+class RoomToItemEntity implements EntityInterface
 {
     public function __construct(
-        public ?int $id,
-        public string $name,
-        public string $category,
-        public int $amount,
-        #[OrmColumn('user_id')]
-        public ?UserEntity $user,
+        public ?int        $id,
         #[OrmColumn('room_id')]
-        public ?RoomEntity $room
-
+        public ?RoomEntity $roomId,
+        #[OrmColumn('item_id')]
+        public ?ItemEntity $item_id
     )
     {
     }
 
     public static function getTable(): string
     {
-        return 'item';
+        return 'item_to_room';
     }
+
     public function setId(int $id): void
     {
         $this->id = $id;

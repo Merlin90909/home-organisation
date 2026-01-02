@@ -57,8 +57,6 @@ $pdo->exec("
         FOREIGN KEY (user_id) REFERENCES user(id),
         FOREIGN KEY (room_id) REFERENCES room(id)
 );
-CREATE UNIQUE INDEX IF NOT EXISTS uniq_item_name_category
-  ON item(name, category);
 
     CREATE TABLE user_to_room(
         id INTEGER PRIMARY KEY AUTOINCREMENT,

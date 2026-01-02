@@ -3,58 +3,51 @@
 namespace App\Services;
 
 use App\Dtos\ItemDto;
+use App\Entities\ItemEntity;
+use App\Entities\RoomEntity;
+use App\Entities\RoomToItemEntity;
+use App\Entities\UserEntity;
+use App\Entities\UserToItemEntity;
+use App\Entities\UserToRoomEntity;
+use Framework\Services\OrmService;
 use PDO;
 
 class WarehouseService
 {
-    public function __construct(private PDO $pdo)
+    public function __construct(private PDO $pdo, private OrmService $ormService)
     {
     }
 
     public function edit(
-        int $userId,
-        int $roomId,
+        int    $userId,
+        int    $roomId,
         string $name,
         string $category,
-        int $amount
-    ): bool {
-        if ($userId === null || $roomId === null || $name === null || $category === null || $amount === null) {
-            return false;
-        }
+        int    $amount
+    ): bool
+    {
 
-
-        $statement = $this->pdo->prepare(
-            'INSERT INTO item (name, category, amount,  user_id, room_id)
-             VALUES(:name, :category, :amount,  :created_by, :room_id)
-             ON CONFLICT(name, category)
-             DO UPDATE SET amount = item.amount + excluded.amount'
+        $user = $this->ormService->findOneBy(
+            [
+                'user.id' => $userId
+            ],
+            UserEntity::class
         );
-        $statement->execute([
-            ':name' => $name,
-            ':category' => $category,
-            ':amount' => $amount,
-            ':created_by' => $userId,
-            ':room_id' => $roomId
-        ]);
-
-        $itemId = $this->pdo->lastInsertId();
-        $statement = $this->pdo->prepare(
-            'INSERT INTO item_to_user(item_id, user_id) 
-                    VALUES(:item_id, :id)'
+        $room = $this->ormService->findOneBy(
+            [
+                'room.id' => $roomId
+            ],
+            RoomEntity::class
         );
-        $statement->execute([
-            ':item_id' => $itemId,
-            ':id' => $userId,
-        ]);
 
-        $statement2 = $this->pdo->prepare(
-            'INSERT INTO item_to_room(item_id, room_id)
-                    VALUES(:item_id, :room_id)'
-        );
-        $statement2->execute([
-            ':item_id' => $itemId,
-            ':room_id' => $roomId,
-        ]);
+        $item = new ItemEntity(null, $name, $category, $amount, $user, $room);
+        $this->ormService->save($item);
+
+        $userItem = new UserToItemEntity(null, $user, $item);
+        $this->ormService->save($userItem);
+
+        $roomItem = new RoomToItemEntity(null, $room, $item);
+        $this->ormService->save($roomItem);
 
         return true;
     }
