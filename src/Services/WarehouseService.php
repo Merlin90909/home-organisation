@@ -54,16 +54,24 @@ class WarehouseService
 
     public function getItems($userId): array
     {
-        $stmt = $this->pdo->prepare(
-            "SELECT i.name, i.category, i.amount, r.name AS room_name
-           FROM item i
-           LEFT JOIN room r ON r.id = i.room_id
-          WHERE i.user_id = :id
-       ORDER BY i.name COLLATE NOCASE, i.category COLLATE NOCASE"
+        $items = $this->ormService->findBY(
+            [
+                'user.id' => $userId
+            ],
+            ItemEntity::class
         );
-        $stmt->execute([':id' => $userId]);
+        return $items;
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+//        $stmt = $this->pdo->prepare(
+//            "SELECT i.name, i.category, i.amount, r.name AS room_name
+//           FROM item i
+//           LEFT JOIN room r ON r.id = i.room_id
+//          WHERE i.user_id = :id
+//       ORDER BY i.name COLLATE NOCASE, i.category COLLATE NOCASE"
+//        );
+//        $stmt->execute([':id' => $userId]);
+//
+//        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 
     public function getRoomNames($userId): array

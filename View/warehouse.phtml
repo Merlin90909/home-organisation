@@ -96,10 +96,10 @@ require_once(__DIR__ . '/header.phtml');
                         <?php
                         foreach ($items as $row): ?>
                             <tr>
-                                <td><?= htmlspecialchars($row['name']) ?></td>
-                                <td><?= htmlspecialchars($row['category']) ?></td>
-                                <td><?= (int)$row['amount'] ?></td>
-                                <td><?= $row['room_name'] ?></td>
+                                <td><?= htmlspecialchars($row->name) ?></td>
+                                <td><?= htmlspecialchars($row->category) ?></td>
+                                <td><?= (int)$row->amount ?></td>
+                                <td><?= $row->room->name ?></td>
                             </tr>
                         <?php
                         endforeach; ?>
