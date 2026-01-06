@@ -10,31 +10,33 @@ use Framework\Interfaces\EntityInterface;
 class TaskEntity implements EntityInterface
 {
     public function __construct(
-        public ?int $id ,
-        public string $title,
-        public string $notes,
+        public ?int        $id,
+        public string      $title,
+        public string      $notes,
         #[OrmColumn('due_at')]
-        public string $due,
-        public string $priority,
-        public bool $repeat,
+        public string      $due,
+        public string      $priority,
+        public bool        $repeat,
         #[OrmColumn('repeat_rule')]
-        public string $repeatRule,
+        public string      $repeatRule,
         #[OrmColumn('created_at')]
-        public string $created,
-        public bool $deleted,
-        public bool $checked,
+        public string      $created,
+        public bool        $deleted,
+        public bool        $checked,
         #[OrmColumn('user_id')]
-        public ?UserEntity $user ,
+        public ?UserEntity $user,
         #[OrmColumn('room_id')]
         public ?RoomEntity $room
 
-    ) {
+    )
+    {
     }
 
     public static function getTable(): string
     {
         return 'task';
     }
+
     public function setId(int $id): void
     {
         $this->id = $id;

@@ -11,6 +11,10 @@ final class UpdateQueryBuilder extends AbstractQueryBuilder
     public function set(array $values): self
     {
         foreach ($values as $column => $value) {
+            if (is_object($value)) {
+                $value = method_exists($value, 'getId') ? $value->getId() : '[OBJECT]';
+            }
+
             $this->setValues[] = sprintf("%s = '%s'", $column, addslashes((string)$value));
         }
         return $this;

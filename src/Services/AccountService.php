@@ -12,8 +12,9 @@ class AccountService
 
     public function __construct(
         private UserService $userService,
-        private OrmService $ormService
-    ) {
+        private OrmService  $ormService
+    )
+    {
     }
 
     public function showParameters(int $userId): EntityInterface
@@ -27,9 +28,10 @@ class AccountService
 
     public function setEmail(
         string $email,
-        int $userId,
+        int    $userId,
         string $password
-    ): bool {
+    ): bool
+    {
         $user = $this->userService->getUserbyId($userId);
         if (!isset($user->password) || $user->password !== $password) {
             return false;

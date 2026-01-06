@@ -27,24 +27,19 @@ class TaskService
         return $tasks;
     }
 
-    //not   work at all; same id error
     public function deleteTaskById(int $taskId): bool
     {
         $task = $this->getTaskById($taskId);
-        //dd($task);
-
         $task->deleted = 1;
-        return $this->ormService->save($task);
 
-//        $stmt = $this->pdo->prepare('UPDATE task SET deleted = 1 WHERE id = :id');
-//        return $stmt->execute(['id' => $id]);
+        return $this->ormService->save($task);
     }
 
-    public function getTaskById($taskId): EntityInterface
+    public function getTaskById(int $taskId): EntityInterface
     {
         $task = $this->ormService->findOneBy(
             [
-                'id' => $taskId
+                'task.id' => $taskId
             ],
             TaskEntity::class
         );

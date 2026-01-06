@@ -64,7 +64,7 @@ class DashboardService
 
     public function checkTask(int $taskId): bool
     {
-        $task = $this->ormService->findOneBy(['id' => $taskId], TaskEntity::class);
+        $task = $this->ormService->findOneBy(['task.id' => $taskId], TaskEntity::class);
         $task->checked = 1;
         return $this->ormService->save($task);
     }

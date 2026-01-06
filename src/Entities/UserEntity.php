@@ -12,14 +12,15 @@ class UserEntity implements EntityInterface
 {
 
     public function __construct(
-        public ?int $id,
+        public ?int   $id,
         #[OrmColumn('first_name')]
         public string $firstName,
         #[OrmColumn('last_name')]
         public string $lastName,
         public string $email,
         public string $password,
-    ) {
+    )
+    {
     }
 
     public static function getTable(): string

@@ -23,7 +23,7 @@ class TaskDeleteController implements ControllerInterface
         $taskId = (int)$httpRequest->getPayload()['task_id'] ?? null;
         $roomId = (int)$httpRequest->getPayload()['room_id'] ?? null;
 
-       $deleted = $this->taskService->deleteTaskById($taskId);
+       $deleted = $this->taskService->deleteTaskById((int)$taskId);
 
         if($deleted){
             return new RedirectResponse('/room/' . $roomId . '?delete_succeed');

@@ -38,8 +38,7 @@ class RoomController implements ControllerInterface
 
         return new HtmlResponse($this->htmlRenderer->render('room.phtml', [
             'room' => $room,
-            'task' => $task,
-            'timers' => $task
+            'task' => $task
         ]));
     }
 }
