@@ -33,7 +33,8 @@ class AccountService
     ): bool
     {
         $user = $this->userService->getUserbyId($userId);
-        if (!isset($user->password) || $user->password !== $password) {
+
+        if (!password_verify($password, $user->password)) {
             return false;
         }
 
